@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title><?php echo _($admin_title); ?></title>
 </head>
 <body>
 	
