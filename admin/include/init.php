@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Load database details
 include_once '../config.php';
 
