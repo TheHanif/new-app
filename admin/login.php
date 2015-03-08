@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
         <p><input type="text" name="login" value="" placeholder="<?php echo _('Username'); ?>"></p>
         <p><input type="password" name="password" value="" placeholder="<?php echo _('Password'); ?>"></p>
         
-        <p class="login-help error"><?php echo (isset($error_login))? _($error_login) : ''; ?></p>
+        <?php echo (isset($error_login))? '<p class="login-help error">'._($error_login).'</p>' : ''; ?>
         <!-- <p class="remember_me">
           <label>
             <input type="checkbox" name="remember_me" id="remember_me">
