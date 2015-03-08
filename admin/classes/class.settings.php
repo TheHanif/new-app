@@ -1,5 +1,5 @@
 <?php
-class settings extends database{
+class Settings extends Database{
 
 	private $settings;
 	private $table_name;
