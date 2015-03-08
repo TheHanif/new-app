@@ -2,6 +2,10 @@
 // Admin absolute path
 define('ADMINABS', ABSPATH.'admin/');
 
+// CMS name
+define('CMSNAME', 'New App');
+
+
 // Admin page title
 $admin_title = 'Untitled';
 
