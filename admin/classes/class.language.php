@@ -1,6 +1,6 @@
 <?php
 
-class Language extends database{
+class Language extends settings{
 
 	private $lang_info = array();
 	private $lang_data = array();
@@ -10,6 +10,8 @@ class Language extends database{
 	 */
 	public function __construct()
 	{	
+		parent::__construct();
+		
 		$language = $this->get_language();
 		$this->lang_info = $this->get_language_info($language);
 		$this->lang_data = $this->get_language_data($language);

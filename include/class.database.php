@@ -266,16 +266,16 @@ class Database {
      * while($row = result)
      * @return Object single object
      */
-    public function result() {
-        return $this->_query->fetch(PDO::FETCH_OBJ);
+    public function result($fetch_type = PDO::FETCH_OBJ) {
+        return $this->_query->fetch($fetch_type);
     }
 
     /**
      * Fetch all results in onces
      * @return array 
      */
-    public function all_results() {
-        return $this->_query->fetchAll(PDO::FETCH_OBJ);
+    public function all_results($fetch_type = PDO::FETCH_OBJ) {
+        return $this->_query->fetchAll($fetch_type);
     }
 
     /**
