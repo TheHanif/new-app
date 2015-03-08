@@ -11,10 +11,11 @@ class Language extends settings{
 	public function __construct()
 	{	
 		parent::__construct();
-		
+
 		$language = $this->get_language();
 		$this->lang_info = $this->get_language_info($language);
 		$this->lang_data = $this->get_language_data($language);
+
 	}
 
 	/**
@@ -84,7 +85,7 @@ class Language extends settings{
 	 */
 	public function get_language()
 	{
-		return 'en-US';
+		return $this->get_settings('language');
 	}
 
 	public function set_language()

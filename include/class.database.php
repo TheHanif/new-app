@@ -107,6 +107,7 @@ class Database {
                 $this->_query->bindValue(':' . $c, $value[0], $this->get_type($value[0]));
             }
         }
+
         if (!empty($this->_data)) {
             $i = 0;
             foreach ($this->_data as $c => $value) {
@@ -240,6 +241,7 @@ class Database {
             }
             $query = rtrim($query, ', ');
             $query .= ')';
+
         }
         if ($this->_action != 'INSERT' && !empty($this->_limit)) {
             $query .= ' LIMIT ' . $this->_limit;
@@ -254,12 +256,16 @@ class Database {
     private function build_update_data() {
         $fields = '';
         $i = 0;
+
         foreach ($this->_data as $c => $v) {
-            $fields .= $c . " " . $v[1] . ":" . $c . $i . ", ";
+            $fields .= $c . " = :" . $c . $i . ", ";
             $i++;
         }
+
+        // echo $fields ; exit;
         return rtrim($fields, ', ');
     }
+
 
     /**
      * Fetch single row, use while loop to fetch by row
@@ -292,7 +298,7 @@ class Database {
      * @param  Int $num_rows   How many rows to select
      * @return none             
      */
-    public function get($table_name, $num_rows = NULL) {
+    public function from($table_name, $num_rows = NULL) {
         $this->_action = 'SELECT';
         $this->_table = $table_name;
         $this->_limit = $num_rows;
