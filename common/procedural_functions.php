@@ -20,3 +20,36 @@ function _($key)
 	global $lang;
 	return $lang->get_key($key);
 }
+
+// Alternate of print_r
+function print_f($data, $exit = false)
+{
+	echo '<pre>';
+	print_r($data);
+	echo '</pre>';
+
+	if($exit) exit;
+}
+
+// Get current URL from address bar
+function get_actual_url()
+{
+	$actual_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+	return urlencode($actual_url);
+}
+
+/**
+ * Check user login status
+ * 
+ * @param boolean $redirect
+ */
+function is_logged_in($redirect = false)
+{
+	$status = Users::is_logged_in();
+
+	if (!$status && $redirect) {
+		header("location:login.php?URL=".get_actual_url());
+	}
+
+	return $status;
+}
