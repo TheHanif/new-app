@@ -1,6 +1,6 @@
 <?php
 
-class Language extends settings{
+class Language extends Settings{
 
 	private $lang_info = array();
 	private $lang_data = array();
