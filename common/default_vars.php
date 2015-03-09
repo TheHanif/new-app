@@ -11,3 +11,6 @@ $admin_title = 'Untitled';
 
 // Language object
 $lang = NULL; // Used in procedural functions
+
+// Admin sidebar navigation
+$admin_sidebar_navigation = array();
