@@ -65,9 +65,13 @@ function get_script_name()
 	return end(explode('/', rtrim($_SERVER['SCRIPT_NAME'], '.php')));
 }
 
-function is_page_active($page)
-{
+function is_page_active($page, $echo = true)
+{	
 	if ($page == get_script_name()) {
-		echo "active";
+		if ($echo) {
+			echo "active";
+		}else{
+			return 'active';
+		}
 	}
 }
