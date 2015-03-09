@@ -2,6 +2,7 @@
 /**
  * Name: English
  * Country: United State
+ * Direction : LTR
  */
 
 $language['Title'] = 'Title';

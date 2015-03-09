@@ -71,11 +71,13 @@ class Language extends Settings{
 		// Get details
 		$name = end(explode('* Name: ', $info[0]));
 		$country = end(explode('* Country: ', $info[1]));
+		$direction = end(explode('* Direction: ', $info[2]));
 
 		// Prepare
 		$info = array();
 		$info['name'] = $name;
 		$info['country'] = $country;
+		$info['direction'] = $direction;
 
 		return $info;
 	}
