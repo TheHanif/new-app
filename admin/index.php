@@ -5,6 +5,9 @@ include_once 'include/init.php';
 // Page title
 $admin_title = 'Dashboard';
 
+// Variable to active select page
+// $page = get_script_name();
+
 // Header file
 include 'include/header.php';
 ?>
@@ -27,7 +30,7 @@ include 'include/header.php';
 	<!-- END PAGE HEADING ROW -->					
 		<div class="row">
 			<div class="col-lg-12">
-			
+			<?php echo $page; ?>
 			<!-- START YOUR CONTENT HERE -->
 				<p>This is a light-weight blank page, with minimum to none plugins loaded</p>
 			<!-- END YOUR CONTENT HERE -->

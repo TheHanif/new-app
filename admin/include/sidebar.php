@@ -28,10 +28,11 @@
 							<!-- END Navigation category -->
 							
 							<li>
-								<a class="active" href="index.html">
+								<a class="<?php is_page_active('index'); ?>" href="index.php">
 									<i class="fa fa-dashboard"></i> Dashboard
 								</a>
 							</li>
+							
 							<!-- BEGIN DROPDOWN -->
 							<li class="panel">
 								<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#forms">

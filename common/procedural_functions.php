@@ -55,3 +55,19 @@ function is_logged_in($redirect = false)
 
 	return $status;
 }
+
+/**
+ * Get requested file name
+ * @return string
+ */
+function get_script_name()
+{
+	return end(explode('/', rtrim($_SERVER['SCRIPT_NAME'], '.php')));
+}
+
+function is_page_active($page)
+{
+	if ($page == get_script_name()) {
+		echo "active";
+	}
+}
