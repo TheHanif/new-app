@@ -26,12 +26,29 @@
 								<h4>Navigation</h4> 								
 							</li>
 							<!-- END Navigation category -->
-							
+
 							<li>
 								<a class="<?php is_page_active('index'); ?>" href="index.php">
 									<i class="fa fa-dashboard"></i> Dashboard
 								</a>
 							</li>
+
+							<?php
+								foreach ($admin_sidebar_navigation as $key => $data) {
+									$parent_active = '';
+									if (strpos($data['file'], '.')) {
+										$file = array_shift(array_slice(explode('.', $data['file']), 0, 1));
+										$parent_active = is_page_active($file, false);
+									}
+								?>
+									<li class="<?php echo (isset($data['submenu']))? 'panel ' : ' '; ?>">
+										<a class="<?php echo $parent_active; ?>" href="<?php echo $data['file']; ?>">
+											<i class="fa fa-<?php echo $data['icon']; ?>"></i> <?php echo $data['title']; ?>
+										</a>
+									</li>
+								<?php
+								}
+							?>
 							
 							<!-- BEGIN DROPDOWN -->
 							<li class="panel">
