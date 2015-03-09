@@ -6,7 +6,7 @@ is_logged_in(true);
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title><?php echo _($admin_title) , ' | ' , CMSNAME; ?></title>
+	<title><?php echo __($admin_title) , ' | ' , CMSNAME; ?></title>
 </head>
 <body>
 	
