@@ -15,7 +15,7 @@ spl_autoload_register('class_autoloader');
  */
 $lang = new language();
 
-function _($key)
+function __($key)
 {	
 	global $lang;
 	return $lang->get_key($key);
@@ -46,6 +46,8 @@ function get_actual_url()
 function is_logged_in($redirect = false)
 {
 	$status = Users::is_logged_in();
+
+	// $URL = (isset($_GET['URL']))? urlencode($_GET['URL']) : get_actual_url();
 
 	if (!$status && $redirect) {
 		header("location:login.php?URL=".get_actual_url());
