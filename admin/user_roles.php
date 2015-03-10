@@ -3,10 +3,7 @@
 include_once 'include/init.php';
 
 // Page title
-$admin_title = 'Create User';
-
-// Variable to active select page
-// $page = get_script_name();
+$admin_title = 'Roles and Capabilities';
 
 // Header file
 include 'include/header.php';

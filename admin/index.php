@@ -25,6 +25,8 @@ include 'include/header.php';
 					<h1><?php echo __($admin_title); ?> <span class="sub-title">sub title</span></h1>								
 				</div>
 				
+				<?php get_messages(); ?>	
+
 			</div><!-- /.col-lg-12 -->
 		</div><!-- /.row -->
 	<!-- END PAGE HEADING ROW -->					
