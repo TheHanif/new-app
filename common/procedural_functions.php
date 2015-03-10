@@ -81,6 +81,7 @@ function is_page_active($page, $echo = true)
  */
 function generate_admin_menu()
 {
+	global $admin_sidebar_navigation;
 	foreach ($admin_sidebar_navigation as $key => $data) {
 		$parent_active = '';
 		if (strpos($data['file'], '.')) {
