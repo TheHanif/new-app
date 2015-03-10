@@ -26,31 +26,11 @@
 								<h4>Navigation</h4> 								
 							</li>
 							<!-- END Navigation category -->
-
-							<li>
-								<a class="<?php is_page_active('index'); ?>" href="index.php">
-									<i class="fa fa-dashboard"></i> Dashboard
-								</a>
-							</li>
-
+							
 							<?php 
 							// Get Admin navigation
 							generate_admin_menu(); ?>
-							
-							<!-- BEGIN DROPDOWN -->
-							<li class="panel open">
-								<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#forms">
-									<i class="fa fa-cogs"></i> Elements <span class="fa arrow"></span>
-								</a>
-									<ul class="collapse nav" id="forms">
-										<li>
-											<a href="jquery-ui.html">
-												<i class="fa fa-angle-double-right"></i> jQuery UI 
-											</a>
-										</li>
-									</ul>
-							</li>
-							<!-- END DROPDOWN -->
+
 						</ul><!-- /.side-nav -->
 						
 						<div class="sidebar-labels">
