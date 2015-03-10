@@ -144,3 +144,31 @@ function check_submenu($data)
 	$class = 'panel '.$open;
 	return $class;
 } // check_submenu
+
+/**
+ * Add item admin sidebar navigation
+ * @param string $name   item key
+ * @param string $title  item text
+ * @param string $icon   fa icon
+ * @param string $file   file name
+ * @param string $parent parent key
+ */
+function add_navigation_item($name, $title, $icon, $file, $parent = NULL)
+{
+	global $admin_sidebar_navigation;
+
+	// Prepare item data
+	$item = array();
+	$item = array(
+		'title' => $title
+		,'icon' => $icon
+		,'file' => $file
+	);
+
+	if (isset($parent)) { // Submenu item
+		$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
+	}else{ // Top level item
+		$admin_sidebar_navigation[$name]=$item
+	}
+	
+} // end of add_navigation_item
