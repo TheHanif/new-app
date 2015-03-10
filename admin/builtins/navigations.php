@@ -4,58 +4,14 @@
  */
 
 // Dashboard
-$dashboard = array(
-		'title' => 'Dashboard'
-		,'icon' => 'dashboard'
-		,'file' => 'index.php'
-	);
-$admin_sidebar_navigation['dashboard'] = $dashboard;
+add_navigation_item('dashboard', 'Dashboard', 'dashboard', 'index.php');
 
 // Users
-$users = array(
-		'title' => 'Users'
-		,'icon' => 'users'
-		,'file' => 'javascript:;'
-		,'submenu' => array(
-				'users' => array(
-						'title' => 'Users'
-						,'icon' => 'users'
-						,'file' => 'users.php'
-					) // end item
-				,'create_user' => array(
-						'title' => 'Create user'
-						,'icon' => 'plus'
-						,'file' => 'create_user.php'
-					) // end item
-				,'user_roles' => array(
-						'title' => 'User role'
-						,'icon' => 'check'
-						,'file' => 'user_roles.php'
-					) // end item
-			) // end submenu
-	); // end menu item
-$admin_sidebar_navigation['users'] = $users;
+add_navigation_item('users', 'Users', 'users', '#');
+add_navigation_item('users', 'Users', 'users', 'users.php', 'users');
+add_navigation_item('create_user', 'Create user', 'plus', 'create_user.php', 'users');
+add_navigation_item('user_role', 'User roles', 'check', 'user_roles.php', 'users');
+
 
 // Settings
-$settings = array(
-		'title' => 'Settings'
-		,'icon' => 'cogs'
-		,'file' => 'settings.php'
-	);
-$admin_sidebar_navigation['settings'] = $settings;
-
-
-/// Sample
-$sample = array(
-		'title' => 'Sample'
-		,'icon' => 'twitter'
-		,'file' => 'javascript:;'
-		,'submenu' => array(
-				'facebook' => array(
-						'title' => 'Facebook'
-						,'icon' => 'facebook'
-						,'file' => 'facebook.php'
-					) // end item
-			) // end submenu
-	); // end menu item
-$admin_sidebar_navigation['sample'] = $sample;
+add_navigation_item('settings', 'Settings', 'cogs', 'settings.php');

@@ -168,7 +168,7 @@ function add_navigation_item($name, $title, $icon, $file, $parent = NULL)
 	if (isset($parent)) { // Submenu item
 		$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
 	}else{ // Top level item
-		$admin_sidebar_navigation[$name]=$item
+		$admin_sidebar_navigation[$name]=$item;
 	}
-	
+
 } // end of add_navigation_item
