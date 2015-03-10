@@ -38,7 +38,7 @@
 							generate_admin_menu(); ?>
 							
 							<!-- BEGIN DROPDOWN -->
-							<li class="panel">
+							<li class="panel open">
 								<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#forms">
 									<i class="fa fa-cogs"></i> Elements <span class="fa arrow"></span>
 								</a>

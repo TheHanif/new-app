@@ -89,14 +89,18 @@ function generate_admin_menu()
 			$parent_active = is_page_active($file, false);
 		}
 	?>
-		<li class="<?php echo (isset($data['submenu']))? 'panel' : ''; ?>">
-			<a class="<?php echo $parent_active; ?>" href="<?php echo $data['file']; ?>">
-				<i class="fa fa-<?php echo $data['icon']; ?>"></i> <?php echo $data['title']; ?> <?php echo (isset($data['submenu']))? '<span class="fa arrow"></span>' : ''; ?>
+		<li class="<?php echo (isset($data['submenu']))? check_submenu($data['submenu']) : ''; ?>">
+			<?php if (isset($data['submenu'])) {
+				echo '<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#'.$key.'">';
+			}else{
+				?><a class="<?php echo $parent_active; ?>" href="<?php echo $data['file']; ?>"><?php
+				} ?>
+				<i class="fa fa-<?php echo $data['icon']; ?>"></i> <?php __($data['title']); ?> <?php echo (isset($data['submenu']))? '<span class="fa arrow"></span>' : ''; ?>
 			</a>
 			<?php // Get Submenu
 				if (isset($data['submenu'])) {
 					?>
-						<ul class="collapse nav" id="forms">
+						<ul class="collapse nav" id="<?php echo $key; ?>">
 							<?php // Submenu loop
 								foreach ($data['submenu'] as $submenu_key => $submenu_data) {
 									$submenu_item_active = '';
@@ -107,7 +111,7 @@ function generate_admin_menu()
 									?>
 										<li>
 											<a class="<?php echo $submenu_item_active; ?>" href="<?php echo $submenu_data['file']; ?>">
-												<i class="fa fa-<?php echo $submenu_data['icon']; ?>"></i> <?php echo $submenu_data['title']; ?>
+												<i class="fa fa-<?php echo $submenu_data['icon']; ?>"></i> <?php __($submenu_data['title']); ?>
 											</a>
 										</li>
 									<?php
@@ -121,3 +125,22 @@ function generate_admin_menu()
 	<?php
 	} // end foreach
 } // end of generate_admin_menu()
+
+/**
+ * Get classes for submenus
+ */
+function check_submenu($data)
+{
+	$open = '';
+	foreach ($data as $key => $value) {
+		if (strpos($value['file'], '.')) {
+			$file = array_shift(array_slice(explode('.', $value['file']), 0, 1));
+			if (is_page_active($file, false)) {
+				$open = 'open';
+			}
+		}
+	}// end foreach
+
+	$class = 'panel '.$open;
+	return $class;
+} // check_submenu
