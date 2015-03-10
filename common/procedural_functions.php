@@ -165,10 +165,48 @@ function add_navigation_item($name, $title, $icon, $file, $parent = NULL)
 		,'file' => $file
 	);
 
-	if (isset($parent)) { // Submenu item
+	if (isset($parent) && isset($admin_sidebar_navigation[$parent])) { // Submenu item
 		$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
 	}else{ // Top level item
 		$admin_sidebar_navigation[$name]=$item;
 	}
 
 } // end of add_navigation_item
+
+/**
+ * Add message for admin area
+ * @param  string $title   Message title
+ * @param  string $message Message
+ * @param  string $type    alert type
+ */
+function register_admin_message($title, $message, $type)
+{
+	global $messages;
+
+	$message = array(
+			'title' => $title
+			,'message' => $message
+			,'type' => $type
+		);
+	$messages[] = $message;
+} // register_admin_message
+
+/**
+ * Get message for admin
+ * @return string alert HTML markup
+ */
+function get_messages()
+{
+	global $messages;
+	$types = array('warning', 'info', 'danger', 'success', 'primary', 'inverse');
+
+	foreach ($messages as $message) {
+		if(!in_array($message['type'], $types)) continue;
+		?>
+		<div class="alert bg-<?php echo $message['type'] ?>">
+			<button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+			<p><strong><?php echo $message['title']; ?>:</strong><br>  <?php echo $message['message']; ?></p>
+		</div>
+		<?php
+	} // end of foreach
+} // end of get_messages()

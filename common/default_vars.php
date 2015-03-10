@@ -13,3 +13,6 @@ $lang = NULL; // Used in procedural functions
 
 // Admin sidebar navigation
 $admin_sidebar_navigation = array();
+
+// Admin messages and notifications
+$messages = array();
