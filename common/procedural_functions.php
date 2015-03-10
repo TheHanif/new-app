@@ -92,11 +92,11 @@ function generate_admin_menu()
 			<a class="<?php echo $parent_active; ?>" href="<?php echo $data['file']; ?>">
 				<i class="fa fa-<?php echo $data['icon']; ?>"></i> <?php echo $data['title']; ?> <?php echo (isset($data['submenu']))? '<span class="fa arrow"></span>' : ''; ?>
 			</a>
-			<?php 
+			<?php // Get Submenu
 				if (isset($data['submenu'])) {
 					?>
 						<ul class="collapse nav" id="forms">
-							<?php 
+							<?php // Submenu loop
 								foreach ($data['submenu'] as $submenu_key => $submenu_data) {
 									$submenu_item_active = '';
 									if (strpos($submenu_data['file'], '.')) {
@@ -110,13 +110,13 @@ function generate_admin_menu()
 											</a>
 										</li>
 									<?php
-								}
+								} // end for foreach
 							?>
 						</ul>
 					<?php
-				}
+				} // end submenu
 			 ?>
 		</li>
 	<?php
-	}
+	} // end foreach
 } // end of generate_admin_menu()
