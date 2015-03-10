@@ -75,3 +75,48 @@ function is_page_active($page, $echo = true)
 		}
 	}
 }
+
+/**
+ * Generate Admin sidebar navigation $admin_sidebar_navigation
+ */
+function generate_admin_menu()
+{
+	foreach ($admin_sidebar_navigation as $key => $data) {
+		$parent_active = '';
+		if (strpos($data['file'], '.')) {
+			$file = array_shift(array_slice(explode('.', $data['file']), 0, 1));
+			$parent_active = is_page_active($file, false);
+		}
+	?>
+		<li class="<?php echo (isset($data['submenu']))? 'panel' : ''; ?>">
+			<a class="<?php echo $parent_active; ?>" href="<?php echo $data['file']; ?>">
+				<i class="fa fa-<?php echo $data['icon']; ?>"></i> <?php echo $data['title']; ?> <?php echo (isset($data['submenu']))? '<span class="fa arrow"></span>' : ''; ?>
+			</a>
+			<?php 
+				if (isset($data['submenu'])) {
+					?>
+						<ul class="collapse nav" id="forms">
+							<?php 
+								foreach ($data['submenu'] as $submenu_key => $submenu_data) {
+									$submenu_item_active = '';
+									if (strpos($submenu_data['file'], '.')) {
+										$file = array_shift(array_slice(explode('.', $submenu_data['file']), 0, 1));
+										$submenu_item_active = is_page_active($file, false);
+									}
+									?>
+										<li>
+											<a class="<?php echo $submenu_item_active; ?>" href="<?php echo $submenu_data['file']; ?>">
+												<i class="fa fa-<?php echo $submenu_data['icon']; ?>"></i> <?php echo $submenu_data['title']; ?>
+											</a>
+										</li>
+									<?php
+								}
+							?>
+						</ul>
+					<?php
+				}
+			 ?>
+		</li>
+	<?php
+	}
+} // end of generate_admin_menu()
