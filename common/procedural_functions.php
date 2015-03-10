@@ -153,9 +153,20 @@ function check_submenu($data)
  * @param string $file   file name
  * @param string $parent parent key
  */
-function add_navigation_item($name, $title, $icon, $file, $parent = NULL)
+function add_navigation_item($name, $title, $icon, $file, $parent = NULL, $settings = NULL, $capability = NULL)
 {
 	global $admin_sidebar_navigation;
+
+	// Check rights and capabilities
+	// if ((isset($settings) || isset($capability)) && !is_allowed($settings, $capability)) {
+	// 	return;
+	// }
+	
+	
+	
+	if (!is_allowed($settings, $capability)) {
+		return;
+	}
 
 	// Prepare item data
 	$item = array();
@@ -163,10 +174,14 @@ function add_navigation_item($name, $title, $icon, $file, $parent = NULL)
 		'title' => $title
 		,'icon' => $icon
 		,'file' => $file
+		// ,'has_settings' => $settings
+		// ,'has_capability' => $capability
 	);
 
-	if (isset($parent) && isset($admin_sidebar_navigation[$parent])) { // Submenu item
-		$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
+	if (isset($parent)) { // Submenu item
+		if (isset($admin_sidebar_navigation[$parent])) {
+			$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
+		}
 	}else{ // Top level item
 		$admin_sidebar_navigation[$name]=$item;
 	}
@@ -210,3 +225,22 @@ function get_messages()
 		<?php
 	} // end of foreach
 } // end of get_messages()
+
+/**
+ * Check if user have capabities in some areas
+ * @param  contants  $settings   main settings variables
+ * @param  array  $capability user role have rights in this
+ * @return boolean
+ */
+function is_allowed($settings = null, $capability = null){
+
+	// By default every thing is allowed.
+	$state = true;
+
+	// Default settings
+	if ((isset($settings) && $settings == false)) {
+		$state = false;
+	}
+
+	return $state;
+} // end of is_allowed()
