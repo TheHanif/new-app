@@ -19,7 +19,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php echo __($admin_title); ?> <span class="sub-title">sub title</span></h1>								
+					<h1><?php echo __($admin_title); ?></h1>
 				</div>
 
 				<?php get_messages(); ?>
@@ -27,6 +27,11 @@ include 'include/header.php';
 			</div><!-- /.col-lg-12 -->
 		</div><!-- /.row -->
 	<!-- END PAGE HEADING ROW -->					
+		
+		<?php
+		// Check page for loack status
+		get_lock_status(); ?>
+		
 		<div class="row">
 			<div class="col-lg-12">
 			

@@ -82,11 +82,15 @@ function is_page_active($page, $echo = true)
 function generate_admin_menu()
 {
 	global $admin_sidebar_navigation;
+
 	foreach ($admin_sidebar_navigation as $key => $data) {
 		$parent_active = '';
 		if (strpos($data['file'], '.')) {
 			$file = array_shift(array_slice(explode('.', $data['file']), 0, 1));
 			$parent_active = is_page_active($file, false);
+
+			// Go to unlock the page
+			unlock_page(is_page_active($file, false), $data['has_settings'], $data['has_capability']);
 		}
 	?>
 		<li class="<?php echo (isset($data['submenu']))? check_submenu($data['submenu']) : ''; ?>">
@@ -107,6 +111,9 @@ function generate_admin_menu()
 									if (strpos($submenu_data['file'], '.')) {
 										$file = array_shift(array_slice(explode('.', $submenu_data['file']), 0, 1));
 										$submenu_item_active = is_page_active($file, false);
+
+										// Go to unlock the page
+										unlock_page(is_page_active($file, false), $submenu_data['has_settings'], $submenu_data['has_capability']);
 									}
 									?>
 										<li>
@@ -125,6 +132,35 @@ function generate_admin_menu()
 	<?php
 	} // end foreach
 } // end of generate_admin_menu()
+
+/**
+ * Unlock admin page
+ * 
+ * @return boolean	true if unlocked
+ */
+function unlock_page($is_active, $has_settings, $has_capabilities)
+{
+	global $lock_page;
+	if ($is_active && is_allowed($has_settings, $has_capabilities)) {
+		$lock_page = false;
+		return true;
+	}
+} // end of unlock_page()
+
+/**
+ * Get the lock status of page
+ * If false, include footer file and exit the page to prevent loading of page contents
+ */
+function get_lock_status()
+{	
+	global $lock_page;
+
+	if ($lock_page) {
+		generate_message('ACCESS DENIED!', 'You do not have sufficient capabilities to access this area.', 'danger');
+		include ADMINABS.'include/footer.php';
+		exit;
+	}
+} // end of get_lock_status()
 
 /**
  * Get classes for submenus
@@ -174,8 +210,8 @@ function add_navigation_item($name, $title, $icon, $file, $parent = NULL, $setti
 		'title' => $title
 		,'icon' => $icon
 		,'file' => $file
-		// ,'has_settings' => $settings
-		// ,'has_capability' => $capability
+		,'has_settings' => $settings
+		,'has_capability' => $capability
 	);
 
 	if (isset($parent)) { // Submenu item
@@ -207,7 +243,7 @@ function register_admin_message($title, $message, $type)
 } // register_admin_message
 
 /**
- * Get message for admin
+ * Get all messages for admin
  * @return string alert HTML markup
  */
 function get_messages()
@@ -220,10 +256,27 @@ function get_messages()
 		?>
 		<div class="alert bg-<?php echo $message['type'] ?>">
 			<button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
-			<p><strong><?php echo $message['title']; ?>:</strong><br>  <?php echo $message['message']; ?></p>
+			<p><strong><?php __($message['title']); ?>:</strong><br>  <?php __($message['message']); ?></p>
 		</div>
 		<?php
 	} // end of foreach
+} // end of get_messages()
+
+/**
+ * Generate alert message for admin
+ * @return string alert HTML markup
+ */
+function generate_message($title, $message, $type)
+{
+	$types = array('warning', 'info', 'danger', 'success', 'primary', 'inverse');
+
+	if(!in_array($type, $types)) return;
+	?>
+	<div class="alert bg-<?php echo $type; ?>">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+		<p><strong><?php __($title); ?>:</strong><br>  <?php __($message); ?></p>
+	</div>
+	<?php
 } // end of get_messages()
 
 /**
@@ -239,6 +292,11 @@ function is_allowed($settings = null, $capability = null){
 
 	// Default settings
 	if ((isset($settings) && $settings == false)) {
+		$state = false;
+	}
+
+	// User Rights and capabilitirs
+	if ((isset($capability) && $capability == false)) {
 		$state = false;
 	}
 

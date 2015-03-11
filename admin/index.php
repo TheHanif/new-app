@@ -29,7 +29,12 @@ include 'include/header.php';
 
 			</div><!-- /.col-lg-12 -->
 		</div><!-- /.row -->
-	<!-- END PAGE HEADING ROW -->					
+	<!-- END PAGE HEADING ROW -->
+
+		<?php
+		// Check page for loack status
+		get_lock_status(); ?>
+		
 		<div class="row">
 			<div class="col-lg-12">
 			<?php print_f($admin_sidebar_navigation); ?>
