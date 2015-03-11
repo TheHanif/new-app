@@ -19,7 +19,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php echo __($admin_title); ?></h1>
+					<h1 class='clearfix'><?php __($admin_title); ?> <a href="create_role.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> <?php __('New Role') ?></a></h1>
 				</div>
 
 				<?php get_messages(); ?>
