@@ -67,7 +67,7 @@ function get_script_name()
 
 function is_page_active($page, $echo = true)
 {	
-	if ($page == get_script_name()) {
+	if ((is_array($page) && in_array(get_script_name(), $page)) || ($page == get_script_name())) {
 		if ($echo) {
 			echo "active";
 		}else{
@@ -87,10 +87,12 @@ function generate_admin_menu()
 		$parent_active = '';
 		if (strpos($data['file'], '.')) {
 			$file = array_shift(array_slice(explode('.', $data['file']), 0, 1));
-			$parent_active = is_page_active($file, false);
+
+			$data['child_files'][] = $file;
+			$parent_active = is_page_active($data['child_files'], false);
 
 			// Go to unlock the page
-			unlock_page(is_page_active($file, false), $data['has_settings'], $data['has_capability']);
+			unlock_page(is_page_active($data['child_files'], false), $data['has_settings'], $data['has_capability']);
 		}
 	?>
 		<li class="<?php echo (isset($data['submenu']))? check_submenu($data['submenu']) : ''; ?>">
@@ -110,10 +112,12 @@ function generate_admin_menu()
 									$submenu_item_active = '';
 									if (strpos($submenu_data['file'], '.')) {
 										$file = array_shift(array_slice(explode('.', $submenu_data['file']), 0, 1));
-										$submenu_item_active = is_page_active($file, false);
+
+										$submenu_data['child_files'][] = $file;
+										$submenu_item_active = is_page_active($submenu_data['child_files'], false);
 
 										// Go to unlock the page
-										unlock_page(is_page_active($file, false), $submenu_data['has_settings'], $submenu_data['has_capability']);
+										unlock_page(is_page_active($submenu_data['child_files'], false), $submenu_data['has_settings'], $submenu_data['has_capability']);
 									}
 									?>
 										<li>
@@ -171,7 +175,10 @@ function check_submenu($data)
 	foreach ($data as $key => $value) {
 		if (strpos($value['file'], '.')) {
 			$file = array_shift(array_slice(explode('.', $value['file']), 0, 1));
-			if (is_page_active($file, false)) {
+
+			$value['child_files'][] = $file;
+
+			if (is_page_active($value['child_files'], false)) {
 				$open = 'open';
 			}
 		}
@@ -189,19 +196,18 @@ function check_submenu($data)
  * @param string $file   file name
  * @param string $parent parent key
  */
-function add_navigation_item($name, $title, $icon, $file, $parent = NULL, $settings = NULL, $capability = NULL)
+function add_navigation_item($name, $title, $icon, $file, $child_files = array(), $parent = NULL, $settings = NULL, $capability = NULL)
 {
 	global $admin_sidebar_navigation;
 
 	// Check rights and capabilities
-	// if ((isset($settings) || isset($capability)) && !is_allowed($settings, $capability)) {
-	// 	return;
-	// }
-	
-	
-	
 	if (!is_allowed($settings, $capability)) {
 		return;
+	}
+
+	// Remove extensions
+	foreach ($child_files as $key => $value) {
+		$child_files[$key] = rtrim($value, '.php');
 	}
 
 	// Prepare item data
@@ -210,6 +216,7 @@ function add_navigation_item($name, $title, $icon, $file, $parent = NULL, $setti
 		'title' => $title
 		,'icon' => $icon
 		,'file' => $file
+		,'child_files' => $child_files
 		,'has_settings' => $settings
 		,'has_capability' => $capability
 	);
