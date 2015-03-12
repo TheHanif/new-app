@@ -309,3 +309,18 @@ function is_allowed($settings = null, $capability = null){
 
 	return $state;
 } // end of is_allowed()
+
+
+/**
+ * Add new capabilty
+ * @param  string $group
+ * @param  string $key
+ */
+function register_capability($group, $key)
+{
+	global $capabilities_groups;
+
+	if (isset($capabilities_groups[$group])) {
+		$capabilities_groups[$group][] = $key;
+	}
+} // end of register_capability()
