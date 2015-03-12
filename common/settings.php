@@ -23,3 +23,7 @@ define('HAS_PLUGINS', true);				// Manage Plugins
 define('HAS_PERFORMANCE', true);			// Manage site performance and cache system
 define('HAS_BACKUP', true);					// Create and manage site backup
 define('HAS_LANGUAGE', true);				// Manage admin language
+
+// Guide
+define('HAS_HELP', true);					// Website Tutorial
+define('HAS_QUERY_FORM', true);				// Help from webmaster
