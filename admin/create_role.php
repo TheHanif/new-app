@@ -3,7 +3,7 @@
 include_once 'include/init.php';
 
 // Page title
-$admin_title = 'Create role';
+$admin_title = 'Create Role';
 
 // Header file
 include 'include/header.php';
@@ -19,7 +19,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php echo __($admin_title); ?> <a href="create_role.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-arrow-left"></i> <?php __('Cancel') ?></a></h1>
+					<h1><?php echo __($admin_title); ?> <a href="user_roles.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-arrow-left"></i> <?php __('Cancel') ?></a></h1>
 				</div>
 
 				<?php get_messages(); ?>
@@ -36,7 +36,42 @@ include 'include/header.php';
 			<div class="col-lg-12">
 			
 			<!-- START YOUR CONTENT HERE -->
-				<p>This is a light-weight blank page, with minimum to none plugins loaded</p>
+				<form action="create_role.php" role="form" method="post">
+					
+					<div class="panel panel-default">
+						<div class="panel-body">
+
+							<div class="form-group">
+								<label for="title">Role and Capability Title</label>
+								<input type="text" class="form-control input-lg" id="title" placeholder="Title">
+							</div>
+							
+							<hr>
+						<div class="form-horizontal">
+						<?php foreach($capabilities_groups as $capabilities_group_name => $capabilities_group): ?>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" style="margin-top:-5px"><?php echo $capabilities_group_name; ?></label>
+								<?php foreach($capabilities_group as $capability_key => $capability_name): ?>
+								<div class="col-sm-9">
+									<div class="tcb">
+										<label>
+											<input type="checkbox" value="1" class="tc" name="capabilities_groups['<?php echo $capabilities_group_name; ?>'][<?php echo $capability_key; ?>]">
+											<span class="labels"> <?php echo $capability_name; ?></span>
+										</label>
+									</div>
+								</div>
+								<?php endforeach; ?>
+							</div><!-- //.form-group -->
+							<hr>
+						<?php endforeach; ?>
+						</div><!-- // .form-horizontal -->
+
+						</div><!-- //.panel-body -->
+					</div>
+
+				</form>
+
+
 			<!-- END YOUR CONTENT HERE -->
 	
 			</div>

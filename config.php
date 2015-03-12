@@ -13,7 +13,7 @@ define('DB_NAME', 'new_app');
 define('DB_USER', 'root');
 
 // Database Password
-define('DB_PASS', '');
+define('DB_PASS', 'root');
 
 // Database table prefix
 define('DB_PREFIX', '');
