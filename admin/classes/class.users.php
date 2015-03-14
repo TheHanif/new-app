@@ -54,6 +54,11 @@ class Users extends Database{
 		return $this->row_count();
 	} // end of save_role()
 
+	/**
+	 * Get roles
+	 * @param  integer $ID
+	 * @return objects
+	 */
 	public function get_roles($ID = NULL)
 	{
 		if (isset($ID)) {
@@ -67,7 +72,13 @@ class Users extends Database{
 		}elseif ($this->row_count() > 0) {
 			return $this->all_results();
 		}
+	}// end of get_roles()
 
+	public function delete_role($ID)
+	{
+		$this->where('role_id', $ID);
+		$this->delete($this->role_table_name, 1);
+		return $this->row_count();
 	}
 
 	/**
