@@ -32,10 +32,14 @@ function print_f($data, $exit = false)
 }
 
 // Get current URL from address bar
-function get_actual_url()
+function get_actual_url($encode = true)
 {
 	$actual_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	return urlencode($actual_url);
+	if ($encode) {
+		return urlencode($actual_url);
+	}else{
+		return $actual_url;
+	}
 }
 
 /**

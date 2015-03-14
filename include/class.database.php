@@ -90,7 +90,12 @@ class Database {
             $this->_query = $this->_DB->prepare(filter_var($query, FILTER_SANITIZE_STRING));
             $this->bind_results();
             $this->_query->execute();
-            unset($this->_action, $this->_where, $this->_limit, $this->_table, $this->_select, $this->_joins);
+
+            // Reset
+            $this->_where = array();
+            $this->_select = array();
+            $this->_data = array();
+            // unset($this->_action, $this->_where, $this->_limit, $this->_table, $this->_select, $this->_joins);
         } catch (PDOException $e) {
             $er = $e->errorInfo;
             echo '<p style="font-family:arial; background:#F00; color:#FFF; padding:5px;">ERROR: ' . $er[2] . '</p>';
