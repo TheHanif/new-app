@@ -5,6 +5,7 @@ include_once 'include/init.php';
 // Page title
 $admin_title = 'Create Role';
 
+// Get User object from builtin/capabilities.php
 $capabilities_groups = $Users->get_capabilities_groups();
 
 // Header file
