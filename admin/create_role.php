@@ -5,6 +5,8 @@ include_once 'include/init.php';
 // Page title
 $admin_title = 'Create Role';
 
+$capabilities_groups = $Users->get_capabilities_groups();
+
 // Header file
 include 'include/header.php';
 ?>
@@ -42,25 +44,25 @@ include 'include/header.php';
 						<div class="panel-body">
 
 							<div class="form-group">
-								<label for="title">Role and Capability Title</label>
-								<input type="text" class="form-control input-lg" id="title" placeholder="Title">
+								<label for="title"><?php __('Role and Capability Title'); ?></label>
+								<input type="text" class="form-control input-lg" id="title" placeholder="<?php __('Title'); ?>">
 							</div>
 							
 							<hr>
 						<div class="form-horizontal">
 						<?php foreach($capabilities_groups as $capabilities_group_name => $capabilities_group): ?>
 							<div class="form-group">
-								<label class="col-sm-3 control-label" style="margin-top:-5px"><?php echo $capabilities_group_name; ?></label>
-								<?php foreach($capabilities_group as $capability_key => $capability_name): ?>
+								<label class="col-sm-3 control-label" style="margin-top:-5px"><?php __($capabilities_group_name); ?></label>
 								<div class="col-sm-9">
+								<?php foreach($capabilities_group as $capability_key => $capability_name): ?>
 									<div class="tcb">
 										<label>
-											<input type="checkbox" value="1" class="tc" name="capabilities_groups['<?php echo $capabilities_group_name; ?>'][<?php echo $capability_key; ?>]">
-											<span class="labels"> <?php echo $capability_name; ?></span>
+											<input type="checkbox" value="<?php echo $capability_key; ?>" class="tc" name="capabilities_groups['<?php echo $capabilities_group_name; ?>'][<?php echo $capability_key; ?>]">
+											<span class="labels"> <?php __($capability_name); ?></span>
 										</label>
 									</div>
-								</div>
 								<?php endforeach; ?>
+								</div>
 							</div><!-- //.form-group -->
 							<hr>
 						<?php endforeach; ?>

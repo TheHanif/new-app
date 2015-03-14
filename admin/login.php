@@ -9,8 +9,7 @@ if (isset($_GET['logout'])) {
 
 // Try to login
 if (isset($_POST['submit'])) {
-  $user = new users();
-  $status = $user->do_login($_POST);
+  $status = $Users->do_login($_POST);
   if (!$status) {
     $error_login = 'Incorrect Username or Password, please try again.';
   }

@@ -4,12 +4,45 @@ class Users extends Database{
 	private $table_name;
 	private $profile_table_name;
 
+	// List of available capabilities
+	private $capabilities_group_container = array();
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->table_name = DB_PREFIX.'users';
 		$this->profile_table_name = DB_PREFIX.'user_profiles';
+
+		// prepare capabilities group
+		$this->capabilities_group_container['Site'] 		= array(); // Manage pages
+		$this->capabilities_group_container['Blog'] 		= array(); // Manage Blog
+		$this->capabilities_group_container['Catalog'] 		= array(); // Manage Catalog
+		$this->capabilities_group_container['Users'] 		= array(); // Manage Users
+		$this->capabilities_group_container['Plugins'] 		= array(); // Manage Plugins
+		$this->capabilities_group_container['Settings'] 	= array(); // Manage System Settings
 	}
+
+	/**
+	* Add new capabilty
+	* @param  string $group
+	* @param  string $key
+	*/
+	public function register_capability($group, $key)
+	{
+		if (isset($this->capabilities_group_container[$group])) {
+			$this->capabilities_group_container[$group][str_replace(' ', '-', $key)] = $key;
+		}else{
+			register_admin_message('Capabilty not registered', 'Invalid capabilty group.', 'danger');
+		}
+	} // end of register_capability()
+
+	/**
+	 * Get Capabilities Group
+	 */
+	public function get_capabilities_groups()
+	{
+		return $this->capabilities_group_container;
+	} // end of get_capabilities_groups()
 
 	// Get login status
 	public static function is_logged_in()
@@ -19,7 +52,7 @@ class Users extends Database{
 		}else{
 			return false;
 		}
-	}
+	} // end of is_logged_in()
 
 	/**
 	 * Login user
