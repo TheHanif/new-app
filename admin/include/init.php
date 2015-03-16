@@ -16,8 +16,8 @@ include_once ABSPATH.'common/default_vars.php';
 // Prosedural functions
 include_once ABSPATH.'common/procedural_functions.php';
 
-// Load Built-in features
-include_once ADMINABS.'builtins/navigations.php';
-
 // Load default capabilities list
 include_once ADMINABS.'builtins/capabilities.php';
+
+// Load Built-in features
+include_once ADMINABS.'builtins/navigations.php';

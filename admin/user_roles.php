@@ -32,7 +32,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1 class='clearfix'><?php __($admin_title); ?> <a href="create_role.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> <?php __('New Role') ?></a></h1>
+					<h1 class='clearfix'><?php __($admin_title); ?> <?php if(is_allowed(HAS_USERS_ROLE, array('Users'=>array('manage-roles')))): ?> <a href="create_role.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> <?php __('New Role') ?></a><?php endif; ?></h1>
 				</div>
 
 				<?php get_messages(); ?>
@@ -50,13 +50,13 @@ include 'include/header.php';
 			
 			<!-- START YOUR CONTENT HERE -->
 			<?php 
-				if (!isset($roles)) {
+				if (!isset($roles)):
 					echo "<p>";
 					__($admin_title);
 					echo " ";
 					__("are not available.");
 					echo "</p>";
-				}
+				else:
 			?>
 				<table class="table table-bordered table-hover tc-table">
 					<thead>
@@ -93,6 +93,8 @@ include 'include/header.php';
 						<?php endforeach; ?>
 					</tbody>
 				</table>
+
+				<?php endif; ?>
 			<!-- END YOUR CONTENT HERE -->
 	
 			</div>

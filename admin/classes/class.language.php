@@ -121,9 +121,9 @@ class Language extends Settings{
 	public function get_key($key)
 	{	
 		if (isset($this->lang_data[$key])) {
-			echo $this->lang_data[$key];
+			return $this->lang_data[$key];
 		}else{
-			echo '*'.$key;
+			return '*'.$key;
 		}
 	}
 } // end of class

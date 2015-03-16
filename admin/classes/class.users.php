@@ -4,6 +4,7 @@ class Users extends Database{
 	private $table_name;
 	private $profile_table_name;
 	private $role_table_name;
+	private $user_capabilities;
 
 	// List of available capabilities
 	private $capabilities_group_container = array();
@@ -22,7 +23,58 @@ class Users extends Database{
 		$this->capabilities_group_container['Users'] 		= array(); // Manage Users
 		$this->capabilities_group_container['Plugins'] 		= array(); // Manage Plugins
 		$this->capabilities_group_container['Settings'] 	= array(); // Manage System Settings
-	}
+
+		// Get capabilities for current logged user
+		if ($this->is_logged_in()) {
+			$this->user_capabilities = $this->get_user_capabilitirs();
+		}
+	} // end of __construct()
+
+	/**
+	 * Check if current user has these capabilities
+	 */
+	public function has_capabilities($capabilities = array())
+	{	
+		$state = false;
+
+		// Provided capabilities must be an array
+		if (!is_array($capabilities)) {
+			register_admin_message('Capability error!', 'Provided capabilities must be an array', 'danger');
+			return $state;
+		}
+
+		// Check through user's capabilities.
+		foreach ($capabilities as $group_name => $group) {
+			foreach ($group as $key => $value) {
+				if (array_key_exists($group_name, $this->user_capabilities) && array_key_exists($value, $this->user_capabilities[$group_name])) {
+					$state = true;
+				}
+			}
+		}
+
+		return $state;
+	} // end of has_capabilities()
+
+	/**
+	 * Ger user's capabilities
+	 */
+	public function get_user_capabilitirs($user_id = NULL)
+	{
+		$profile = $this->get_profile($user_id);
+		$role = $this->get_roles($profile->user_role);
+		$role_capabilities_object = json_decode($role->role_object);
+
+		// Convert to array
+		$role_capabilities = array();
+		foreach ($role_capabilities_object as $group_name => $group_data) {
+			$role_capabilities[$group_name] = array();
+			foreach ($group_data as $key => $value) {
+				$role_capabilities[$group_name][$key] = $value;
+			}
+		}
+
+		return $role_capabilities;
+	} // end of get_user_capabilitirs()
 
 	/**
 	 * Save or update role
@@ -89,7 +141,7 @@ class Users extends Database{
 	public function register_capability($group, $key)
 	{
 		if (isset($this->capabilities_group_container[$group])) {
-			$this->capabilities_group_container[$group][str_replace(' ', '-', $key)] = $key;
+			$this->capabilities_group_container[$group][str_replace(' ', '-', strtolower($key))] = $key;
 		}else{
 			register_admin_message('Capabilty not registered', 'Invalid capabilty group.', 'danger');
 		}
@@ -176,8 +228,12 @@ class Users extends Database{
 	 * @param  int $user_id
 	 * @return object
 	 */
-	public function get_profile($user_id)
+	public function get_profile($user_id = NULL)
 	{
+		if (is_null($user_id)) {
+			$user_id = $this->get_logged_id();
+		}
+
 		$this->where('user_id', $user_id);
 		$this->from($this->profile_table_name);
 		if ($this->row_count() > 0) {

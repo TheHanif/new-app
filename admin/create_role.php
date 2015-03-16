@@ -22,7 +22,7 @@ if (!is_null($ID)) {
 }
 
 // Page title
-$admin_title = 'Create Role';
+$admin_title = (isset($ID))? 'Edit Role' : 'Create Role';
 
 // Get User object from builtin/capabilities.php
 $capabilities_groups = $Users->get_capabilities_groups();
@@ -82,8 +82,8 @@ include 'include/header.php';
 									<?php foreach($capabilities_group as $capability_key => $capability_name): ?>
 										<div class="tcb">
 											<label>
-												<input type="checkbox" <?php echo (isset($role) && isset($role_object->$capabilities_group_name->$capability_key))? 'checked' : ''; ?> value="<?php echo $capability_key; ?>" class="tc" name="capabilities_groups[<?php echo $capabilities_group_name; ?>][<?php echo $capability_key; ?>]">
-												<span class="labels"> <?php __($capability_name); ?></span>
+												<input type="checkbox" <?php echo (isset($role) && isset($role_object->$capabilities_group_name->$capability_key))? 'checked' : ''; ?> value="1" class="tc" name="capabilities_groups[<?php echo $capabilities_group_name; ?>][<?php echo $capability_key; ?>]">
+												<span class="labels"> <?php __($capability_name); ?> (<?php echo str_replace(' ', '-', strtolower($capability_name)); ?>)</span>
 											</label>
 										</div>
 									<?php endforeach; ?>

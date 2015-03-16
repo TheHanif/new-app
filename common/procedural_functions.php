@@ -15,10 +15,15 @@ spl_autoload_register('class_autoloader');
  */
 $lang = new language();
 
-function __($key)
+function __($key, $echo = true)
 {	
 	global $lang;
-	return $lang->get_key($key);
+
+	if ($echo) {
+		echo $lang->get_key($key);
+	}else{
+		return $lang->get_key($key);
+	}
 }
 
 // Alternate of print_r
@@ -298,6 +303,8 @@ function generate_message($title, $message, $type)
  */
 function is_allowed($settings = null, $capability = null){
 
+	global $Users;
+
 	// By default every thing is allowed.
 	$state = true;
 
@@ -307,7 +314,7 @@ function is_allowed($settings = null, $capability = null){
 	}
 
 	// User Rights and capabilitirs
-	if ((isset($capability) && $capability == false)) {
+	if ((isset($capability) && !$Users->has_capabilities($capability))) {
 		$state = false;
 	}
 
