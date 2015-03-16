@@ -17,6 +17,7 @@ $roles = $Users->get_roles();
 // Page title
 $admin_title = 'Roles and Capabilities';
 
+$available_groups = $Users->get_capabilities_groups();
 
 // Header file
 include 'include/header.php';
@@ -78,7 +79,7 @@ include 'include/header.php';
 							<td>
 								<ul class="list-unstyled">
 									<?php foreach($role_object as $object_key => $object ): ?>
-									<li><?php echo $object_key; ?></li>
+									<li><?php echo $object_key; ?> (<?php echo count((array)$object); ?> / <?php echo count($available_groups[$object_key]) ?>)</li>
 								<?php endforeach; ?>
 								</ul>
 							</td>
