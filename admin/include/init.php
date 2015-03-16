@@ -16,6 +16,9 @@ include_once ABSPATH.'common/default_vars.php';
 // Prosedural functions
 include_once ABSPATH.'common/procedural_functions.php';
 
+// Redirect to login page if not logged in
+is_logged_in(true);
+
 // Load default capabilities list
 include_once ADMINABS.'builtins/capabilities.php';
 
