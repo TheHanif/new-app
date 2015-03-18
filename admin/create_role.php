@@ -4,7 +4,11 @@ include_once 'include/init.php';
 
 $ID = (isset($_GET['ID']))? $_GET['ID'] : NULL;
 
-if (isset($_POST['submit'])) {	
+// Get status for form submission
+$is_allowed = is_allowed(HAS_USERS_ROLE, array('Users'=>array('manage-roles')));
+
+// Proccess submited data
+if (isset($_POST['submit']) && $is_allowed) {	
 	$result = $Users->save_role($_POST['title'], $_POST['description'], $_POST['capabilities_groups'], $ID);
 	if($result > 0){
 		register_admin_message('Success', 'Your Role updated/created successfully.', 'success');
@@ -12,7 +16,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Select role from database to edit
-if (!is_null($ID)) {
+if (!is_null($ID) && $is_allowed) {
 	$role = $Users->get_roles($ID);
 	if ($Users->row_count() > 0) {
 		$role_object = json_decode($role->role_object);
