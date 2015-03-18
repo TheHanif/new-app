@@ -17,6 +17,54 @@ class Users extends Capabilities{
 
 	} // end of __construct()
 
+	public function save_user($data, $user_ID = NULL)
+	{
+		extract($data);
+
+		// User
+		$user_data = array();
+		$user_data['user_username'] = $username;
+
+		if (isset($password)) {
+
+			// -- Check for old password
+			// -- Match passwords
+			
+			$user_data['user_password'] = md5($password1);
+		}
+
+		// User data
+		if (isset($user_ID)) {
+			// Update old
+			$this->where('user_id', $user_ID);
+			$this->update($this->table_name, $user_data);
+		}else{
+			// Insert new
+			$this->insert($this->table_name, $user_data);
+			$new_user_id = $this->last_id();
+		}
+
+		$profile_data = array();
+		$profile_data['user_name'] = $name;
+		$profile_data['user_display_name'] = $display_name;
+		$profile_data['user_email'] = $email;
+		$profile_data['user_image'] = 'image';
+		$profile_data['user_role'] = $role;
+
+		// User Profile
+		if (isset($user_ID)) {
+			// Update old
+			$this->where('user_id', $user_ID);
+			$this->update($this->profile_table_name, $profile_data);
+		}else{
+			// Insert new
+			$profile_data['user_id'] = $new_user_id;
+			$this->insert($this->profile_table_name, $profile_data);
+		}
+
+		return $this->row_count();
+	}
+
 	// Get login status
 	public static function is_logged_in()
 	{	

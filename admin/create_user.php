@@ -7,6 +7,14 @@ $ID = (isset($_GET['ID']))? $_GET['ID'] : NULL;
 // Get status for form submission
 $is_allowed = is_allowed(HAS_USERS, array('Users'=>array('manage-users', 'create-users')));
 
+// Proccess submitted form data
+if (isset($_POST['']) && $is_allowed) {
+	$result = $Users->save_user($_POST, $ID);
+	if ($result > 0) {
+		register_admin_message('Success', 'User updated/created successfully.', 'success');
+	}
+}
+
 // Page title
 $admin_title = 'Create User';
 
@@ -56,14 +64,21 @@ include 'include/header.php';
 					<div class="panel-body">
 						<form action="<?php echo get_actual_url(false); ?>" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Name:</label>
+								<label class="col-sm-3 control-label"><?php __('Name') ?>:</label>
 								<div class="col-sm-3">
 									<input type="text" class="form-control" name="name">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Email</label>
+								<label class="col-sm-3 control-label"><?php __('Display name') ?>:</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" name="display_name">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><?php __('Email') ?>:</label>
 								<div class="col-sm-3">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
@@ -73,7 +88,7 @@ include 'include/header.php';
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Username</label>
+								<label class="col-sm-3 control-label"><?php __('Username') ?>:</label>
 								<div class="col-sm-3">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -81,7 +96,21 @@ include 'include/header.php';
 									</div>
 								</div>
 							</div>
-							
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><?php __('Profile photo') ?>:</label>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-btn">
+											<span class="btn btn-file">
+												<?php __('Browse'); ?> <input type="file">
+											</span>
+										</span>
+										<input type="text" class="form-control" readonly>
+									</div>
+								</div>
+							</div>
+
 							<hr class="separator">
 							
 							<div class="form-group">
@@ -89,34 +118,34 @@ include 'include/header.php';
 								<div class="col-sm-9">
 									<div class="tcb">
 										<label>
-											<input type="checkbox" class="tc tc-red">
-											<span class="labels"> Tick to Pickup Pasword</span>
+											<input type="checkbox" name="password" value="yes" class="tc tc-red">
+											<span class="labels"> <?php __('Tick to Pickup Pasword'); ?></span>
 										</label>
 									</div>
 								</div>
 							</div>
 								<div class="myPassword" style="display: none;">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Existing Password:</label>
+										<label class="col-sm-3 control-label"><?php __('Existing Password') ?>:</label>
 										<div class="col-sm-3">
 											<div class="input-group">
-												<input type="password" class="form-control" id="form-field-1">
+												<input type="password" name="old_password" class="form-control" id="form-field-1">
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label">New Password:</label>
+										<label class="col-sm-3 control-label"><?php __('New Password') ?>:</label>
 										<div class="col-sm-3">
 											<div class="input-group">
-												<input type="password" class="form-control" id="form-field-2">
+												<input type="password" name="password1" class="form-control" id="form-field-2">
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Confirm New Password:</label>
+										<label class="col-sm-3 control-label"><?php __('Confirm New Password'); ?>:</label>
 										<div class="col-sm-3">
 											<div class="input-group">
-												<input type="password" class="form-control" id="form-field-3">
+												<input type="password" name="password2" class="form-control" id="form-field-3">
 											</div>
 										</div>
 									</div>
@@ -125,12 +154,15 @@ include 'include/header.php';
 							<hr class="separator">
 							
 							<div class="form-group">
-								<label class="col-sm-3 control-label">User role:</label>
+								<label class="col-sm-3 control-label"><?php __('User role'); ?>:</label>
 								<div class="col-sm-3">
-									<select class="form-control selectpicker">
-										<option>Mustard</option>
-										<option>Ketchup</option>
-										<option>Relish</option>
+									<select name="role" class="form-control selectpicker">
+									<?php 
+										$roles = $Users->get_roles();
+										foreach ($roles as $role) {
+											?><option name="<?php echo $role->role_id; ?>" ><?php __($role->role_title); ?></option><?php
+										}
+									?>
 									</select>
 								</div>
 							</div>
@@ -138,8 +170,8 @@ include 'include/header.php';
 							<div class="form-actions">
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-9">
-										<button type="submit" class="btn btn-primary">Submit</button>
-										<button type="submit" class="btn btn-inverse">Cancel</button>
+										<button type="submit" class="btn btn-primary"><?php __('Submit'); ?></button>
+										<button type="submit" class="btn btn-inverse"><?php __('Cancel'); ?></button>
 									</div>
 								</div>
 							</div>
@@ -213,5 +245,28 @@ include 'include/header.php';
 		// for more document http://vitalets.github.io/x-editable/docs.html
 		
 		$('.datepicker').datepicker();			
+	});
+
+	// Custome File Input
+	$(document).on('change', '.btn-file :file', function() {
+		var input = $(this),
+		numFiles = input.get(0).files ? input.get(0).files.length : 1,
+		label = input.val().replace(/\\/g, 'http://qsthemes.com/').replace(/.*\//, '');
+		input.trigger('fileselect', [numFiles, label]);
+	});
+
+	$(document).ready( function() {
+		$('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+    
+			var input = $(this).parents('.input-group').find(':text'),
+			log = numFiles > 1 ? numFiles + ' files selected' : label;
+    
+			if( input.length ) {
+				input.val(log);
+			} else {
+				if( log ) alert(log);
+			}
+    
+		});
 	});
 </script>
