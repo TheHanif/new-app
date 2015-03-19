@@ -2,24 +2,32 @@
 // Initialization
 include_once 'include/init.php';
 
-$ID = (isset($_GET['ID']))? $_GET['ID'] : NULL;
+$ID = (isset($_GET['update']))? $Users->get_logged_id() : NULL;
+$ID = (isset($_GET['ID']))? $_GET['ID'] : $ID;
 
 // Get status for form submission
 $is_allowed = is_allowed(HAS_USERS, array('Users'=>array('manage-users', 'create-users')));
 
 // Proccess submitted form data
-if (isset($_POST['']) && $is_allowed) {
+if (isset($_POST['submit']) && $is_allowed) {
 	$result = $Users->save_user($_POST, $ID);
 	if ($result > 0) {
 		register_admin_message('Success', 'User updated/created successfully.', 'success');
 	}
 }
 
-// Page title
-$admin_title = 'Create User';
+if (isset($ID)) {
+	$Users->where('user_id', $ID);
+	$Users->select(array('user_username'=>'user_username'));
+	$Users->from($Users->table_name);
 
-// Variable to active select page
-// $page = get_script_name();
+	$user = $Users->result();
+	
+	$profile = $Users->get_profile($ID);
+}
+
+// Page title
+$admin_title = (isset($ID))? 'Edit profile' : 'Create User';
 
 // Header file
 include 'include/header.php';
@@ -66,14 +74,14 @@ include 'include/header.php';
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><?php __('Name') ?>:</label>
 								<div class="col-sm-3">
-									<input type="text" class="form-control" name="name">
+									<input type="text" class="form-control" value="<?php echo (isset($ID))? $profile->user_name : '' ?>" name="name">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><?php __('Display name') ?>:</label>
 								<div class="col-sm-3">
-									<input type="text" class="form-control" name="display_name">
+									<input type="text" class="form-control" value="<?php echo (isset($ID))? $profile->user_display_name : '' ?>" name="display_name">
 								</div>
 							</div>
 
@@ -82,7 +90,7 @@ include 'include/header.php';
 								<div class="col-sm-3">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-										<input type="email" class="form-control" name="email">
+										<input type="email" class="form-control" value="<?php echo (isset($ID))? $profile->user_email : '' ?>" name="email">
 									</div>
 								</div>
 							</div>
@@ -92,7 +100,7 @@ include 'include/header.php';
 								<div class="col-sm-3">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
-										<input type="username" class="form-control" name="username">
+										<input type="text" <?php echo (isset($ID))? 'disabled' : ''; ?> value="<?php echo (isset($ID))? $user->user_username : '' ?>" class="form-control" name="username">
 									</div>
 								</div>
 							</div>
@@ -112,7 +120,7 @@ include 'include/header.php';
 							</div>
 
 							<hr class="separator">
-							
+							<?php if(isset($ID)): ?>
 							<div class="form-group">
 								<label class="col-sm-3 control-label"></label>
 								<div class="col-sm-9">
@@ -124,7 +132,11 @@ include 'include/header.php';
 									</div>
 								</div>
 							</div>
-								<div class="myPassword" style="display: none;">
+							<?php else: ?>
+								<input type="hidden" name="password" value="yes" class="tc tc-red">
+							<?php endif; ?>
+								<div class="myPassword" style="<?php echo (isset($ID))? 'display: none;' : ''; ?>">
+									<?php if(isset($_GET['update'])): ?>
 									<div class="form-group">
 										<label class="col-sm-3 control-label"><?php __('Existing Password') ?>:</label>
 										<div class="col-sm-3">
@@ -133,6 +145,7 @@ include 'include/header.php';
 											</div>
 										</div>
 									</div>
+									<?php endif; ?>
 									<div class="form-group">
 										<label class="col-sm-3 control-label"><?php __('New Password') ?>:</label>
 										<div class="col-sm-3">
@@ -160,7 +173,7 @@ include 'include/header.php';
 									<?php 
 										$roles = $Users->get_roles();
 										foreach ($roles as $role) {
-											?><option name="<?php echo $role->role_id; ?>" ><?php __($role->role_title); ?></option><?php
+											?><option value="<?php echo $role->role_id; ?>" ><?php __($role->role_title); ?></option><?php
 										}
 									?>
 									</select>
@@ -170,8 +183,8 @@ include 'include/header.php';
 							<div class="form-actions">
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-9">
-										<button type="submit" class="btn btn-primary"><?php __('Submit'); ?></button>
-										<button type="submit" class="btn btn-inverse"><?php __('Cancel'); ?></button>
+										<button type="submit" name="submit" class="btn btn-primary"><?php __('Submit'); ?></button>
+										<button type="reset" class="btn btn-inverse"><?php __('Reset'); ?></button>
 									</div>
 								</div>
 							</div>

@@ -22,7 +22,7 @@ class Database {
     private $_action;
     private $_limit;
     private $_table;
-    private $_data;
+    private $_data = array();
     private $_joins = array();
 
     /**
@@ -95,10 +95,11 @@ class Database {
             $this->_where = array();
             $this->_select = array();
             $this->_data = array();
+            // $this->_query = '';
             // unset($this->_action, $this->_where, $this->_limit, $this->_table, $this->_select, $this->_joins);
         } catch (PDOException $e) {
             $er = $e->errorInfo;
-            echo '<p style="font-family:arial; background:#F00; color:#FFF; padding:5px;">ERROR: ' . $er[2] . '</p>';
+            echo '<p style="font-family:arial; background:#F00; position:absolute; z-index:10000; color:#FFF; padding:5px;">ERROR: ' . $er[2] . '</p>';
         }
     }
 

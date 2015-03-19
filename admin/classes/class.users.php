@@ -1,7 +1,7 @@
 <?php
 class Users extends Capabilities{
 
-	private $table_name;
+	public $table_name;
 	private $profile_table_name;
 
 	public function __construct()
@@ -17,18 +17,56 @@ class Users extends Capabilities{
 
 	} // end of __construct()
 
+	/**
+	 * Delete user
+	 */
+	public function delete_user($user_id)
+	{
+		$this->where('user_id', $user_id);
+		$this->delete($this->profile_table_name,1);
+
+		if($this->row_count() > 0){
+			$this->where('user_id', $user_id);
+			$this->delete($this->table_name,1);
+		}
+
+		return $this->row_count();
+	}
+
+	/**
+	 * Get all users
+	 */
+	public function get_users()
+	{
+		$this->from($this->table_name);
+		return $this->all_results();
+	}
+
 	public function save_user($data, $user_ID = NULL)
 	{
 		extract($data);
 
 		// User
 		$user_data = array();
-		$user_data['user_username'] = $username;
 
 		if (isset($password)) {
+			// Check for old password
+			if (isset($user_ID) && isset($old_password)) {
+				$this->where('user_password', md5($old_password));
+				$this->where('user_id', $user_ID);
+				$this->select(array('user_id'=>'user_id'));
+				$this->from($this->table_name);
+				if ($this->row_count() <= 0){
+					register_admin_message('Incorrect Password', 'Please enter valid existing password.', 'danger');
+					return false;
+				}
+			}
 
-			// -- Check for old password
-			// -- Match passwords
+			// Match passwords
+			if ($password1 != $password2) {
+				register_admin_message('Password Mismatch', 'New password and confirm new password does not match.', 'danger');
+				return false;
+			}
 			
 			$user_data['user_password'] = md5($password1);
 		}
@@ -36,10 +74,13 @@ class Users extends Capabilities{
 		// User data
 		if (isset($user_ID)) {
 			// Update old
-			$this->where('user_id', $user_ID);
-			$this->update($this->table_name, $user_data);
+			if (isset($password)) {
+				$this->where('user_id', $user_ID);
+				$this->update($this->table_name, $user_data);
+			}
 		}else{
 			// Insert new
+			$user_data['user_username'] = $username;
 			$this->insert($this->table_name, $user_data);
 			$new_user_id = $this->last_id();
 		}
@@ -62,7 +103,7 @@ class Users extends Capabilities{
 			$this->insert($this->profile_table_name, $profile_data);
 		}
 
-		return $this->row_count();
+		return 1;
 	}
 
 	// Get login status
