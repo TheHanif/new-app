@@ -27,8 +27,8 @@ if (isset($_POST['submit'])) {
 if (is_logged_in(false)) {
 
   // Redirection previous URL
-  if (isset($_GET['URL'])) {
-    header('location:'.urldecode($_GET['URL']));
+  if (isset($_GET['return'])) {
+    header('location:'.urldecode($_GET['return']));
     exit;
   }
 
@@ -54,7 +54,7 @@ if (is_logged_in(false)) {
   <section class="container">
     <div class="login">
       <h1><?php __('Login'); ?></h1>
-      <form method="post" action="login.php<?php echo (isset($_GET['URL']))? '?URL='.urlencode($_GET['URL']) : ''; ?>">
+      <form method="post" action="<?php echo get_actual_url(false); ?>">
         <p><input type="text" name="login" value="<?php echo (isset($_POST['login']))? $_POST['login'] : ''; ?>" placeholder="<?php __('Username'); ?>"></p>
         <p><input type="password" name="password" value="<?php echo (isset($_POST['password']))? $_POST['password'] : ''; ?>" placeholder="<?php __('Password'); ?>"></p>
         

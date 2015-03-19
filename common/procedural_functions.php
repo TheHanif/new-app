@@ -59,7 +59,7 @@ function is_logged_in($redirect = false)
 	// $URL = (isset($_GET['URL']))? urlencode($_GET['URL']) : get_actual_url();
 
 	if (!$status && $redirect) {
-		header("location:login.php?URL=".get_actual_url());
+		header("location:login.php?return=".get_actual_url());
 	}
 
 	return $status;
