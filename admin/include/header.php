@@ -86,23 +86,37 @@ is_logged_in(true);
 									</a>
 								</li>
 								<!--Speech Icon-->
-								<!--signout Icon-->
-								<li class="dropdown pull-right">
-									<a href="login.php?logout" class="signout-button">
-										<i class="fa fa-sign-out"></i>
-									</a>
-								</li>
-								<!--signout Icon-->
+								
 								<li class="dropdown user-box">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 										<img class="img-circle" src="assets/images/user.jpg" alt=""> <span class="user-info">John Smith</span> <b class="caret"></b>
 									</a>
 									<ul class="dropdown-menu dropdown-user">
 										<li>
-											<a href="profile.html">
-												<i class="fa fa-user"></i>My Profile
+											<a href="create_user.php?update=profile">
+												<i class="fa fa-user"></i> <?php __('Edit Profile'); ?>
 											</a>
 										</li>
+										<li>
+												<a href="#">
+													<i class="fa fa-envelope"></i> My Messages
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													<i class="fa fa-tasks"></i> My Tasks
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													<i class="fa fa-gear"></i> Settings
+												</a>
+											</li>											
+											<li>
+												<a href="login.php?logout">
+													<i class="fa fa-power-off"></i> Logout
+												</a>
+											</li>
 									</ul>
 								</li>
 								<!--Search Box-->

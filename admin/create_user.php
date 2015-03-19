@@ -51,7 +51,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php __($admin_title); ?> <span class="sub-title">sub title</span></h1>								
+					<h1><?php __($admin_title); ?> <a href="users.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-arrow-left"></i> <?php __('Cancel') ?></a></h1>								
 				</div>
 
 				<?php get_messages(); ?>

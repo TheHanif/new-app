@@ -34,7 +34,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1 class='clearfix'><?php __($admin_title); ?> <?php if(is_allowed(HAS_USERS_ROLE, array('Users'=>array('manage-roles')))): ?> <a href="create_role.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> <?php __('New Role') ?></a><?php endif; ?></h1>
+					<h1 class='clearfix'><?php __($admin_title); ?> <?php if(is_allowed(HAS_USERS, array('Users'=>array('manage-users', 'create-users')))): ?> <a href="create_user.php" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> <?php __('New user') ?></a><?php endif; ?></h1>
 				</div>
 
 				<?php get_messages(); ?>
