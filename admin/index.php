@@ -5,9 +5,6 @@ include_once 'include/init.php';
 // Page title
 $admin_title = 'Dashboard';
 
-// Variable to active select page
-// $page = get_script_name();
-
 // Header file
 include 'include/header.php';
 ?>
