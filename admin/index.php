@@ -5,9 +5,6 @@ include_once 'include/init.php';
 // Page title
 $admin_title = 'Dashboard';
 
-// Variable to active select page
-// $page = get_script_name();
-
 // Header file
 include 'include/header.php';
 ?>
@@ -37,12 +34,8 @@ include 'include/header.php';
 		
 		<div class="row">
 			<div class="col-lg-12">
-			<?php print_f($admin_sidebar_navigation); ?>
-			<?php 
-			if (HAS_USERS) {
-				echo 1;
-			}
-			 ?>
+			<?php print_f($Users->get_profile()); ?>
+			
 			<!-- START YOUR CONTENT HERE -->
 				<p>This is a light-weight blank page, with minimum to none plugins loaded</p>
 			<!-- END YOUR CONTENT HERE -->
