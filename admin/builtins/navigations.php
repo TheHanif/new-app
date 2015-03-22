@@ -6,6 +6,9 @@
 // Dashboard
 add_navigation_item('dashboard', 'Dashboard', 'dashboard', 'index.php');
 
+// Media
+add_navigation_item('media', 'Media', 'camera', 'media.php', array('media_upload.php', 'media_edit.php'));
+
 // Users
 add_navigation_item('users', 'Users', 'users', '#', array(), NULL, HAS_USERS, array('Users'=>array('manage-users')));
 

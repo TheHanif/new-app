@@ -1,14 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.6
+-- version 3.4.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 09, 2015 at 02:08 PM
--- Server version: 5.5.33
--- PHP Version: 5.3.27
+-- Generation Time: Mar 22, 2015 at 09:10 PM
+-- Server version: 5.5.20
+-- PHP Version: 5.3.9
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `new_app`
@@ -17,23 +23,52 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `objects`
+--
+
+CREATE TABLE IF NOT EXISTS `objects` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(256) NOT NULL,
+  `content` longtext NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `mimetype` varchar(16) NOT NULL,
+  `type` varchar(16) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `objects`
+--
+
+INSERT INTO `objects` (`ID`, `title`, `content`, `name`, `mimetype`, `type`, `ts`) VALUES
+(1, '', '', 'signin-bg-1.jpg', 'image/jpeg', 'media', '2015-03-22 21:09:15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `settings`
 --
 
-CREATE TABLE `settings` (
+CREATE TABLE IF NOT EXISTS `settings` (
   `setting_id` int(11) NOT NULL AUTO_INCREMENT,
   `setting_name` varchar(32) NOT NULL,
   `setting_value` longtext NOT NULL,
   `setting_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`setting_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`setting_id`, `setting_name`, `setting_value`, `setting_ts`) VALUES
-(1, 'language', 'en-US', '2015-03-08 08:07:49');
+(1, 'language', 'en-US', '2015-03-08 08:07:49'),
+(36, 'media', '{"thumbnail":{"w":"150","h":"150","c":"1"},"small":{"w":"300","h":"250"},"medium":{"w":"450","h":"350"},"large":{"w":"700","h":"600"}}', '2015-03-22 08:52:34'),
+(37, 'site_title', 'Test title', '2015-03-22 08:56:06'),
+(38, 'site_description', 'Test desctiotion', '2015-03-22 08:58:37'),
+(39, 'site_url', 'google.com', '2015-03-22 08:58:37'),
+(40, 'site_email', 'hanig@hanif.com', '2015-03-22 08:58:37');
 
 -- --------------------------------------------------------
 
@@ -41,7 +76,7 @@ INSERT INTO `settings` (`setting_id`, `setting_name`, `setting_value`, `setting_
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_username` varchar(32) NOT NULL,
   `user_password` varchar(256) NOT NULL,
@@ -62,7 +97,7 @@ INSERT INTO `users` (`user_id`, `user_username`, `user_password`, `user_ts`) VAL
 -- Table structure for table `user_profiles`
 --
 
-CREATE TABLE `user_profiles` (
+CREATE TABLE IF NOT EXISTS `user_profiles` (
   `user_profile_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `user_name` varchar(128) NOT NULL,
@@ -71,14 +106,14 @@ CREATE TABLE `user_profiles` (
   `user_image` varchar(128) NOT NULL,
   `user_role` int(11) NOT NULL,
   PRIMARY KEY (`user_profile_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `user_profiles`
 --
 
 INSERT INTO `user_profiles` (`user_profile_id`, `user_id`, `user_name`, `user_display_name`, `user_email`, `user_image`, `user_role`) VALUES
-(1, 1, 'Muhammad Hanif', 'The Hanif', 'thehanif@msn.com', '', 0);
+(3, 1, 'Muhammd Hanif', 'Muhammad Hanif', 'hanif@imagiacian.com', 'image', 2);
 
 -- --------------------------------------------------------
 
@@ -86,11 +121,22 @@ INSERT INTO `user_profiles` (`user_profile_id`, `user_id`, `user_name`, `user_di
 -- Table structure for table `user_roles`
 --
 
-CREATE TABLE `user_roles` (
+CREATE TABLE IF NOT EXISTS `user_roles` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_title` varchar(32) NOT NULL,
   `role_description` varchar(250) NOT NULL,
   `role_object` longtext NOT NULL,
   `role_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`role_id`, `role_title`, `role_description`, `role_object`, `role_ts`) VALUES
+(2, 'Administrator', 'This role has all the capabilities.', '{"Site":{"manage-pages":"1","create-pages":"1","publish-pages":"1","edit-pages":"1","delete-pages":"1","manage-themes":"1"},"Blog":{"manage-blog":"1","create-posts":"1","edit-posts":"1","publish-posts":"1","delete-posts":"1","manage-comments":"1"},"Catalog":{"manage-catalog":"1","add-products":"1","edit-products":"1","delete-products":"1","manage-reviews":"1","manage-payment-methods":"1","manage-shipping-methods":"1","manage-orders":"1","edit-orders":"1","delete-orders":"1","manage-customers":"1"},"Users":{"manage-users":"1","create-users":"1","delete-users":"1","manage-roles":"1"},"Plugins":{"manage-plugins":"1"},"Settings":{"manage-settings":"1"}}', '2015-03-14 16:53:29');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -193,6 +193,8 @@ include 'include/header.php';
 														</div>
 													</div><!-- height -->
 												</div>
+
+												
 											</div><!-- column -->
 
 										</div><!-- // small -->
@@ -221,6 +223,7 @@ include 'include/header.php';
 														</div>
 													</div><!-- height -->
 												</div>
+												
 											</div><!-- column -->
 
 										</div><!-- // Medium -->
@@ -249,6 +252,7 @@ include 'include/header.php';
 														</div>
 													</div><!-- height -->
 												</div>
+												
 											</div><!-- column -->
 
 										</div><!-- // Large -->
