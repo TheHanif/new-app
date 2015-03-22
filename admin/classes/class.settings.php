@@ -1,7 +1,7 @@
 <?php
 class Settings extends Database{
 
-	private $settings;
+	public $settings;
 	private $table_name;
 
 	public function __construct()
@@ -15,7 +15,7 @@ class Settings extends Database{
 	/**
 	 * Get saved settings from database
 	 */
-	private function select_all_settings()
+	public function select_all_settings()
 	{
 
 		$columns = array();
@@ -60,6 +60,10 @@ class Settings extends Database{
 	 */
 	public function set_setting($name, $value)
 	{
+		if (empty($value) || $value == '') {
+			return;
+		}
+
 		if (is_array($value)) {
 			$value = json_encode($value);
 		}
@@ -78,6 +82,10 @@ class Settings extends Database{
 
 		// Reload all settings
 		$this->select_all_settings();
+
+		if ($this->row_count() > 0) {
+			return $this->row_count();
+		}
 	}
 
 	/**
