@@ -36,7 +36,11 @@ is_logged_in(true);
     <script src="assets/js/html5shiv.js"></script>
     <script src="assets/js/respond.min.js"></script>
     <![endif]-->
-	
+	<style>
+	.navbar-brand{
+		padding: 6px;
+	}
+	</style>
   </head>
 
   <body>
@@ -51,7 +55,7 @@ is_logged_in(true);
 						</button>
 						<div class="navbar-brand">
 							<a href="index.html">
-								<img src="assets/images/logo.png" alt="logo" class="img-responsive">
+								<img src="assets/images/main-logo.png" alt="logo" class="img-responsive">
 							</a>
 						</div>
 					</div>
