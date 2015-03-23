@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2015 at 09:10 PM
+-- Generation Time: Mar 23, 2015 at 01:48 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `new_app`
@@ -30,19 +24,13 @@ CREATE TABLE IF NOT EXISTS `objects` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(256) NOT NULL,
   `content` longtext NOT NULL,
+  `excerpt` longtext NOT NULL,
   `name` varchar(256) NOT NULL,
   `mimetype` varchar(16) NOT NULL,
   `type` varchar(16) NOT NULL,
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `objects`
---
-
-INSERT INTO `objects` (`ID`, `title`, `content`, `name`, `mimetype`, `type`, `ts`) VALUES
-(1, '', '', 'signin-bg-1.jpg', 'image/jpeg', 'media', '2015-03-22 21:09:15');
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 -- --------------------------------------------------------
 
@@ -64,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 
 INSERT INTO `settings` (`setting_id`, `setting_name`, `setting_value`, `setting_ts`) VALUES
 (1, 'language', 'en-US', '2015-03-08 08:07:49'),
-(36, 'media', '{"thumbnail":{"w":"150","h":"150","c":"1"},"small":{"w":"300","h":"250"},"medium":{"w":"450","h":"350"},"large":{"w":"700","h":"600"}}', '2015-03-22 08:52:34'),
+(36, 'media', '{"thumbnail":{"w":"150","h":"150","c":"1"},"small":{"w":"300","h":"250"},"medium":{"w":"400","h":"350"},"large":{"w":"700","h":"700"}}', '2015-03-22 08:52:34'),
 (37, 'site_title', 'Test title', '2015-03-22 08:56:06'),
 (38, 'site_description', 'Test desctiotion', '2015-03-22 08:58:37'),
 (39, 'site_url', 'google.com', '2015-03-22 08:58:37'),
@@ -136,7 +124,3 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 INSERT INTO `user_roles` (`role_id`, `role_title`, `role_description`, `role_object`, `role_ts`) VALUES
 (2, 'Administrator', 'This role has all the capabilities.', '{"Site":{"manage-pages":"1","create-pages":"1","publish-pages":"1","edit-pages":"1","delete-pages":"1","manage-themes":"1"},"Blog":{"manage-blog":"1","create-posts":"1","edit-posts":"1","publish-posts":"1","delete-posts":"1","manage-comments":"1"},"Catalog":{"manage-catalog":"1","add-products":"1","edit-products":"1","delete-products":"1","manage-reviews":"1","manage-payment-methods":"1","manage-shipping-methods":"1","manage-orders":"1","edit-orders":"1","delete-orders":"1","manage-customers":"1"},"Users":{"manage-users":"1","create-users":"1","delete-users":"1","manage-roles":"1"},"Plugins":{"manage-plugins":"1"},"Settings":{"manage-settings":"1"}}', '2015-03-14 16:53:29');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -83,7 +83,7 @@ class Media extends Settings{
 	 */
 	public function get_media($ID = NULL)
 	{
-		$this->select(array('ID'=>'ID', 'title'=>'title', 'name'=>'file', 'ts'=>'date', 'mimetype'=>'type'));
+		$this->select(array('ID'=>'ID', 'title'=>'title', 'excerpt'=>'caption', 'content'=>'description', 'name'=>'file', 'ts'=>'date', 'mimetype'=>'type'));
 
 		if (isset($ID)) {
 			$this->where('ID', $ID);
@@ -131,9 +131,20 @@ class Media extends Settings{
 	{
 		if (isset($media)) {
 			$media['type'] = 'media';
-
 			$this->insert($this->table_name, $media);
 		} // end media
+
+		if (isset($meta) && isset($ID)) {
+			$data = array();
+			$data['title'] = $meta['title'];
+			$data['excerpt'] = $meta['caption'];
+			$data['content'] = $meta['description'];
+
+			$this->where('ID', $ID);
+			$this->update($this->table_name, $data);
+
+			return $this->row_count();
+		}
 
 	} // end of save_media
 
