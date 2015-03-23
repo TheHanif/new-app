@@ -18,7 +18,8 @@ if (isset($_POST['submit'])) {
 			$status = 0;
 		}
 	}
-
+header('location:media.php');
+exit;
 	if ($status == 0) {
 		register_admin_message('Error uploading', 'Some of your file are not uploaded', 'danger');
 	}

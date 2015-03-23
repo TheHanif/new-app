@@ -13,13 +13,87 @@ class Media extends Settings{
 
 		$this->dimentions = json_decode($this->get_settings('media'));
 
-		$this->upload_path = ABSPATH."contents/uploads/".date( 'Y/m/d/');
+		$this->upload_path = ABSPATH."contents/uploads/".date('Y/m/d/');
 
 		if (!file_exists($this->upload_path)) {
 			mkdir($this->upload_path, 0777, true);
 		}
 	
 	} // end of __construct()
+
+	/**
+	 * Delete media by ID
+	 */
+	public function delete_media($ID)
+	{	
+		if ($this->delete_media_files($ID)) {
+		
+			$this->where('ID', $ID);
+			$this->delete($this->table_name,1);
+
+			return $this->row_count();
+		}
+		
+	} // end of delete_media()
+
+	/**
+	 * Delete media file by ID
+	 */
+	public function delete_media_files($ID)
+	{
+		$media = $this->get_media($ID);
+
+		// if media exists in db
+		if ($this->row_count() <= 0) {
+			return;
+		}
+
+		$media = $media[0];
+
+		$file_directory = ABSPATH."contents/uploads/".$this->_date('Y/m/d/', $media->date);
+
+		$file = $file_directory.$media->file;
+
+		// Delete if file exists
+		if (file_exists($file)) {
+			unlink($file);
+
+			// if image, delete all croped images
+			if(strpos($media->type,"image") !== false){
+				$files = array();
+				$files[] = str_replace('.', '-thumbnail.', $file);
+				$files[] = str_replace('.', '-small.', $file);
+				$files[] = str_replace('.', '-medium.', $file);
+				$files[] = str_replace('.', '-large.', $file);
+
+				foreach ($files as $file) {
+					if (file_exists($file)) {
+						unlink($file);
+					}
+				}
+			} // end of croped images
+
+			return true;
+		}
+
+	} // end of delete_media_files()
+
+	/**
+	 * Get media
+	 */
+	public function get_media($ID = NULL)
+	{
+		$this->select(array('ID'=>'ID', 'title'=>'title', 'name'=>'file', 'ts'=>'date', 'mimetype'=>'type'));
+
+		if (isset($ID)) {
+			$this->where('ID', $ID);
+		}
+
+		$this->from($this->table_name);
+		if ($this->row_count() > 0) {
+			return $this->all_results();
+		}
+	} // end get_media
 
 	public function upload_media($media)
 	{
@@ -68,7 +142,7 @@ class Media extends Settings{
 		foreach ($this->dimentions as $key => $dimention) {
 			$width 	= $dimention->w;
 			$height  = $dimention->h;
-print_f($dimention);
+
 			$image = $upload_path . $name;
 			$newimage = $upload_path.str_replace('.', '-'.$key.'.', $name);
 			copy($image, $newimage);

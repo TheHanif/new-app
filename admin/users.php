@@ -5,7 +5,7 @@ include_once 'include/init.php';
 // Get status for form submission
 $is_allowed = is_allowed(HAS_USERS, array('Users'=>array('manage-users', 'delete-users')));
 
-// Delete role
+// Delete user
 if (isset($_GET['ID']) && $is_allowed) {
 	if ($Users->delete_user($_GET['ID']) > 0) {
 		register_admin_message('Success', 'User has been deleted successfully.', 'success');
