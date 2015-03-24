@@ -22,6 +22,92 @@ class Media extends Settings{
 	} // end of __construct()
 
 	/**
+	 * Scale and resize image
+	 * @param  int $ID media id
+	 * @param array $data form data
+	 * @return boolean
+	 */
+	public function scale($ID, $data)
+	{
+		// Get media info
+		$media = $this->get_media($ID);
+		$media = $media[0];
+
+		$folder = ABSPATH."contents/uploads/".$this->_date('Y/m/d/', $media->date);
+		$image = $folder.$media->file;
+
+		$this->backup_original($ID);
+
+
+		switch($media->type){
+			case 'image/jpeg';
+				$images_orig = imagecreatefromjpeg($image);
+			break;
+			case 'image/png';
+				$images_orig = imagecreatefrompng($image);
+			break;
+			case 'image/gif';
+				$images_orig = imagecreatefromgif($image);
+			break;
+		}
+
+		$photoX = ImagesX($images_orig);
+		$photoY = ImagesY($images_orig);
+
+		$images_fin = ImageCreateTrueColor($data['width'], $data['height']);
+
+		ImageCopyResampled($images_fin, $images_orig, 0, 0, 0, 0, $data['width']+1, $data['height']+1, $photoX, $photoY);
+			
+			switch($media->type){
+				case 'image/jpeg';
+					imagejpeg($images_fin,$image);
+				break;
+				case 'image/png';
+					imagepng($images_fin,$image);
+				break;
+				case 'image/gif';
+					imagegif($images_fin,$image);
+				break;
+			}
+		
+		ImageDestroy($images_orig);
+		ImageDestroy($images_fin);
+
+		// Update all sizes
+		if(isset($data['scale_all']))
+			$this->create_images($media->file, $folder);
+
+		return true;
+	}
+
+	/**
+	 * Backup original image if not exist original image
+	 * @param  int  $ID     media id
+	 * @param  boolean $backup force backup if file not exist. Pars false if just want to know is file exist
+	 * @return boolean
+	 */
+	public function backup_original($ID, $backup = true)
+	{
+		$media = $this->get_media($ID);
+
+		if($this->row_count() <= 0) 
+			return;
+
+		$media = $media[0];
+
+		$folder = ABSPATH."contents/uploads/".$this->_date('Y/m/d/', $media->date);
+		$image = $folder.$media->file;
+
+		$backup_image = str_replace('.', '-backup.', $image);
+		if(file_exists($backup_image)){
+			return true;
+		}elseif($backup && copy($image, $backup_image)){
+			return true;
+		}
+
+	} // end of backup_original()
+
+	/**
 	 * Delete media by ID
 	 */
 	public function delete_media($ID)
@@ -37,9 +123,34 @@ class Media extends Settings{
 	} // end of delete_media()
 
 	/**
+	 * Delete all images, restore from backup_* file
+	 * @param  int $ID media id
+	 * @return boolean     
+	 */
+	public function restore_original($ID)
+	{
+		$media = $this->get_media($ID);
+		$media = $media[0];
+
+		$folder = ABSPATH."contents/uploads/".$this->_date('Y/m/d/', $media->date);
+		$image = $folder.$media->file;
+
+		if (file_exists(str_replace('.', '-backup.', $image))) {
+			
+			$this->delete_media_files($ID, false);
+			
+			rename(str_replace('.', '-backup.', $image), $image);
+
+			$this->create_images($media->file, $folder);
+
+			return true;
+		}
+	} // end of retore_original()
+
+	/**
 	 * Delete media file by ID
 	 */
-	public function delete_media_files($ID)
+	public function delete_media_files($ID, $delete_backup = true)
 	{
 		$media = $this->get_media($ID);
 
@@ -65,6 +176,9 @@ class Media extends Settings{
 				$files[] = str_replace('.', '-small.', $file);
 				$files[] = str_replace('.', '-medium.', $file);
 				$files[] = str_replace('.', '-large.', $file);
+
+				if($delete_backup)
+				$files[] = str_replace('.', '-backup.', $file);
 
 				foreach ($files as $file) {
 					if (file_exists($file)) {
@@ -127,6 +241,152 @@ class Media extends Settings{
 		return true;
 	} // end of upload_media()
 
+
+	public function crop($ID, $data)
+	{
+		$media = $this->get_media($ID);
+		$media = $media[0];
+
+		$folder = ABSPATH."contents/uploads/".$this->_date('Y/m/d/', $media->date);
+		$image = $folder.$media->file;
+
+		$this->backup_original($ID);
+
+		switch($media->type){
+			case 'image/jpeg';
+				$images_orig = imagecreatefromjpeg($image);
+			break;
+			case 'image/png';
+				$images_orig = imagecreatefrompng($image);
+			break;
+			case 'image/gif';
+				$images_orig = imagecreatefromgif($image);
+			break;
+		}
+
+		$width = ImagesX($images_orig);
+		$height = ImagesY($images_orig);
+
+		$pw = $data['iw'] / $width *100;
+		$ph = $data['ih'] / $height *100;
+
+		$spw = $w = $width/100*($data['w'] / $data['iw'] * 100);
+		$sph = $h = $height/100*($data['h'] / $data['ih'] * 100);
+
+		$x = $width/100*($data['x'] / $data['iw'] * 100);
+		$y = $height/100*($data['y'] / $data['ih'] * 100);
+
+		// Thumbnail only
+		if(isset($data['radio_crop']) && $data['radio_crop'] === 'thumbnail'){
+			$image = str_replace('.', '-thumbnail.', $image);
+			$w 	= $this->dimentions->thumbnail->w;
+			$h  = $this->dimentions->thumbnail->h;
+		}
+
+		$images_fin = ImageCreateTrueColor($w, $h);
+
+		ImageCopyResampled($images_fin, $images_orig, 0, 0, $x, $y, $w, $h, $spw, $sph);
+
+			
+		switch($media->type){
+			case 'image/jpeg';
+				imagejpeg($images_fin,$image);
+			break;
+			case 'image/png';
+				imagepng($images_fin,$image);
+			break;
+			case 'image/gif';
+				imagegif($images_fin,$image);
+			break;
+		}
+	
+		ImageDestroy($images_orig);
+		ImageDestroy($images_fin);
+
+
+		// Update all sizes
+		if(isset($data['radio_crop']) && $data['radio_crop'] === 'except')
+			$this->create_images($media->file, $folder, false);
+	}// end of crop()
+
+	/**
+	 * Flip or rotate image
+	 * @param  int $ID   media id
+	 * @param  arrat $data action
+	 * @return boolean
+	 */
+	public function flip_rotate($ID, $data)
+	{
+		$media = $this->get_media($ID);
+		$media = $media[0];
+
+		$folder = ABSPATH."contents/uploads/".$this->_date('Y/m/d/', $media->date);
+		$image = $folder.$media->file;
+
+		$this->backup_original($ID);
+
+		switch($media->type){
+			case 'image/jpeg';
+				$images_orig = imagecreatefromjpeg($image);
+			break;
+			case 'image/png';
+				$images_orig = imagecreatefrompng($image);
+			break;
+			case 'image/gif';
+				$images_orig = imagecreatefromgif($image);
+			break;
+		}
+
+		// Flip Image
+		if (isset($data['flip'])) {
+
+			$photoX = $v = ImagesX($images_orig);
+			$photoY = $h = ImagesY($images_orig);
+
+			$images_fin = ImageCreateTrueColor($photoX, $photoY);
+
+			if ($data['flip'] === 'v') {
+				// Flip Verticle
+				ImageCopyResampled($images_fin, $images_orig, 0, 0, 0, $photoY-1, $photoX, $photoY, $photoX, -$photoY);
+			}elseif ($data['flip'] === 'h') {
+				// Flip Horizontal
+				ImageCopyResampled($images_fin, $images_orig, 0, 0, $photoX-1, 0, $photoX, $photoY, -$photoX, $photoY);
+			}
+		}
+
+		// Rotate Image
+		if (isset($data['rotate'])) {
+			
+			if ($data['rotate'] === 'c') {
+				// Rotate clockwise
+				$degrees = -90;
+			} elseif($data['rotate'] === 'ac') {
+				// Rotate anti clockwise
+				$degrees = 90;
+			}
+			
+			$images_fin = imagerotate($images_orig, $degrees, 0);
+		}
+
+		switch($media->type){
+			case 'image/jpeg';
+				imagejpeg($images_fin,$image);
+			break;
+			case 'image/png';
+				imagepng($images_fin,$image);
+			break;
+			case 'image/gif';
+				imagegif($images_fin,$image);
+			break;
+		}
+
+		// Update all sizes
+		// if(isset($data['flip_all']))
+			$this->create_images($media->file, $folder);
+
+		return true;
+	} // end of flip_rotate()
+
 	public function save_media($media = NULL, $meta = NULL, $ID = NULL)
 	{
 		if (isset($media)) {
@@ -148,9 +408,12 @@ class Media extends Settings{
 
 	} // end of save_media
 
-	public function create_images($name, $upload_path = NULL)
+	public function create_images($name, $upload_path = NULL, $thumbnail = true)
 	{
 		foreach ($this->dimentions as $key => $dimention) {
+
+			if(!$thumbnail && $key == 'thumbnail') continue;
+
 			$width 	= $dimention->w;
 			$height  = $dimention->h;
 
