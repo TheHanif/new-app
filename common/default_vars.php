@@ -23,3 +23,6 @@ $messages = array();
 // Handled from generate_admin_menu() active page sections
 // If current requested page is active item in menu, all the settings and capabilities will verified
 $lock_page = true;
+
+// Registered posts
+$posts = array();
