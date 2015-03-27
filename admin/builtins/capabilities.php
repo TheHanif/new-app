@@ -13,12 +13,12 @@ $Users->register_capability('Site', 'Delete Pages');
 $Users->register_capability('Site', 'Manage Themes');
 
 // Blog
-$Users->register_capability('Blog', 'Manage Blog');
-$Users->register_capability('Blog', 'Create Posts');
-$Users->register_capability('Blog', 'Edit Posts');
-$Users->register_capability('Blog', 'Publish Posts');
-$Users->register_capability('Blog', 'Delete Posts');
-$Users->register_capability('Blog', 'Manage Comments');
+// $Users->register_capability('Blog', 'Manage Blog');
+// $Users->register_capability('Blog', 'Create Posts');
+// $Users->register_capability('Blog', 'Edit Posts');
+// $Users->register_capability('Blog', 'Publish Posts');
+// $Users->register_capability('Blog', 'Delete Posts');
+// $Users->register_capability('Blog', 'Manage Comments');
 
 // Catalog
 $Users->register_capability('Catalog', 'Manage catalog');

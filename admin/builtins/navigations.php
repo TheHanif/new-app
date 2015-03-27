@@ -9,7 +9,42 @@
 add_navigation_item('dashboard', 'Dashboard', 'dashboard', 'index.php');
 
 // Blog
-// add_navigation_item('blog', 'Blog', 'thumb-tack', '#', array(), NULL, HAS_BLOG, array('Blog'=>array('manage-blog')));
+$blog = array(
+		'id' 		=>	'blog'
+		,'name'	=> 'Blog'
+		,'meta'		=>	array(
+					'title' => 'Post'
+					,'single_title' => 'post'
+					,'pulural_title' => 'Posts'
+					,'icon' => 'thumb-tack'
+					)
+		,'category'	=> true
+		,'featured_image'=> true
+		,'tag'	=> true
+		,'template' => true
+		,'searchable'=> true
+	);
+
+register_post($blog); // end Blog
+
+// Blog
+$services = array(
+		'id' 		=>	'services'
+		,'name'	=> 'Services'
+		,'meta'		=>	array(
+					'title' => 'Service'
+					,'single_title' => 'service'
+					,'pulural_title' => 'services'
+					,'icon' => 'thumb-tack'
+					)
+		,'category'	=> true
+		,'featured_image'=> true
+		,'tag'	=> true
+		,'template' => true
+		,'searchable'=> true
+	);
+
+register_post($services); // end Blog
 
 // Media
 add_navigation_item('media', 'Media', 'camera', 'media.php', array('media_upload.php', 'media_edit.php'));
@@ -24,3 +59,5 @@ add_navigation_item('user_role', 'User roles', 'check', 'user_roles.php', array(
 
 // Settings
 add_navigation_item('settings', 'Settings', 'cogs', 'settings.php', array(), NULL, NULL, array('Settings'=>array('manage-settings')));
+
+// print_f($Users->user_capabilities, 1);

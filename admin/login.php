@@ -7,8 +7,7 @@ define('ADMINABS', ABSPATH.'admin/');
 define('CMSNAME', 'New App');
 
 include_once ABSPATH.'include/class.database.php';
-include_once ABSPATH.'common/procedural_functions.php';
-
+include_once ADMINABS.'include/procedural_functions.php';
 
 // Logout
 if (isset($_GET['logout'])) {
