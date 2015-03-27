@@ -30,22 +30,3 @@ include_once ADMINABS.'builtins/capabilities.php';
 
 // Load Built-in features
 include_once ADMINABS.'builtins/navigations.php';
-
-$args = array(
-		'id' 		=>	'blog'
-		,'title'	=> 'Blog'
-		,'meta'		=>	array(
-					'title' => 'Post'
-					,'single_title' => 'post'
-					,'pulural_title' => 'Posts'
-					)
-		,'cattegory'	=> true
-		,'featured_image'=> true
-		,'tag'	=> true
-		,'template' => true
-		,'searchable'=> true
-	);
-
-	register_post($args);
-
-	print_f($posts,1);

@@ -132,11 +132,12 @@ class Capabilities extends Database{
 	/**
 	* Add new capabilty
 	* @param  string $group
+	* @param  boolean $group
 	* @param  string $key
 	*/
-	public function register_capability($group, $key)
+	public function register_capability($group, $key, $force = false)
 	{
-		if (isset($this->capabilities_group_container[$group])) {
+		if (isset($this->capabilities_group_container[$group]) || $force) {
 			$this->capabilities_group_container[$group][str_replace(' ', '-', strtolower($key))] = $key;
 		}else{
 			register_admin_message('Capabilty not registered', 'Invalid capabilty group.', 'danger');
