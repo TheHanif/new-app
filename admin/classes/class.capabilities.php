@@ -15,7 +15,7 @@ class Capabilities extends Database{
 
 		// prepare capabilities group
 		$this->capabilities_group_container['Site'] 		= array(); // Manage pages
-		$this->capabilities_group_container['Blog'] 		= array(); // Manage Blog
+		// $this->capabilities_group_container['Blog'] 		= array(); // Manage Blog
 		$this->capabilities_group_container['Catalog'] 		= array(); // Manage Catalog
 		$this->capabilities_group_container['Users'] 		= array(); // Manage Users
 		$this->capabilities_group_container['Plugins'] 		= array(); // Manage Plugins

@@ -9,23 +9,25 @@
 add_navigation_item('dashboard', 'Dashboard', 'dashboard', 'index.php');
 
 // Blog
-$blog = array(
-		'id' 		=>	'blog'
-		,'name'	=> 'Blog'
-		,'meta'		=>	array(
-					'title' => 'Post'
-					,'single_title' => 'post'
-					,'pulural_title' => 'Posts'
-					,'icon' => 'thumb-tack'
-					)
-		,'category'	=> true
-		,'featured_image'=> true
-		,'tag'	=> true
-		,'template' => true
-		,'searchable'=> true
-	);
+if (defined('HAS_BLOG') && HAS_BLOG == true) {
+	$blog = array(
+			'id' 		=>	'blog'
+			,'name'	=> 'Blog'
+			,'meta'		=>	array(
+						'title' => 'Post'
+						,'single_title' => 'post'
+						,'pulural_title' => 'posts'
+						,'icon' => 'thumb-tack'
+						)
+			,'category'	=> true
+			,'featured_image'=> true
+			,'tag'	=> true
+			,'template' => true
+			,'searchable'=> true
+		);
 
-register_post($blog); // end Blog
+	register_post($blog); // end Blog
+} // end blog
 
 // Blog
 $services = array(
