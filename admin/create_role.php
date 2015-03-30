@@ -81,7 +81,7 @@ include 'include/header.php';
 							<div class="form-horizontal">
 							<?php foreach($capabilities_groups as $capabilities_group_name => $capabilities_group): ?>
 								<div class="form-group">
-									<label class="col-sm-3 control-label" style="margin-top:-5px"><?php __($capabilities_group_name); ?></label>
+									<label class="col-sm-3 control-label" style="margin-top:-5px"><?php __(ucfirst($capabilities_group_name)); ?></label>
 									<div class="col-sm-9">
 									<?php foreach($capabilities_group as $capability_key => $capability_name): ?>
 										<div class="tcb">
