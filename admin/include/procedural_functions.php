@@ -75,9 +75,20 @@ function get_script_name()
 	return end(explode('/', rtrim($_SERVER['SCRIPT_NAME'], '.php')));
 }
 
-function is_page_active($page, $echo = true)
+function is_page_active($page, $id = NULL, $echo = true)
 {	
-	if ((is_array($page) && in_array(get_script_name(), $page)) || ($page == get_script_name())) {
+	$state = true;
+
+	if (isset($id) && get_query_string()) {
+		
+		 $query_strings = get_query_string();
+
+		if (isset($query_strings['type']) && !in_array($id, $query_strings)) {
+			$state = false;
+		}
+	}
+
+	if (((is_array($page) && in_array(get_script_name(), $page)) || ($page == get_script_name())) && $state) {
 		if ($echo) {
 			echo "active";
 		}else{
@@ -93,21 +104,21 @@ function generate_admin_menu()
 {
 	global $admin_sidebar_navigation;
 
-	foreach ($admin_sidebar_navigation as $key => $data) {
+	foreach ($admin_sidebar_navigation as $id => $data) {
 		$parent_active = '';
 		if (strpos($data['file'], '.')) {
 			$file = array_shift(array_slice(explode('.', $data['file']), 0, 1));
 
 			$data['child_files'][] = $file;
-			$parent_active = is_page_active($data['child_files'], false);
+			$parent_active = is_page_active($data['child_files'], $id, false);
 
 			// Go to unlock the page
-			unlock_page(is_page_active($data['child_files'], false), $data['has_settings'], $data['has_capability']);
+			unlock_page(is_page_active($data['child_files'], $id, false), $data['has_settings'], $data['has_capability']);
 		}
 	?>
-		<li class="<?php echo (isset($data['submenu']))? check_submenu($data['submenu']) : ''; ?>">
+		<li class="<?php echo (isset($data['submenu']))? check_submenu($data['submenu'], $id) : ''; ?>">
 			<?php if (isset($data['submenu'])) {
-				echo '<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#'.$key.'">';
+				echo '<a href="javascript:;" data-parent="#side" data-toggle="collapse" class="accordion-toggle" data-target="#'.$id.'">';
 			}else{
 				?><a class="<?php echo $parent_active; ?>" href="<?php echo $data['file']; ?>"><?php
 				} ?>
@@ -116,7 +127,7 @@ function generate_admin_menu()
 			<?php // Get Submenu
 				if (isset($data['submenu'])) {
 					?>
-						<ul class="collapse nav" id="<?php echo $key; ?>">
+						<ul class="collapse nav" id="<?php echo $id; ?>">
 							<?php // Submenu loop
 								foreach ($data['submenu'] as $submenu_key => $submenu_data) {
 									$submenu_item_active = '';
@@ -124,10 +135,11 @@ function generate_admin_menu()
 										$file = array_shift(array_slice(explode('.', $submenu_data['file']), 0, 1));
 
 										$submenu_data['child_files'][] = $file;
-										$submenu_item_active = is_page_active($submenu_data['child_files'], false);
+										
+										$submenu_item_active = is_page_active($submenu_data['child_files'], $id, false);
 
 										// Go to unlock the page
-										unlock_page(is_page_active($submenu_data['child_files'], false), $submenu_data['has_settings'], $submenu_data['has_capability']);
+										unlock_page(is_page_active($submenu_data['child_files'], $id, false), $submenu_data['has_settings'], $submenu_data['has_capability']);
 									}
 									?>
 										<li>
@@ -179,7 +191,7 @@ function get_lock_status()
 /**
  * Get classes for submenus
  */
-function check_submenu($data)
+function check_submenu($data, $id = NULL)
 {
 	$open = '';
 	foreach ($data as $key => $value) {
@@ -188,7 +200,7 @@ function check_submenu($data)
 
 			$value['child_files'][] = $file;
 
-			if (is_page_active($value['child_files'], false)) {
+			if (is_page_active($value['child_files'], $id, false)) {
 				$open = 'open';
 			}
 		}

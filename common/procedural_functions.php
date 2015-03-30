@@ -69,3 +69,38 @@ function register_post($args = array()){
 
 } // end of register_post()
 // add_navigation_item($name, $title, $icon, $file, $child_files = array(), $parent = NULL, $settings = NULL, $capability = NULL)
+
+/**
+ * Get available query strings
+ * @return array
+ */
+function get_query_string()
+{
+	if (empty($_SERVER['QUERY_STRING'])) {
+		return;
+	}
+
+	$query_strings = $_SERVER['QUERY_STRING'];
+
+	// Create array if more then 1 query
+	if (strpos($query_strings, '&') != false) {
+		$query_strings = explode('&', $query_strings);
+	}
+
+	// Sub array
+	$params = array();
+
+	// Loop if more then 1 query
+	if (is_array($query_strings)) {
+		foreach ($query_strings as $value) {
+			$string_data = explode('=', $value);
+			$params[$string_data[0]] = $string_data[1];
+		}
+	}else{
+		// If 1 query
+		$string_data = explode('=', $query_strings);
+		$params[$string_data[0]] = $string_data[1];
+	}
+
+	return $params;
+}
