@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 23, 2015 at 01:48 PM
+-- Generation Time: Mar 30, 2015 at 07:16 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.9
 
@@ -13,6 +13,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `new_app`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE IF NOT EXISTS `categories` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(32) NOT NULL,
+  `category_slug` varchar(64) NOT NULL,
+  `category_description` longtext,
+  `category_media` int(11) DEFAULT NULL,
+  `category_parent` int(11) DEFAULT NULL,
+  `category_item_count` int(11) DEFAULT NULL,
+  `category_order` int(11) DEFAULT NULL,
+  `category_type` varchar(32) NOT NULL,
+  `category_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -30,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `objects` (
   `type` varchar(16) NOT NULL,
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 -- --------------------------------------------------------
 
@@ -123,4 +143,4 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 --
 
 INSERT INTO `user_roles` (`role_id`, `role_title`, `role_description`, `role_object`, `role_ts`) VALUES
-(2, 'Administrator', 'This role has all the capabilities.', '{"Site":{"manage-pages":"1","create-pages":"1","publish-pages":"1","edit-pages":"1","delete-pages":"1","manage-themes":"1"},"Blog":{"manage-blog":"1","create-posts":"1","edit-posts":"1","publish-posts":"1","delete-posts":"1","manage-comments":"1"},"Catalog":{"manage-catalog":"1","add-products":"1","edit-products":"1","delete-products":"1","manage-reviews":"1","manage-payment-methods":"1","manage-shipping-methods":"1","manage-orders":"1","edit-orders":"1","delete-orders":"1","manage-customers":"1"},"Users":{"manage-users":"1","create-users":"1","delete-users":"1","manage-roles":"1"},"Plugins":{"manage-plugins":"1"},"Settings":{"manage-settings":"1"}}', '2015-03-14 16:53:29');
+(2, 'Administrator', 'This role has all the capabilities.', '{"Site":{"manage-pages":"1","create-pages":"1","publish-pages":"1","edit-pages":"1","delete-pages":"1","manage-themes":"1"},"Catalog":{"manage-catalog":"1","add-products":"1","edit-products":"1","delete-products":"1","manage-reviews":"1","manage-payment-methods":"1","manage-shipping-methods":"1","manage-orders":"1","edit-orders":"1","delete-orders":"1","manage-customers":"1"},"Users":{"manage-users":"1","create-users":"1","delete-users":"1","manage-roles":"1"},"Plugins":{"manage-plugins":"1"},"Settings":{"manage-settings":"1"},"blog":{"manage":"1","create":"1"},"services":{"manage":"1","create":"1"}}', '2015-03-14 16:53:29');
