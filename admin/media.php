@@ -157,7 +157,7 @@ include 'include/header.php';
 			rel: 'colorbox',
 			reposition:true,
 			scalePhotos:true,
-			scrolling:false,
+			scrolling:true,
 			previous:'<i class="fa fa-arrow-left text-gray"></i>',
 			next:'<i class="fa fa-arrow-right text-gray"></i>',
 			close:'<i class="fa fa-times text-primary"></i>',
@@ -176,7 +176,7 @@ include 'include/header.php';
 			}
 		};
 
-			$('.tc-gallery [data-rel="colorbox"]').colorbox(colorbox_params); // for enable colorbox gallery style 1 
+
 			$('.thumbnail [data-rel="colorbox"]').colorbox(colorbox_params); // for enable gallery style 2
 		
 			$("#cboxLoadingGraphic").append("<i class='fa fa-spinner fa-spin'></i>");//let's add a custom loading icon for colorbox

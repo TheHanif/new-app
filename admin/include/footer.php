@@ -25,7 +25,8 @@
 	<script src="assets/js/plugins/pace/pace.min.js"></script>
 	
 	<!-- PAGE LEVEL PLUGINS JS -->
-	
+	<script src="assets/js/plugins/bootbox/bootbox.min.js"></script>
+
     <!-- Themes Core Scripts -->	
 	<script src="assets/js/main.js"></script>
 	
@@ -36,12 +37,18 @@
 	<script src="assets/js/plugins/bootstrap-wysihtml/wysihtml.min.js"></script>
 	<script src="assets/js/plugins/bootstrap-wysihtml/bootstrap-wysihtml.js"></script>
 	<script src="assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js"></script>
+	<script src="assets/js/plugins/colorBox/jquery.colorbox-min.js"></script>
+	<script src="assets/js/plugins/slimscroll/jquery.slimscroll.init.js"></script>
 	<script>
 		$(document).ready(function() {
-		// wysihtml editor
-		$('#editor').wysihtml5();		
-	});
+			// wysihtml editor
+			$('#editor').wysihtml5();
+		});
+
+
+		var SITEURL = '<?php echo SITEURL; ?>';
 	</script>
+	<script src="assets/js/media.js"></script>
 	<!-- initial page level scripts for examples -->	
   </body>
 </html>

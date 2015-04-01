@@ -79,8 +79,8 @@ include 'include/header.php';
 								<div class="col-sm-10">
 									<div class="input-group">
 										<span class="input-group-btn">
-											<span class="btn btn-file">
-												<?php __('Browse'); ?> <input type="file">
+											<span class="btn btn-file1 browse-media" data-media="true" data-preview="#preview" data-value="#image" data-output="id">
+												<?php __('Browse'); ?>
 											</span>
 										</span>
 										<input type="text" class="form-control" readonly>

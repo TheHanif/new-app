@@ -18,6 +18,8 @@ is_logged_in(true);
 	<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 	
 	<!-- PAGE LEVEL PLUGINS STYLES -->
+	<link rel="stylesheet" href="assets/css/plugins/colorBox/colorbox.css">
+
 	<!-- REQUIRE FOR SPEECH COMMANDS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/plugins/gritter/jquery.gritter.css" />	
 
@@ -39,6 +41,10 @@ is_logged_in(true);
 	<style>
 	.navbar-brand{
 		padding: 6px;
+	}
+
+	.bootbox-close-button{
+		margin-bottom: -11px;/*remove bottom margin of media browse*/
 	}
 	</style>
 	<link rel="stylesheet" href="assets/css/plugins/bootstrap-wysihtml/bootstrap-wysihtml5.css">
