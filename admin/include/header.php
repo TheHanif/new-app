@@ -41,6 +41,7 @@ is_logged_in(true);
 		padding: 6px;
 	}
 	</style>
+	<link rel="stylesheet" href="assets/css/plugins/bootstrap-wysihtml/bootstrap-wysihtml5.css">
   </head>
 
   <body>

@@ -33,6 +33,15 @@
 	<script src="assets/js/speech-commands.js"></script>
 	<script src="assets/js/plugins/gritter/jquery.gritter.min.js"></script>	
 	
+	<script src="assets/js/plugins/bootstrap-wysihtml/wysihtml.min.js"></script>
+	<script src="assets/js/plugins/bootstrap-wysihtml/bootstrap-wysihtml.js"></script>
+	<script src="assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		// wysihtml editor
+		$('#editor').wysihtml5();		
+	});
+	</script>
 	<!-- initial page level scripts for examples -->	
   </body>
 </html>

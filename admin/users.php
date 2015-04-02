@@ -63,11 +63,11 @@ include 'include/header.php';
 				<table class="table table-bordered table-hover tc-table">
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Username</th>
-							<th>Email</th>
-							<th class="hidden-xs">Date</th>
-							<th class="col-medium center">Action</th>
+							<th><?php __('Name'); ?></th>
+							<th><?php __('Username'); ?></th>
+							<th><?php __('Email'); ?></th>
+							<th class="hidden-xs"><?php __('Date'); ?></th>
+							<th class="col-medium center"><?php __('Action'); ?></th>
 						</tr>
 					</thead>
 					<tbody>

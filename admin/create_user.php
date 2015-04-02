@@ -33,12 +33,9 @@ $admin_title = (isset($ID))? 'Edit profile' : 'Create User';
 include 'include/header.php';
 ?>
 <!-- PAGE LEVEL PLUGINS STYLES -->
-<link href="assets/css/plugins/select2/select2.css" rel="stylesheet">
-<link href="assets/css/plugins/select2/select2.custom.min.css" rel="stylesheet">
 <link href="assets/css/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/plugins/bootstrap-wysihtml/bootstrap-wysihtml5.css">
 <link rel="stylesheet" href="assets/css/plugins/bootstrap-editable/bootstrap-editable.css">
-<link rel="stylesheet" href="assets/css/plugins/bootstrap-datepicker/datepicker.css">
 
 <!-- BEGIN MAIN PAGE CONTENT -->
 <div id="page-wrapper">
@@ -201,7 +198,6 @@ include 'include/header.php';
 <script src="assets/js/plugins/bootstrap-wysihtml/bootstrap-wysihtml.js"></script>
 <script src="assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js"></script>
 <script src="assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-<script src="assets/js/plugins/select2/select2.min.js"></script>
 <script src="assets/js/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 <!-- REQUIRE FOR SPEECH COMMANDS -->
 <script src="assets/js/speech-commands.js"></script>
@@ -257,7 +253,6 @@ include 'include/header.php';
 		
 		// for more document http://vitalets.github.io/x-editable/docs.html
 		
-		$('.datepicker').datepicker();			
 	});
 
 	// Custome File Input

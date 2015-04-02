@@ -101,7 +101,7 @@ include 'include/header.php';
 							<li class="thumbnail">
 								<div class="thumb-preview">
 									<div class="thumb-image">
-										<img src="<?php echo $thumbnail; ?>" alt="" style="width:160px; height: 120px;">
+										<img src="<?php echo $thumbnail; ?>" alt="" style="width:150px; height: 150px;">
 									</div>
 									<div class="gl-thumb-options">
 										<?php if(strpos($media->type,"image") !== false): ?>

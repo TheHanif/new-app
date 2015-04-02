@@ -56,7 +56,6 @@ $admin_title = 'Edit media';
 // Header file
 include 'include/header.php';
 ?>
-<link rel="stylesheet" href="assets/css/plugins/bootstrap-wysihtml/bootstrap-wysihtml5.css">
 <!-- BEGIN MAIN PAGE CONTENT -->
 <div id="page-wrapper">
 	<!-- BEGIN PAGE HEADING ROW -->
@@ -295,18 +294,13 @@ include 'include/header.php';
 	max-width: 100%;
 }
 </style>
-<script src="assets/js/plugins/bootstrap-wysihtml/wysihtml.min.js"></script>
-<script src="assets/js/plugins/bootstrap-wysihtml/bootstrap-wysihtml.js"></script>
-<script src="assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js"></script>
+
 <link rel="stylesheet" href="assets/css/jquery.Jcrop.min.css" type="text/css" />
 <script type="text/javascript" src="assets/js/jquery.Jcrop.min.js"></script>
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		// wysihtml editor
-		$('#editor').wysihtml5();		
-	});
+	
 
 	$('.flip-rotate').find('input').on('change', function(e) {
 		e.preventDefault();
