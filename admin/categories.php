@@ -78,12 +78,11 @@ include 'include/header.php';
 								<label class="col-sm-2 control-label"><?php __('Image'); ?></label>
 								<div class="col-sm-10">
 									<div class="input-group">
-										<span class="input-group-btn">
-											<span class="btn btn-file1 browse-media" data-media="true" data-preview="#preview" data-value="#image" data-output="id">
-												<?php __('Browse'); ?>
-											</span>
+										<div id="thumbnail"></div>
+										<span class="btn btn-file1 browse-media" data-media="false" data-preview="#preview" data-thumbnail="#thumbnail" data-value="#image" data-output="id">
+											<?php __('Browse'); ?>
 										</span>
-										<input type="text" class="form-control" readonly>
+										<input type="hidden" name="image" id="image" class="form-control">
 									</div>
 								</div>
 							</div>

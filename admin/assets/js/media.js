@@ -3,17 +3,73 @@ $(document).ready(function() {
 	$('.browse-media').each(function(index, el) {
 		$(this).click(function(e) {
 			e.preventDefault();
-			get_media($(el));
-			
+
+			var el = $(this);
+
+			if (el.data('media') == 'true') {
+				remove_media(el);
+			}else{
+				get_media(el);
+			}
+
 		});
 	}); // end of browse media
 });
 
-function insert_media(el){
-	console.log(el);
-}
 
-function get_media(el){
+// Remove inserted media
+function remove_media(browser){
+	// Selectors
+	var preview = browser.data('preview');
+	var thumbnail = browser.data('thumbnail');
+	var value = browser.data('value');
+
+	// Media value
+	$(value).val();
+
+	// Remove if any image already
+	$(preview).find('img').remove();
+	$(thumbnail).find('img').remove();
+
+	// Change browser text and set media true
+	browser.text(browser_text).data('media', 'false');
+
+} // end of remove_media
+
+
+// Insert selected media in form
+function insert_media(browser, media){
+	
+	// return if nothing selected
+	if(media.length == 0) return;
+
+	// Selectors
+	var preview = browser.data('preview');
+	var thumbnail = browser.data('thumbnail');
+	var value = browser.data('value');
+
+	// Media value
+	$(value).val(media.val());
+
+	// Remove if any image already
+	$(preview).find('img').remove();
+	$(thumbnail).find('img').remove();
+
+	// Thumbnail
+	$('<img>',{
+		src: media.data('thumbnail')
+	}).appendTo(thumbnail);
+
+	// Preview
+	$('<img>',{
+		src: media.data('preview')
+	}).appendTo(preview);
+
+	// Change browser text and set media true
+	browser.text(browser_remove).data('media', 'true');
+} // end of insert media
+
+function get_media(browser){
 	
 	$.ajax({
 		url: 'include/media_ajax.php',
@@ -39,7 +95,7 @@ function get_media(el){
 
 				var path = SITEURL+'contents/uploads/'+y+'/'+m+'/'+d+'/';
 			
-				if (el.data('output') == 'url') { value = path+media.file};
+				if (browser.data('output') == 'url') { value = path+media.file};
 
 				gallery += '<li class="thumbnail">'+
 					'<div class="thumb-preview">'+
@@ -52,8 +108,8 @@ function get_media(el){
 							'</a>'+
 							'<div class="gl-toolbar">'+
 								'<div class="gl-option checkbox-inline">'+
-									'<input class="tc" type="checkbox" id="file_'+media.ID+'" value="1">'+
-									'<label class="labels media" for="file_'+media.ID+'" name="media[]" value="'+value+'"> Select</label>'+
+									'<input class="tc media_select" type="checkbox" id="file_'+media.ID+'" name="media" data-preview="'+path+media.file.replace('.', '-large.')+'" data-thumbnail="'+path+media.file.replace('.', '-thumbnail.')+'" value="'+value+'">'+
+									'<label class="labels media" for="file_'+media.ID+'"> Select</label>'+
 								'</div>'+
 							'</div>'+
 						'</div>'+
@@ -74,8 +130,9 @@ function get_media(el){
 				  {
 					"label" : "<i class='fa fa-check'></i> Insert!",
 						"className" : "btn-sm btn-success",
-						"callback": function(el) {
-							insert_media(el);
+						"callback": function() {
+							var media_select = $('.media_select:checked');
+							insert_media(browser, media_select);
 						}
 				 },
 				"cancel" :
@@ -126,10 +183,5 @@ function get_media(el){
 			$("#cboxLoadingGraphic").append("<i class='fa fa-spinner fa-spin'></i>");//let's add a custom loading icon for colorbox
 		})
 	}) // end done
-		
-	
-
-// console.log(result.responseText);
-	// return result.responseText;
 }
 

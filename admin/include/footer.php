@@ -45,8 +45,12 @@
 			$('#editor').wysihtml5();
 		});
 
-
 		var SITEURL = '<?php echo SITEURL; ?>';
+
+		// Media browser language text
+		var browser_text = '<?php __('Browse'); ?>';
+		var browser_remove = '<?php __('Remove'); ?>';
+
 	</script>
 	<script src="assets/js/media.js"></script>
 	<!-- initial page level scripts for examples -->	
