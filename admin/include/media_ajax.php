@@ -3,9 +3,10 @@ session_start();
 
 include_once '../../config.php';
 
-define('ADMINABS', ABSPATH.'admin/');
+// define('ADMINABS', ABSPATH.'admin/');
 
 include_once ABSPATH.'include/class.database.php';
+include_once ABSPATH.'common/default_vars.php';
 include_once ADMINABS.'include/procedural_functions.php';
 
 $Media = new media();

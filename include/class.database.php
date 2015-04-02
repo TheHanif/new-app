@@ -229,7 +229,7 @@ class Database {
             $query .= ' WHERE ';
             $columns = array();
             foreach ($this->_where as $c => $v) {
-                $columns[] = $c . ' ' . $v[1] . ':' . $c;
+                $columns[] = $c . ' ' . $v[1] . ' :' . $c;
             }
             $query .= implode(' AND ', $columns);
         }

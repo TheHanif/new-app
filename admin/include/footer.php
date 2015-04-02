@@ -51,6 +51,14 @@
 		var browser_text = '<?php __('Browse'); ?>';
 		var browser_remove = '<?php __('Remove'); ?>';
 
+		// Handle permalink
+		$("#name").bind("keyup change", function(e) {
+			var value = $(this).val();
+			$("#slug").val(function(i) {
+				return $.trim(value.replace(/ /g, "-").toLowerCase());
+			});	
+		})
+
 	</script>
 	<script src="assets/js/media.js"></script>
 	<!-- initial page level scripts for examples -->	

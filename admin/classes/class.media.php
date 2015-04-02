@@ -205,9 +205,30 @@ class Media extends Settings{
 
 		$this->from($this->table_name);
 		if ($this->row_count() > 0) {
-			return $this->all_results();
+			return $this->filter_media($this->all_results());
 		}
 	} // end get_media
+
+	/**
+	 * Filter media for additional files
+	 */
+	public function filter_media($medias)
+	{
+
+		foreach ($medias as $key => $value) {
+			// Skiff if not an image
+			if(strpos($value->type,"image") !== false){
+
+				$folder = SITEURL."contents/uploads/".$this->_date('Y/m/d/', $value->date);
+				$medias[$key]->thumbnail = $folder.str_replace('.', '-thumbnail.', $value->file);
+				$medias[$key]->small = $folder.str_replace('.', '-small.', $value->file);
+				$medias[$key]->medium = $folder.str_replace('.', '-medium.', $value->file);
+				$medias[$key]->large = $folder.str_replace('.', '-large.', $value->file);
+			}
+		}
+
+		return $medias;
+	} // filter_media()
 
 	public function upload_media($media)
 	{

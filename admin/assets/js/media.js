@@ -5,8 +5,8 @@ $(document).ready(function() {
 			e.preventDefault();
 
 			var el = $(this);
-
-			if (el.data('media') == 'true') {
+// console.log(el.data('media'));
+			if (el.data('media') == 1) {
 				remove_media(el);
 			}else{
 				get_media(el);
@@ -25,14 +25,14 @@ function remove_media(browser){
 	var value = browser.data('value');
 
 	// Media value
-	$(value).val();
+	$(value).val('');
 
 	// Remove if any image already
 	$(preview).find('img').remove();
 	$(thumbnail).find('img').remove();
 
 	// Change browser text and set media true
-	browser.text(browser_text).data('media', 'false');
+	browser.text(browser_text).data('media', 0);
 
 } // end of remove_media
 
@@ -66,7 +66,7 @@ function insert_media(browser, media){
 	}).appendTo(preview);
 
 	// Change browser text and set media true
-	browser.text(browser_remove).data('media', 'true');
+	browser.text(browser_remove).data('media', 1);
 } // end of insert media
 
 function get_media(browser){
