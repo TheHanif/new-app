@@ -21,10 +21,20 @@ if (isset($_POST['submit'])) {
 
 if (isset($_GET['action'])) {
 	
-
 	// Get category
 	if ($_GET['action'] == 'edit') {
 		$category = $Categories->get_categories($type, $ID);
+	}
+
+	// Delete category
+	if ($_GET['action'] == 'delete') {
+		if ($Categories->delete_category($ID) > 0) {
+			register_admin_message('Success', 'Category has been deleted successfully.', 'success');
+		}else{
+			register_admin_message('Not found', 'Category not found or already deleted. Please try again.', 'danger');
+		}
+		unset($_GET['action']);
+		unset($_GET['ID']);
 	}
 }
 
@@ -46,7 +56,9 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php echo __($admin_title); ?> <span class="sub-title"><?php __(ucfirst($type)); ?></span></h1>								
+					<h1><?php echo __($admin_title); ?> <span class="sub-title"><?php __(ucfirst($type)); ?></span> <?php if (isset($_GET['action']) && $_GET['action'] == 'edit') {
+						?> <a href="categories.php?type=<?php echo $type; ?>" class="btn btn-default pull-right btn-sm"><i class="fa fa-plus"></i> <?php __('Create new'); ?></a><?php
+					} ?></h1>								
 				</div>
 				
 				<?php get_messages(); ?>	
@@ -90,9 +102,33 @@ include 'include/header.php';
 								<label class="col-sm-2 control-label"><?php __('Parent'); ?></label>
 								<div class="col-sm-10">
 									<select name="parent" class="form-control selectpicker">
-										<option value="0">Mustard</option>
-										<option value="1">Ketchup</option>
-										<option value="2">Relish</option>
+										<option value="">None</option>
+										<?php foreach ($all_categories as $key => $all_category) { 
+												if(isset($category) && $all_category->category_id == $category->category_id) continue;
+												if($all_category->category_parent != 0) continue;
+											?>
+										<option value="<?php echo $all_category->category_id; ?>" <?php echo (isset($category) && $all_category->category_id == $category->category_parent)? 'selected' : ''; ?>><?php echo $all_category->category_name; ?></option>
+
+											<!-- Go for sencond level -->
+												<?php foreach ($all_categories as $key => $second_all_category) { 
+														if(isset($category) && $second_all_category->category_id == $category->category_id) continue;
+														if($second_all_category->category_parent != $all_category->category_id) continue;
+													?>
+												<option value="<?php echo $second_all_category->category_id; ?>" <?php echo (isset($category) && $second_all_category->category_id == $category->category_parent)? 'selected' : ''; ?>>- <?php echo $second_all_category->category_name; ?></option>
+
+													<!-- Go for third level -->
+														<!--<?php foreach ($all_categories as $key => $third_all_category) { 
+																if(isset($category) && $third_all_category->category_id == $category->category_id) continue;
+																if($third_all_category->category_parent != $second_all_category->category_id) continue;
+															?>
+														<option value="<?php echo $third_all_category->category_id; ?>" <?php echo (isset($category) && $third_all_category->category_id == $category->category_parent)? 'selected' : ''; ?>>-- <?php echo $third_all_category->category_name; ?></option>
+														<?php }?>-->
+													<!-- End of third level -->
+
+												<?php }?>
+											<!-- End of sencond level -->
+
+										<?php } // end of first level ?>
 									</select>
 								</div>
 							</div>
@@ -143,7 +179,8 @@ include 'include/header.php';
 			</div><!-- end of form -->
 			<div class="col-md-7">
 				<?php
-				if (!isset($all_categories) || (isset($all_categories) && count($all_categories) <= 1)):
+				// print_f($all_categories);
+				if (!isset($all_categories)):
 					echo "<p>";
 					__($admin_title);
 					echo " ";
@@ -151,7 +188,7 @@ include 'include/header.php';
 					echo "</p>";
 				else:
 				?>
-				<table class="table table-bordered table-hover tc-table">
+				<table class="table table-bordered table-striped table-hover tc-table">
 					<thead>
 						<tr>
 							<th class="col-small center"><?php __('Image'); ?></th>
@@ -162,7 +199,9 @@ include 'include/header.php';
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($all_categories as $key => $category) { ?>
+						<?php foreach ($all_categories as $key => $category) { 
+								if($category->category_parent != 0) continue;
+							?>
 						<tr>
 							<td>
 								<?php if (!empty($category->category_media) && $Categories->Media->get_media($category->category_media)) {
@@ -176,23 +215,62 @@ include 'include/header.php';
 							<td class="col-small center">
 								<div class="btn-group btn-group-xs">
 									<a href="categories.php?type=<?php echo $type; ?>&action=edit&ID=<?php echo $category->category_id; ?>" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
-									<a href="" class="btn btn-danger" onClick="return confirm('<?php __('Confirm delete?'); ?>');"><i class="fa fa-times icon-only"></i></a>
+									<a href="categories.php?type=<?php echo $type; ?>&action=delete&ID=<?php echo $category->category_id; ?>" class="btn btn-danger" onClick="return confirm('<?php __('Confirm delete?'); ?>');"><i class="fa fa-times icon-only"></i></a>
 								</div>	
 							</td>
 						</tr>
-						<?php } ?>
-						<tr>
-							<td></td>
-							<td><i class="fa fa-minus text-gray"></i> <i class="fa fa-minus text-gray"></i> Sub category</td>
-							<td class="col-small center"><span class="badge">10</span></td>
-							<td class="col-medium">Fate</td>
-							<td class="col-small center">
-								<div class="btn-group btn-group-xs">
-									<a href="" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
-									<a href="" class="btn btn-danger" onClick="return confirm('<?php __('Confirm delete?'); ?>');"><i class="fa fa-times icon-only"></i></a>
-								</div>	
-							</td>
-						</tr>
+								
+							<!-- Go for second level -->
+								<?php foreach ($all_categories as $second_key => $second_category) { 
+										if($category->category_id != $second_category->category_parent) continue;
+									?>
+									<tr>
+										<td>
+											<?php if (!empty($second_category->category_media) && $Categories->Media->get_media($second_category->category_media)) {
+													$media = $Categories->Media->get_media($second_category->category_media);
+													echo '<img src="'.$media[0]->thumbnail.'" style="width:100%">';
+												} ?>
+										</td>
+										<td><i class="fa fa-minus text-gray"></i> <?php echo $second_category->category_name; ?></td>
+										<td class="col-small center"><span class="badge"><?php echo (empty($second_category->category_item_count))? 0 : $second_category->category_item_count; ?></span></td>
+										<td class="col-medium"><?php echo $Categories->_date('d-m-Y', $second_category->category_ts); ?></td>
+										<td class="col-small center">
+											<div class="btn-group btn-group-xs">
+												<a href="categories.php?type=<?php echo $type; ?>&action=edit&ID=<?php echo $second_category->category_id; ?>" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
+												<a href="categories.php?type=<?php echo $type; ?>&action=delete&ID=<?php echo $second_category->category_id; ?>" class="btn btn-danger" onClick="return confirm('<?php __('Confirm delete?'); ?>');"><i class="fa fa-times icon-only"></i></a>
+											</div>	
+										</td>
+									</tr>
+
+									<!-- Go for third level -->
+										<?php foreach ($all_categories as $third_key => $third_category) { 
+												if($second_category->category_id != $third_category->category_parent) continue;
+											?>
+											<tr>
+												<td>
+													<?php if (!empty($third_category->category_media) && $Categories->Media->get_media($third_category->category_media)) {
+															$media = $Categories->Media->get_media($third_category->category_media);
+															echo '<img src="'.$media[0]->thumbnail.'" style="width:100%">';
+														} ?>
+												</td>
+												<td><i class="fa fa-minus text-gray"></i> <i class="fa fa-minus text-gray"></i> <?php echo $third_category->category_name; ?></td>
+												<td class="col-small center"><span class="badge"><?php echo (empty($third_category->category_item_count))? 0 : $third_category->category_item_count; ?></span></td>
+												<td class="col-medium"><?php echo $Categories->_date('d-m-Y', $third_category->category_ts); ?></td>
+												<td class="col-small center">
+													<div class="btn-group btn-group-xs">
+														<a href="categories.php?type=<?php echo $type; ?>&action=edit&ID=<?php echo $third_category->category_id; ?>" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
+														<a href="categories.php?type=<?php echo $type; ?>&action=delete&ID=<?php echo $third_category->category_id; ?>" class="btn btn-danger" onClick="return confirm('<?php __('Confirm delete?'); ?>');"><i class="fa fa-times icon-only"></i></a>
+													</div>	
+												</td>
+											</tr>
+										<?php } ?>
+									<!-- End third level -->
+
+								<?php } ?>
+							<!-- End second level -->
+
+						<?php } // End first level ?>
+						
 					</tbody>
 				</table>	
 				<?php endif; ?>

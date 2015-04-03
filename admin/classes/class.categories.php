@@ -12,6 +12,30 @@ class Categories extends Database{
 		$this->Media = new Media();
 	} // end of __construct()
 
+	public function delete_category($category_ID)
+	{
+		$this->where('category_id', $category_ID);
+		$this->from($this->table_name,1);
+
+		if ($this->row_count() == 0) {
+			return false;
+		}
+
+		$category = $this->result();
+
+		$this->where('category_id', $category_ID);
+		$this->delete($this->table_name,1);
+
+		$count = $this->row_count();
+
+		if($count > 0){
+			$this->where('category_parent', $category_ID);
+			$this->update($this->table_name, array('category_parent'=>$category->category_parent));
+		}
+
+		return 1;
+	} // end of delete_category()
+
 	/**
 	 * Get categories
 	 */
@@ -26,7 +50,7 @@ class Categories extends Database{
 
 		if ($this->row_count() > 0 && isset($category_ID)) {
 			return $this->result();
-		}elseif ($this->row_count() > 1) {
+		}elseif($this->row_count() > 0){
 			return $this->all_results();
 		}
 	} // end of get_categories()
