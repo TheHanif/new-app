@@ -27,7 +27,7 @@ class Capabilities extends Database{
 	 */
 	public function has_capabilities($capabilities = array())
 	{	
-		$state = false;
+		$state = true;
 
 		// Provided capabilities must be an array
 		if (!is_array($capabilities)) {
@@ -38,8 +38,12 @@ class Capabilities extends Database{
 		// Check through user's capabilities.
 		foreach ($capabilities as $group_name => $group) {
 			foreach ($group as $key => $value) {
-				if (array_key_exists($group_name, $this->user_capabilities) && array_key_exists($value, $this->user_capabilities[$group_name])) {
-					$state = true;
+				if (array_key_exists($group_name, $this->user_capabilities)) {
+					if (!array_key_exists($value, $this->user_capabilities[$group_name])) {
+						$state = false;
+					}
+				}else{
+					$state = false;
 				}
 			}
 		}
