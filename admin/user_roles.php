@@ -63,7 +63,7 @@ include 'include/header.php';
 					echo "</p>";
 				else:
 			?>
-				<table class="table table-bordered table-hover tc-table">
+				<table class="table table-bordered table-striped table-hover tc-table">
 					<thead>
 						<tr>
 							<th>Role TItle</th>
@@ -80,12 +80,13 @@ include 'include/header.php';
 						<tr>
 							<td><?php echo $role->role_title; ?></td>
 							<td><?php echo $role->role_description; ?></td>
-							<td>
+							<td><?php if(isset($role_object)): ?>
 								<ul class="list-unstyled">
 									<?php foreach($role_object as $object_key => $object ): ?>
 									<li><?php echo $object_key; ?> (<?php echo count((array)$object); ?> / <?php echo count($available_groups[$object_key]) ?>)</li>
 								<?php endforeach; ?>
 								</ul>
+								<?php endif; ?>
 							</td>
 							<td class="col-medium"><?php echo $Users->_date('d-m-Y', $role->role_ts); ?></td>
 							<td class="col-medium center">
@@ -101,7 +102,6 @@ include 'include/header.php';
 
 				<?php endif; ?>
 			<!-- END YOUR CONTENT HERE -->
-	
 			</div>
 		</div>
 <?php include 'include/footer.php'; ?>
