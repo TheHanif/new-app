@@ -14,8 +14,6 @@ $custom_name = $custom_post['meta']['single_title'];
 // Page title
 $admin_title = (isset($ID))? 'Edit '.$custom_name : 'New '.$custom_name;
 
-
-
 // Header file
 include 'include/header.php';
 ?>
@@ -43,13 +41,22 @@ include 'include/header.php';
 		// Check page for loack status
 		get_lock_status(); ?>
 		
+		<!-- START YOUR CONTENT HERE -->
 		<div class="row">
-			<div class="col-lg-12">
-			
-			<!-- START YOUR CONTENT HERE -->
-				
-			<!-- END YOUR CONTENT HERE -->
-	
-			</div>
+			<form action="<?php echo get_actual_url(false); ?>" role="form" method="post">
+				<div class="col-md-9">
+					<div class="form-group">
+						<label for="name" class="sr-only"><?php echo ucfirst($custom_name).' '; __('name') ?></label>
+						<input type="text" class="form-control input-lg" style="font-weight:bold;" id="name" placeholder="<?php echo ucfirst($custom_name).' '; __('name') ?>">
+					</div><!-- Name -->
+
+					<div class="form-group">
+						<label for="slug">Slug</label>
+						<input type="text" class="form-control" id="slug" name="slug">
+					</div>
+				</div><!-- end of main contents -->
+				<div class="col-md-3">2</div><!-- end of sidebar -->
+			</form>
 		</div>
+		<!-- END YOUR CONTENT HERE -->
 <?php include 'include/footer.php'; ?>
