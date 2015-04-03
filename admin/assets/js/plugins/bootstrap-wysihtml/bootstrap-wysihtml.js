@@ -399,8 +399,8 @@
         "emphasis": true,
         "lists": true,
         "html": true,
-        "link": true,
-        "image": true,
+        "link": false,
+        "image": false,
         events: {},
         parserRules: {
             classes: {
