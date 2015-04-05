@@ -11,7 +11,7 @@
 		<ul>
 			<li><a href="#" title=""><i class="fa fa-signal"></i></a></li>
 			<li><a href="#" title=""><i class="fa fa-comments"></i></a></li>
-			<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="fa fa-plus"></i><span> Tasks</span></a>
+			<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="fa fa-eye"></i> &nbsp;<span> Screen options</span></a>
 				<ul class="dropdown-menu dropdown-primary dropdown-menu-right">
 					<li><a href="#">Add new task</a></li>
 					<li><a href="#">Statement</a></li>
