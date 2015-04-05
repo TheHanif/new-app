@@ -50,13 +50,104 @@ include 'include/header.php';
 						<input type="text" class="form-control input-lg" style="font-weight:bold;" id="name" placeholder="<?php echo ucfirst($custom_name).' '; __('name') ?>">
 					</div><!-- Name -->
 
-					<div class="form-group">
-						<label for="slug">Slug</label>
-						<input type="text" class="form-control" id="slug" name="slug">
-					</div>
+					<?php 
+					// Post permalink
+					if(isset($custom_post['permalink']) && $custom_post['permalink'] == true): ?>
+					<div class="form-group input-group">
+						<span class="input-group-addon"><i class="fa fa-link"></i></span>
+						<span class="input-group-addon"><?php echo SITEURL; ?></span>
+						<input type="text" class="form-control" id="slug" disabled name="slug">
+						<a href="#" class="btn btn-default input-group-addon"><i class="fa fa-pencil"></i></a>
+					</div><!-- permalink -->
+					<?php endif; // end of post permalink ?>
+					
+					<?php 
+					// Post content
+					if(isset($custom_post['content']) && $custom_post['content'] == true): ?>
+					<div class="portlet">
+						<div class="portlet-heading default-bg">
+							<div class="portlet-title">
+								<h4><strong><?php echo ucfirst($custom_name); ?> <?php __('Contents'); ?></strong></h4>
+							</div>
+							<div class="portlet-widgets">
+								<a data-toggle="collapse" data-parent="#accordion" href="#content"><i class="fa fa-chevron-down"></i></a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div id="content" class="panel-collapse collapse in">
+							<div class="portlet-body">
+								<div class="form-group">
+									<textarea name="content" rows="10" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div><!-- post contents -->
+					<?php endif; // end of post content ?>
+
+					<?php 
+					// Post excerpt
+					if(isset($custom_post['excerpt']) && $custom_post['excerpt'] == true): ?>
+					<div class="portlet">
+						<div class="portlet-heading default-bg">
+							<div class="portlet-title">
+								<h4><strong><?php __('Excerpt'); ?></strong></h4>
+							</div>
+							<div class="portlet-widgets">
+								<a data-toggle="collapse" data-parent="#accordion" href="#excerpt"><i class="fa fa-chevron-down"></i></a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div id="excerpt" class="panel-collapse collapse in">
+							<div class="portlet-body">
+								<div class="form-group">
+									<textarea name="excerpt" rows="7" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div><!-- post contents -->
+					<?php endif; // end of post excerpt ?>
+
+
+
 				</div><!-- end of main contents -->
-				<div class="col-md-3">2</div><!-- end of sidebar -->
+				
+				<div class="col-md-3">
+					<div class="portlet">
+						<div class="portlet-heading default-bg">
+							<div class="portlet-title">
+								<h4><strong><?php __('Attributes'); ?></strong></h4>
+							</div>
+							<div class="portlet-widgets">
+								<a data-toggle="collapse" data-parent="#accordion" href="#attributes"><i class="fa fa-chevron-down"></i></a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div id="attributes" class="panel-collapse collapse in">
+							<div class="portlet-body">
+								<hr>
+								<div class="form-group" style="margin-bottom:0">
+									<div class="row">
+										<div class="col-md-8">
+											<?php if(isset($_GET['action']) && $_GET['action'] == 'edit'): ?>
+												<label title="Duplicate" style="margin-top:5px; margin-bottom:0"><strong style="margin-top:2px; float:left">Duplicate </strong>
+													<input name="duplicate" class="tc tc-switch tc-switch-5" type="checkbox" />
+													<span class="labels"></span>
+												</label>
+											<?php endif; ?>
+										</div>
+										<div class="col-md-4">
+											<input type="submit" value="Save" class="btn btn-primary pull-right">
+										</div>
+									</div>
+								</div><!-- // form-group -->
+							</div><!-- // portlet-body -->
+						</div>
+					</div><!-- post contents -->
+				</div><!-- end of sidebar -->
 			</form>
 		</div>
 		<!-- END YOUR CONTENT HERE -->
 <?php include 'include/footer.php'; ?>
+
+
+
