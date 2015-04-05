@@ -19,6 +19,10 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 						,'pulural_title' => 'posts'
 						,'icon' => 'thumb-tack'
 						)
+			,'attributes' => array('template', 'sidebar', 'parent')
+			,'permalink'=> true
+			,'content'=> true
+			,'excerpt'=> true
 			,'category'	=> true
 			,'featured_image'=> true
 			,'tag'	=> true
