@@ -39,7 +39,10 @@
 	<script src="assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js"></script>
 	<script src="assets/js/plugins/colorBox/jquery.colorbox-min.js"></script>
 	<script src="assets/js/plugins/slimscroll/jquery.slimscroll.init.js"></script>
+	<script src="assets/js/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 	<script>
+		$('.selectpicker').selectpicker('show');
+	
 		$(document).ready(function() {
 			// wysihtml editor
 			$('#editor').wysihtml5();

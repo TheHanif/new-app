@@ -44,7 +44,6 @@ $all_categories = $Categories->get_categories($type);
 // Header file
 include 'include/header.php';
 ?>
-<link href="assets/css/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 <!-- BEGIN MAIN PAGE CONTENT -->
 <div id="page-wrapper">
 	<!-- BEGIN PAGE HEADING ROW -->
@@ -278,7 +277,3 @@ include 'include/header.php';
 			<!-- END YOUR CONTENT HERE -->
 		</div>
 <?php include 'include/footer.php'; ?>
-<script src="assets/js/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-<script>
-	$('.selectpicker').selectpicker('show');
-</script>

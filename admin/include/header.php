@@ -48,6 +48,7 @@ is_logged_in(true);
 	}
 	</style>
 	<link rel="stylesheet" href="assets/css/plugins/bootstrap-wysihtml/bootstrap-wysihtml5.css">
+	<link href="assets/css/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
   </head>
 
   <body>
