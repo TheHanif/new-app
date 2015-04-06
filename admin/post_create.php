@@ -111,6 +111,7 @@ include 'include/header.php';
 
 				</div><!-- end of main contents -->
 				
+				<!-- Sidebar start -->
 				<div class="col-md-3">
 					<div class="portlet">
 						<div class="portlet-heading default-bg">
@@ -124,7 +125,56 @@ include 'include/header.php';
 						</div>
 						<div id="attributes" class="panel-collapse collapse in">
 							<div class="portlet-body">
-								<hr>
+
+								<?php 
+								// Post template
+								if (isset($custom_post['attributes']) && in_array('template', $custom_post['attributes'])): ?>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Template</label>
+										<div class="col-sm-9">
+											<select name="template" class="form-control selectpicker">
+												<option>none</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<?php endif; // end of post template ?>
+
+								<?php 
+								// Post parent
+								if (isset($custom_post['attributes']) && in_array('parent', $custom_post['attributes'])): ?>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Parent</label>
+										<div class="col-sm-9">
+											<select name="parent" class="form-control selectpicker">
+												<option>none</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<?php endif; // end of post parent ?>
+
+								<?php 
+								// Post sidebar
+								if (isset($custom_post['attributes']) && in_array('sidebar', $custom_post['attributes'])): ?>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Sidebar</label>
+										<div class="col-sm-9">
+											<select name="sidebar" class="form-control selectpicker">
+												<option>none</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<?php endif; // end of post sidebar ?>
+								
+								<?php 
+								// Seperator
+								echo (isset($custom_post['attributes']) && count($custom_post['attributes']) > 0)? '<hr>' : ''; ?>
+
 								<div class="form-group" style="margin-bottom:0">
 									<div class="row">
 										<div class="col-md-8">
@@ -142,12 +192,86 @@ include 'include/header.php';
 								</div><!-- // form-group -->
 							</div><!-- // portlet-body -->
 						</div>
-					</div><!-- post contents -->
+					</div><!-- end of attributes -->
+
+					<?php 
+					if(isset($custom_post['category']) && $custom_post['category'] == true): ?>
+					<div class="portlet">
+						<div class="portlet-heading default-bg">
+							<div class="portlet-title">
+								<h4><strong><?php __('Categories'); ?></strong></h4>
+							</div>
+							<div class="portlet-widgets">
+								<a data-toggle="collapse" data-parent="#accordion" href="#categories"><i class="fa fa-chevron-down"></i></a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div id="categories" class="panel-collapse collapse in">
+							<div class="portlet-body">
+									<?php 
+										// Get all categories
+										$Categories = new categories();
+										$all_categories = $Categories->get_categories($type);
+										foreach ($all_categories as $key => $all_category) { 
+											if($all_category->category_parent != 0) continue;
+										?>
+										<div class="row">
+										<div class="col-xs-12">
+										<div class="tcb" style="margin:0">
+											<label>
+												<input name="categories[]" value="<?php echo $all_category->category_id; ?>" type="checkbox" class="tc">
+												<span class="labels"> <?php echo $all_category->category_name; ?></span>
+											</label>
+										</div></div></div>
+
+											<!-- Go for sencond level -->
+											<?php foreach ($all_categories as $key => $second_all_category) { 
+													if($second_all_category->category_parent != $all_category->category_id) continue;
+												?>
+											<div class="row"><div class="col-xs-1"></div>
+											<div class="col-xs-11">
+											<div class="tcb" style="margin:0">
+												<label>
+													<input name="categories[]" value="<?php echo $second_all_category->category_id; ?>" type="checkbox" class="tc">
+													<span class="labels"> <?php echo $second_all_category->category_name; ?></span>
+												</label>
+											</div></div></div>
+
+												<!-- Go for third level -->
+												<?php foreach ($all_categories as $key => $third_all_category) { 
+														if($third_all_category->category_parent != $second_all_category->category_id) continue;
+													?>
+												<div class="row"><div class="col-xs-2"></div>
+												<div class="col-xs-10">
+												<div class="tcb" style="margin:0">
+													<label>
+														<input name="categories[]" value="<?php echo $third_all_category->category_id; ?>" type="checkbox" class="tc">
+														<span class="labels"> <?php echo $third_all_category->category_name; ?></span>
+													</label>
+												</div></div></div>
+												
+												<?php }?>
+												<!-- End of third level -->
+
+											<?php }?>
+											<!-- End of sencond level -->
+
+									<?php } // end of first level ?>
+							</div><!-- end of .body -->
+						</div>
+					</div><!-- end of .portlet -->
+					<?php endif; // end of categories ?>
 				</div><!-- end of sidebar -->
 			</form>
 		</div>
 		<!-- END YOUR CONTENT HERE -->
 <?php include 'include/footer.php'; ?>
-
+<script>
+	$('#categories').find('.portlet-body').slimScroll({
+		height: '200px',
+		disableFadeOut: true,
+		touchScrollStep: 50
+	});
+</script>
 
 
