@@ -195,6 +195,7 @@ include 'include/header.php';
 					</div><!-- end of attributes -->
 
 					<?php 
+					// Categories
 					if(isset($custom_post['category']) && $custom_post['category'] == true): ?>
 					<div class="portlet">
 						<div class="portlet-heading default-bg">
@@ -261,6 +262,37 @@ include 'include/header.php';
 						</div>
 					</div><!-- end of .portlet -->
 					<?php endif; // end of categories ?>
+
+					<?php 
+					// Featured images
+					if(isset($custom_post['featured_image']) && (is_numeric($custom_post['featured_image']) && $custom_post['featured_image'] > 0)):
+						for ($i=1; $i <= $custom_post['featured_image']; $i++):
+							$fortlet_id = ($custom_post['featured_image'] > 1)? 'Featured Image '.$i : 'Featured Image';
+
+						?>
+						<div class="portlet">
+							<div class="portlet-heading default-bg">
+								<div class="portlet-title">
+									<h4><strong><?php __($fortlet_id); ?></strong></h4>
+								</div>
+								<div class="portlet-widgets">
+									<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $fortlet_id; ?>"><i class="fa fa-chevron-down"></i></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div id="<?php echo $fortlet_id; ?>" class="panel-collapse collapse in">
+								<div class="portlet-body">
+									<div class="thumbnail<?php echo $i; ?>"></div>
+									<span class="btn btn-file1 browse-media" data-media="0" data-thumbnail=".thumbnail<?php echo $i; ?>" data-value=".value<?php echo $i; ?>" data-output="id">
+										Browse
+									</span>
+									<input type="hidden" class="value<?php echo $i; ?>" name="featured_image[]">
+								</div><!-- end body -->
+							</div>
+						</div><!-- end portlet -->
+					<?php 
+						endfor;
+					endif; ?>
 				</div><!-- end of sidebar -->
 			</form>
 		</div>
