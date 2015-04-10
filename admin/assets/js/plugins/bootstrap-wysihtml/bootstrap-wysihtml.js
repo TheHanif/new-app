@@ -68,6 +68,15 @@
             "</li>";
         },
 
+        "media" : function(locale, options){
+            console.log('media');
+            var size = (options && options.size) ? ' btn-'+options.size : '';
+
+            return "<li>" +
+              "<a class='btn btn-sm" + size + "' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "' tabindex='-1'><i class='fa fa-picture-o icon-only'></i></a>" +
+            "</li>";
+        },
+
         "image": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
@@ -203,6 +212,10 @@
                     if(key === "image") {
                         this.initInsertImage(toolbar);
                     }
+
+                    if(key === "media") {
+                        this.initInsertMedia(toolbar);
+                    }
                 }
             }
 
@@ -236,6 +249,28 @@
             });
         },
 
+        initInsertMedia: function (toolbar) {
+            console.log('media init');
+
+            var caretBookmark;
+            var self = this;
+
+            toolbar.find('a[data-wysihtml5-command=insertImage]').click(function() {
+                self.editor.composer.selection.setBookmark(caretBookmark);
+                var activeButton = $(this).hasClass("wysihtml5-command-active");
+
+                if (!activeButton) {
+                   get_media(null, self);
+                    return false;
+                }
+                else {
+                    return true;
+                }
+                
+            
+            });
+        },
+
         initInsertImage: function(toolbar) {
             var self = this;
             var insertImageModal = toolbar.find('.bootstrap-wysihtml5-insert-image-modal');
@@ -252,6 +287,7 @@
                   self.editor.composer.selection.setBookmark(caretBookmark);
                   caretBookmark = null;
                 }
+                // console.log(url);
                 self.editor.composer.commands.exec("insertImage", url);
             };
 
@@ -395,12 +431,13 @@
 
     var defaultOptions = $.fn.wysihtml5.defaultOptions = {
         "font-styles": true,
-        "color": false,
+        "color": true,
         "emphasis": true,
         "lists": true,
         "html": true,
-        "link": false,
+        "link": true,
         "image": false,
+        "media": true,
         events: {},
         parserRules: {
             classes: {
@@ -495,6 +532,10 @@
                 target: " Open link in new window"
             },
             image: {
+                insert: "Insert image",
+                cancel: "Cancel"
+            },
+            media: {
                 insert: "Insert image",
                 cancel: "Cancel"
             },
