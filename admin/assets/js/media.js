@@ -69,8 +69,8 @@ function insert_media(browser, media){
 	browser.text(browser_remove).data('media', 1);
 } // end of insert media
 
-function get_media(browser){
-	
+function get_media(browser, editor = null){
+
 	$.ajax({
 		url: 'include/media_ajax.php',
 		type: 'POST',
@@ -95,7 +95,7 @@ function get_media(browser){
 
 				var path = SITEURL+'contents/uploads/'+y+'/'+m+'/'+d+'/';
 			
-				if (browser.data('output') == 'url') { value = path+media.file};
+				if (editor != null || (browser != null && browser.data('output') == 'url')) { value = path+media.file};
 
 				gallery += '<li class="thumbnail">'+
 					'<div class="thumb-preview">'+
@@ -108,7 +108,7 @@ function get_media(browser){
 							'</a>'+
 							'<div class="gl-toolbar">'+
 								'<div class="gl-option checkbox-inline">'+
-									'<input class="tc media_select" type="checkbox" id="file_'+media.ID+'" name="media" data-preview="'+path+media.file.replace('.', '-large.')+'" data-thumbnail="'+path+media.file.replace('.', '-thumbnail.')+'" value="'+value+'">'+
+									'<input class="tc media_select" type="checkbox" id="file_'+media.ID+'" name="media" data-preview="'+path+media.file.replace('.', '-large.')+'" data-thumbnail="'+path+media.file.replace('.', '-thumbnail.')+'" data-small="'+path+media.file.replace('.', '-small.')+'" data-medium="'+path+media.file.replace('.', '-medium.')+'" data-large="'+path+media.file.replace('.', '-large.')+'" value="'+value+'">'+
 									'<label class="labels media" for="file_'+media.ID+'"> Select</label>'+
 								'</div>'+
 							'</div>'+
@@ -126,13 +126,77 @@ function get_media(browser){
 			message: gallery,
 			buttons: 			
 			{
+
 				"success" :
 				  {
 					"label" : "<i class='fa fa-check'></i> Insert!",
 						"className" : "btn-sm btn-success",
 						"callback": function() {
 							var media_select = $('.media_select:checked');
-							insert_media(browser, media_select);
+
+							if(editor == null){
+								insert_media(browser, media_select);
+							}else{
+								var message = "<strong>Select Size</strong>";
+
+									// Thumbnail
+									message += '<div class="tcb">'+
+													'<label>'+
+														'<input type="radio" name="optionsRadios" value="thumbnail" class="tc sizes">'+
+														'<span class="labels"> Thumbnail</span>'+
+													'</label>'+
+												'</div>';
+
+									// Small
+									message += '<div class="tcb">'+
+													'<label>'+
+														'<input type="radio" name="optionsRadios" value="small" class="tc sizes">'+
+														'<span class="labels"> Small</span>'+
+													'</label>'+
+												'</div>';
+
+									// Medium
+									message += '<div class="tcb">'+
+													'<label>'+
+														'<input type="radio" name="optionsRadios" value="medium" class="tc sizes">'+
+														'<span class="labels"> Medium</span>'+
+													'</label>'+
+												'</div>';
+
+									// Large
+									message += '<div class="tcb">'+
+													'<label>'+
+														'<input type="radio" name="optionsRadios" value="large" class="tc sizes">'+
+														'<span class="labels"> Large</span>'+
+													'</label>'+
+												'</div>';
+
+									// Original
+									message += '<div class="tcb">'+
+													'<label>'+
+														'<input type="radio" name="optionsRadios" value="original" class="tc sizes">'+
+														'<span class="labels"> Original</span>'+
+													'</label>'+
+												'</div>';
+
+								bootbox.dialog({
+									message: message,
+									buttons: 			
+									{
+										"success" :
+										  {
+											"label" : "<i class='fa fa-check'></i> OK!",
+												"className" : "btn-sm btn-success",
+												"callback": function() {
+													var file = ($('.sizes:checked').val() == 'original')? media_select.val() : media_select.data($('.sizes:checked').val());
+													editor.editor.composer.commands.exec("insertImage", file);
+													return;
+													}
+												}
+										 }
+								});
+								
+							} // end else
 						}
 				 },
 				"cancel" :
@@ -183,5 +247,7 @@ function get_media(browser){
 			$("#cboxLoadingGraphic").append("<i class='fa fa-spinner fa-spin'></i>");//let's add a custom loading icon for colorbox
 		})
 	}) // end done
+
+	
 }
 

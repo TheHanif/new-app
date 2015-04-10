@@ -77,7 +77,7 @@ include 'include/header.php';
 						<div id="content" class="panel-collapse collapse in">
 							<div class="portlet-body">
 								<div class="form-group">
-									<textarea name="content" rows="10" class="form-control"></textarea>
+									<textarea name="content" rows="20" id="editor" class="form-control"></textarea>
 								</div>
 							</div>
 						</div>
@@ -304,6 +304,7 @@ include 'include/header.php';
 		disableFadeOut: true,
 		touchScrollStep: 50
 	});
+
 </script>
 
 
