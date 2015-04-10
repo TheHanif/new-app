@@ -131,10 +131,10 @@ include 'include/header.php';
 								if (isset($custom_post['attributes']) && in_array('template', $custom_post['attributes'])): ?>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Template</label>
+										<label class="col-sm-3 control-label"><?php __('Template') ?></label>
 										<div class="col-sm-9">
 											<select name="template" class="form-control selectpicker">
-												<option>none</option>
+												<option><?php __('none'); ?></option>
 											</select>
 										</div>
 									</div>
@@ -146,10 +146,10 @@ include 'include/header.php';
 								if (isset($custom_post['attributes']) && in_array('parent', $custom_post['attributes'])): ?>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Parent</label>
+										<label class="col-sm-3 control-label"><?php __('Parent') ?></label>
 										<div class="col-sm-9">
 											<select name="parent" class="form-control selectpicker">
-												<option>none</option>
+												<option><?php __('none'); ?></option>
 											</select>
 										</div>
 									</div>
@@ -161,10 +161,10 @@ include 'include/header.php';
 								if (isset($custom_post['attributes']) && in_array('sidebar', $custom_post['attributes'])): ?>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Sidebar</label>
+										<label class="col-sm-3 control-label"><?php __('Sidebar') ?></label>
 										<div class="col-sm-9">
 											<select name="sidebar" class="form-control selectpicker">
-												<option>none</option>
+												<option><?php __('none'); ?></option>
 											</select>
 										</div>
 									</div>
@@ -179,14 +179,14 @@ include 'include/header.php';
 									<div class="row">
 										<div class="col-md-8">
 											<?php if(isset($_GET['action']) && $_GET['action'] == 'edit'): ?>
-												<label title="Duplicate" style="margin-top:5px; margin-bottom:0"><strong style="margin-top:2px; float:left">Duplicate </strong>
+												<label title="<?php __('Duplicate') ?>" style="margin-top:5px; margin-bottom:0"><strong style="margin-top:2px; float:left"><?php __('Duplicate') ?> </strong>
 													<input name="duplicate" class="tc tc-switch tc-switch-5" type="checkbox" />
 													<span class="labels"></span>
 												</label>
 											<?php endif; ?>
 										</div>
 										<div class="col-md-4">
-											<input type="submit" value="Save" class="btn btn-primary pull-right">
+											<input type="submit" value="<?php __('Save') ?>" class="btn btn-primary pull-right">
 										</div>
 									</div>
 								</div><!-- // form-group -->
