@@ -24,7 +24,7 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 			,'content'=> true
 			,'excerpt'=> true
 			,'category'	=> true
-			,'featured_image'=> 1
+			,'featured_image'=> 3
 			,'tag'	=> true
 			,'template' => true
 			,'searchable'=> true
