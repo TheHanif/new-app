@@ -203,6 +203,8 @@ class Media extends Settings{
 			$this->where('ID', $ID);
 		}
 
+		$this->where('type', 'media');
+
 		$this->from($this->table_name);
 		if ($this->row_count() > 0) {
 			return $this->filter_media($this->all_results());
@@ -410,8 +412,10 @@ class Media extends Settings{
 
 	public function save_media($media = NULL, $meta = NULL, $ID = NULL)
 	{
+		//2015-04-12 03:04:02
 		if (isset($media)) {
 			$media['type'] = 'media';
+			$media['ts'] = date('Y-m-d H:i:s');
 			$this->insert($this->table_name, $media);
 		} // end media
 
