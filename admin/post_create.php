@@ -7,6 +7,32 @@ $ID = (isset($_GET['ID']))? $_GET['ID'] : NULL;
 // Get type for custom post
 $type = $_GET['type'];
 
+$Post = new Post();
+$Media = new Media();
+
+if (isset($_POST['title'])) {
+	
+	$result = $Post->save_post($_POST, $ID, $type);
+	if ($result > 0) {
+
+		if (!isset($ID)) {
+			$_SESSION['postback'] = true;
+			header('Location:'.get_actual_url(false).'&ID='.$result);
+			exit;
+		}
+		register_admin_message('Success', 'Post updated successfully.', 'success');
+	}
+}
+
+if (isset($_SESSION['postback']) && $_SESSION['postback'] == true) {
+	unset($_SESSION['postback']);
+	register_admin_message('Success', 'Post created successfully.', 'success');
+}
+
+if (isset($ID)) {
+	$post_data = $Post->get_post($ID);
+}
+
 // Get data of custom post from global post container
 $custom_post = $posts[$type];
 $custom_name = $custom_post['meta']['single_title'];
@@ -47,7 +73,7 @@ include 'include/header.php';
 				<div class="col-md-9">
 					<div class="form-group">
 						<label for="name" class="sr-only"><?php echo ucfirst($custom_name).' '; __('name') ?></label>
-						<input type="text" class="form-control input-lg" style="font-weight:bold;" id="name" placeholder="<?php echo ucfirst($custom_name).' '; __('name') ?>">
+						<input type="text" value="<?php echo (isset($ID))? $post_data->title : '' ?>" class="form-control input-lg" style="font-weight:bold;" id="name" name="title" placeholder="<?php echo ucfirst($custom_name).' '; __('name') ?>">
 					</div><!-- Name -->
 
 					<?php 
@@ -56,7 +82,7 @@ include 'include/header.php';
 					<div class="form-group input-group">
 						<span class="input-group-addon"><i class="fa fa-link"></i></span>
 						<span class="input-group-addon"><?php echo SITEURL; ?></span>
-						<input type="text" class="form-control" id="slug" disabled name="slug">
+						<input type="text" value="<?php echo (isset($ID))? $post_data->name : '' ?>" class="form-control" id="slug" disabled name="slug">
 						<a href="#" class="btn btn-default input-group-addon"><i class="fa fa-pencil"></i></a>
 					</div><!-- permalink -->
 					<?php endif; // end of post permalink ?>
@@ -77,7 +103,7 @@ include 'include/header.php';
 						<div id="content" class="panel-collapse collapse in">
 							<div class="portlet-body">
 								<div class="form-group">
-									<textarea name="content" rows="20" id="editor" class="form-control"></textarea>
+									<textarea name="content" rows="20" id="editor" class="form-control"><?php echo (isset($ID))? $post_data->content : '' ?></textarea>
 								</div>
 							</div>
 						</div>
@@ -100,7 +126,7 @@ include 'include/header.php';
 						<div id="excerpt" class="panel-collapse collapse in">
 							<div class="portlet-body">
 								<div class="form-group">
-									<textarea name="excerpt" rows="7" class="form-control"></textarea>
+									<textarea name="excerpt" rows="7" class="form-control"><?php echo (isset($ID))? $post_data->excerpt : '' ?></textarea>
 								</div>
 							</div>
 						</div>
@@ -135,6 +161,7 @@ include 'include/header.php';
 										<div class="col-sm-9">
 											<select name="template" class="form-control selectpicker">
 												<option><?php __('none'); ?></option>
+												<option value="default" <?php echo ($Post->get_meta($ID, 'template'))? 'selected' : '' ?>>Default</option>
 											</select>
 										</div>
 									</div>
@@ -150,6 +177,7 @@ include 'include/header.php';
 										<div class="col-sm-9">
 											<select name="parent" class="form-control selectpicker">
 												<option><?php __('none'); ?></option>
+												<option value="5" <?php echo (isset($ID) && $post_data->parent == '5')? 'selected' : '' ?>>5</option>
 											</select>
 										</div>
 									</div>
@@ -165,6 +193,7 @@ include 'include/header.php';
 										<div class="col-sm-9">
 											<select name="sidebar" class="form-control selectpicker">
 												<option><?php __('none'); ?></option>
+												<option value="left" <?php echo ($Post->get_meta($ID, 'sidebar'))? 'selected' : '' ?>>left</option>
 											</select>
 										</div>
 									</div>
@@ -178,7 +207,7 @@ include 'include/header.php';
 								<div class="form-group" style="margin-bottom:0">
 									<div class="row">
 										<div class="col-md-8">
-											<?php if(isset($_GET['action']) && $_GET['action'] == 'edit'): ?>
+											<?php if(isset($ID)): ?>
 												<label title="<?php __('Duplicate') ?>" style="margin-top:5px; margin-bottom:0"><strong style="margin-top:2px; float:left"><?php __('Duplicate') ?> </strong>
 													<input name="duplicate" class="tc tc-switch tc-switch-5" type="checkbox" />
 													<span class="labels"></span>
@@ -210,6 +239,13 @@ include 'include/header.php';
 						<div id="categories" class="panel-collapse collapse in">
 							<div class="portlet-body">
 									<?php 
+										$selected_categories = array();
+
+										if (isset($ID)) {
+											unset($selected_categories);
+											$selected_categories = json_decode($Post->get_meta($ID, 'categories'));
+										}
+
 										// Get all categories
 										$Categories = new categories();
 										$all_categories = $Categories->get_categories($type);
@@ -220,7 +256,7 @@ include 'include/header.php';
 										<div class="col-xs-12">
 										<div class="tcb" style="margin:0">
 											<label>
-												<input name="categories[]" value="<?php echo $all_category->category_id; ?>" type="checkbox" class="tc">
+												<input name="categories[]" <?php echo (in_array($all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $all_category->category_id; ?>" type="checkbox" class="tc">
 												<span class="labels"> <?php echo $all_category->category_name; ?></span>
 											</label>
 										</div></div></div>
@@ -233,7 +269,7 @@ include 'include/header.php';
 											<div class="col-xs-11">
 											<div class="tcb" style="margin:0">
 												<label>
-													<input name="categories[]" value="<?php echo $second_all_category->category_id; ?>" type="checkbox" class="tc">
+													<input name="categories[]" <?php echo (in_array($second_all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $second_all_category->category_id; ?>" type="checkbox" class="tc">
 													<span class="labels"> <?php echo $second_all_category->category_name; ?></span>
 												</label>
 											</div></div></div>
@@ -246,7 +282,7 @@ include 'include/header.php';
 												<div class="col-xs-10">
 												<div class="tcb" style="margin:0">
 													<label>
-														<input name="categories[]" value="<?php echo $third_all_category->category_id; ?>" type="checkbox" class="tc">
+														<input name="categories[]" <?php echo (in_array($third_all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $third_all_category->category_id; ?>" type="checkbox" class="tc">
 														<span class="labels"> <?php echo $third_all_category->category_name; ?></span>
 													</label>
 												</div></div></div>
@@ -266,9 +302,21 @@ include 'include/header.php';
 					<?php 
 					// Featured images
 					if(isset($custom_post['featured_image']) && (is_numeric($custom_post['featured_image']) && $custom_post['featured_image'] > 0)):
-						for ($i=1; $i <= $custom_post['featured_image']; $i++):
-							$fortlet_id = ($custom_post['featured_image'] > 1)? 'Featured Image '.$i : 'Featured Image';
 
+						$selected_media = array();
+
+						if (isset($ID)) {
+							$selected_media = json_decode($Post->get_meta($ID, 'featured_image'));
+						}
+
+						for ($i=0; $i < $custom_post['featured_image']; $i++):
+							$fortlet_id = ($custom_post['featured_image'] > 1)? 'Featured Image '.($i+1) : 'Featured Image';
+
+							$media = '';
+							if (isset($selected_media[$i]) && !empty($selected_media[$i])) {
+								$media = $Media->get_media($selected_media[$i]);
+								$media = $media[0];
+							}
 						?>
 						<div class="portlet">
 							<div class="portlet-heading default-bg">
@@ -282,11 +330,11 @@ include 'include/header.php';
 							</div>
 							<div id="<?php echo $fortlet_id; ?>" class="panel-collapse collapse in">
 								<div class="portlet-body">
-									<div class="thumbnail<?php echo $i; ?>"></div>
-									<span class="btn btn-file1 browse-media" data-media="0" data-thumbnail=".thumbnail<?php echo $i; ?>" data-value=".value<?php echo $i; ?>" data-output="id">
-										Browse
+									<div class="thumbnail<?php echo $i; ?>"><?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? ('<img src="'.$media->thumbnail.'">') : ''; ?></div>
+									<span class="btn btn-file1 browse-media" data-media="<?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? 1 : 0; ?>" data-thumbnail=".thumbnail<?php echo $i; ?>" data-value=".value<?php echo $i; ?>" data-output="id">
+										<?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? 'Remove' : 'Browse'; ?>
 									</span>
-									<input type="hidden" class="value<?php echo $i; ?>" name="featured_image[]">
+									<input type="hidden" class="value<?php echo $i; ?>" value="<?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? $media->ID : ''; ?>" name="featured_image[<?php echo $i; ?>]">
 								</div><!-- end body -->
 							</div>
 						</div><!-- end portlet -->
@@ -304,7 +352,6 @@ include 'include/header.php';
 		disableFadeOut: true,
 		touchScrollStep: 50
 	});
-
 </script>
 
 
