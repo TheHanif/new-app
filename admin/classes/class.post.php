@@ -15,6 +15,16 @@ class Post extends Database{
 		$this->user = new Users();	
 	}
 
+	public function get_posts($type)
+	{
+		$this->where('type', $type);
+		$this->from($this->table_name);
+		return $this->all_results();
+	}
+
+	/**
+	 * Get single post
+	 */
 	public function get_post($post_ID)
 	{
 		$this->where('ID', $post_ID);
@@ -70,7 +80,7 @@ class Post extends Database{
 		// Post type
 		$post_data['type'] = $type;
 
-		if (isset($post_ID)) {
+		if (!isset($data['duplicate']) && isset($post_ID)) {
 			// Update old
 			$this->where('ID', $post_ID);
 			$this->update($this->table_name, $post_data);
@@ -78,6 +88,11 @@ class Post extends Database{
 			// Insert new
 			$this->insert($this->table_name, $post_data);
 			$post_ID = $this->last_id();
+		}
+
+
+		if (isset($data['duplicate'])) {
+			unset($data['duplicate']);
 		}
 		
 		// Inset other fields as meta
