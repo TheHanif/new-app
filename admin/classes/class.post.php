@@ -15,6 +15,9 @@ class Post extends Database{
 		$this->user = new Users();	
 	}
 
+	/**
+	 * Get All posts by type
+	 */
 	public function get_posts($type)
 	{
 		$this->where('type', $type);
@@ -84,6 +87,12 @@ class Post extends Database{
 			// Update old
 			$this->where('ID', $post_ID);
 			$this->update($this->table_name, $post_data);
+
+			// delete categories if deselected all
+			if (!isset($data['categories'])) {
+				$this->delete_meta($post_ID, 'categories');
+			}
+
 		}else{
 			// Insert new
 			$this->insert($this->table_name, $post_data);
@@ -173,5 +182,17 @@ class Post extends Database{
 
 		return $this->all_results();
 	} // end of get_meta()
+
+	/**
+	 * Delete post meta
+	 */
+	public function delete_meta($post_ID, $key = NULL)
+	{
+		if (isset($key)) {
+			$this->where('meta_key', $key);
+		}
+		$this->where('object_id', $post_ID);
+		$this->delete($this->table_meta_name);
+	}// end of delete_meta()
 
 }
