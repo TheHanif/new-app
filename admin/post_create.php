@@ -54,7 +54,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php echo __($admin_title); ?> <span class="sub-title"><?php __(ucfirst($type)); ?></span> </h1>								
+					<h1><?php echo __($admin_title); ?></h1>								
 				</div>
 				
 				<?php get_messages(); ?>	
