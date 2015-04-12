@@ -15,9 +15,9 @@ if (isset($_POST['title'])) {
 	$result = $Post->save_post($_POST, $ID, $type);
 	if ($result > 0) {
 
-		if (!isset($ID)) {
+		if (!isset($ID) || isset($_POST['duplicate'])) {
 			$_SESSION['postback'] = true;
-			header('Location:'.get_actual_url(false).'&ID='.$result);
+			header('Location:post_create.php?type='.$type.'&ID='.$result);
 			exit;
 		}
 		register_admin_message('Success', 'Post updated successfully.', 'success');
