@@ -177,7 +177,24 @@ include 'include/header.php';
 										<div class="col-sm-9">
 											<select name="parent" class="form-control selectpicker">
 												<option><?php __('none'); ?></option>
-												<option value="5" <?php echo (isset($ID) && $post_data->parent == '5')? 'selected' : '' ?>>5</option>
+
+												<?php 
+													$all_posts = $Post->get_posts($type);
+													function generate_parent($all_posts, $parent = 0, $indent = '', $selected=NULL, $skip = NULL){
+														foreach ($all_posts as $post) {
+															if ((isset($skip) && $skip == $post->ID) || $post->parent != $parent) {
+																continue;
+															}
+															?>
+																<option value="<?php echo $post->ID; ?>" <?php echo (isset($selected) && $post->ID == $selected)? 'selected' : '' ?>><?php echo $indent.' '.$post->title; ?></option>
+															<?php
+															generate_parent($all_posts, $post->ID, $indent.'-', $selected, $skip);
+														}
+													} // end og generate_parent()
+													$selected = (isset($ID)) ? $post_data->parent : NULL;
+													generate_parent($all_posts, 0, '', $selected, $ID);
+												?>
+												
 											</select>
 										</div>
 									</div>
