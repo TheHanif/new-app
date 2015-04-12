@@ -209,7 +209,7 @@ include 'include/header.php';
 										<div class="col-md-8">
 											<?php if(isset($ID)): ?>
 												<label title="<?php __('Duplicate') ?>" style="margin-top:5px; margin-bottom:0"><strong style="margin-top:2px; float:left"><?php __('Duplicate') ?> </strong>
-													<input name="duplicate" class="tc tc-switch tc-switch-5" type="checkbox" />
+													<input name="duplicate" class="tc tc-switch tc-switch-5" value="1" type="checkbox" />
 													<span class="labels"></span>
 												</label>
 											<?php endif; ?>
