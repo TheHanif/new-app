@@ -188,7 +188,7 @@ include 'include/header.php';
 															?>
 																<option value="<?php echo $post->ID; ?>" <?php echo (isset($selected) && $post->ID == $selected)? 'selected' : '' ?>><?php echo $indent.' '.$post->title; ?></option>
 															<?php
-															generate_parent($all_posts, $post->ID, $indent.'-', $selected, $skip);
+															generate_parent($all_posts, $post->ID, $indent.'- ', $selected, $skip);
 														}
 													} // end og generate_parent()
 													$selected = (isset($ID)) ? $post_data->parent : NULL;
@@ -258,7 +258,7 @@ include 'include/header.php';
 									<?php 
 										$selected_categories = array();
 
-										if (isset($ID)) {
+										if (isset($ID) && $Post->get_meta($ID, 'categories')) {
 											unset($selected_categories);
 											$selected_categories = json_decode($Post->get_meta($ID, 'categories'));
 										}
