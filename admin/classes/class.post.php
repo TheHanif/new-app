@@ -4,6 +4,7 @@ class Post extends Database{
 	private $table_name;
 	private $table_meta_name;
 	private $user;
+	private $categories;
 
 	public function __construct()
 	{
@@ -12,7 +13,8 @@ class Post extends Database{
 		$this->table_name = DB_PREFIX.'objects';
 		$this->table_meta_name = DB_PREFIX.'meta';
 
-		$this->user = new Users();	
+		$this->user = new Users();
+		$this->categories = new Categories();
 	}
 
 	/**
@@ -79,6 +81,15 @@ class Post extends Database{
 
 		// Default status to publish
 		$post_data['status'] = 'published';
+
+		// Update categorie post count to negative
+		$categories = $this->get_meta($post_ID, 'categories');
+		if ($categories) {
+			$categories = json_decode($categories);
+			foreach ($categories as $category_ID) {
+				$this->categories->update_category_count($category_ID, -1);
+			}
+		}
 		
 		// Post type
 		$post_data['type'] = $type;
@@ -107,6 +118,15 @@ class Post extends Database{
 		// Inset other fields as meta
 		foreach ($data as $key => $value) {
 			$this->save_meta($key, $value, $post_ID);
+		}
+
+		// Update categorie post count to positive
+		$categories = $this->get_meta($post_ID, 'categories');
+		if ($categories) {
+			$categories = json_decode($categories);
+			foreach ($categories as $category_ID) {
+				$this->categories->update_category_count($category_ID);
+			}
 		}
 
 		return $post_ID;

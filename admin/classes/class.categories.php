@@ -12,6 +12,26 @@ class Categories extends Database{
 		$this->Media = new Media();
 	} // end of __construct()
 
+	/**
+	 * Update category item count
+	 */
+	public function update_category_count($category_ID, $value = 1)
+	{
+		// Select category
+		$category =  $this->get_categories(NULL, $category_ID);
+
+		$category_data = array();
+		$category_data['category_item_count'] = $category->category_item_count+$value;
+
+		$this->where('category_id', $category_ID);
+
+		$this->update($this->table_name, $category_data);
+
+	} // end of update_category_count()
+
+	/**
+	 * Delete category
+	 */
 	public function delete_category($category_ID)
 	{
 		$this->where('category_id', $category_ID);
@@ -39,13 +59,16 @@ class Categories extends Database{
 	/**
 	 * Get categories
 	 */
-	public function get_categories($type, $category_ID = NULL)
+	public function get_categories($type = NULL, $category_ID = NULL)
 	{
 		if (isset($category_ID)) {
 			$this->where('category_id', $category_ID);
 		}
 
-		$this->where('category_type', $type);
+		if (isset($type)) {
+			$this->where('category_type', $type);
+		}
+
 		$this->from($this->table_name);
 
 		if ($this->row_count() > 0 && isset($category_ID)) {
