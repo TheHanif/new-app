@@ -43,6 +43,11 @@ class Post extends Database{
 	 */
 	public function save_post($data, $post_ID = NULL, $type = NULL)
 	{
+		if (isset($data['duplicate'])) {
+			$post_ID = NULL;
+			unset($data['duplicate']);
+		}
+
 		// Remove garbej
 		if (isset($data['_wysihtml5_mode'])) {
 			unset($data['_wysihtml5_mode']);
@@ -82,26 +87,17 @@ class Post extends Database{
 		// Default status to publish
 		$post_data['status'] = 'published';
 
-		// Update categorie post count to negative
-		$categories = $this->get_meta($post_ID, 'categories');
-		if ($categories) {
-			$categories = json_decode($categories);
-			foreach ($categories as $category_ID) {
-				$this->categories->update_category_count($category_ID, -1);
-			}
-		}
-		
 		// Post type
 		$post_data['type'] = $type;
 
-		if (!isset($data['duplicate']) && isset($post_ID)) {
+		if (isset($post_ID)) {
 			// Update old
 			$this->where('ID', $post_ID);
 			$this->update($this->table_name, $post_data);
 
 			// delete categories if deselected all
 			if (!isset($data['categories'])) {
-				$this->delete_meta($post_ID, 'categories');
+				$this->delete_meta($post_ID, 'category');
 			}
 
 		}else{
@@ -110,23 +106,37 @@ class Post extends Database{
 			$post_ID = $this->last_id();
 		}
 
-
-		if (isset($data['duplicate'])) {
-			unset($data['duplicate']);
+		// Update categorie post count to negative
+		$categories = $this->get_meta($post_ID, 'category');
+		if ($categories) {
+			foreach ($categories as $category) {
+				$this->categories->update_category_count($category->meta_value, -1);
+			}
 		}
+
+		// delete categories if deselected all
+		$this->delete_meta($post_ID, 'category');
+
+		// Insert post categories
+		if (isset($data['categories'])) {
+			foreach ($data['categories'] as $category) {
+				$meta = array();
+				$meta['meta_key'] = 'category';
+				$meta['meta_value'] = $category;
+				$meta['object_id'] = $post_ID;
+
+				$this->insert($this->table_meta_name, $meta);
+
+				// Update categorie post count to positive
+				$this->categories->update_category_count($category);
+			}
+			// Remove from array
+			unset($data['categories']);
+		} // end of category insert
 		
 		// Inset other fields as meta
 		foreach ($data as $key => $value) {
 			$this->save_meta($key, $value, $post_ID);
-		}
-
-		// Update categorie post count to positive
-		$categories = $this->get_meta($post_ID, 'categories');
-		if ($categories) {
-			$categories = json_decode($categories);
-			foreach ($categories as $category_ID) {
-				$this->categories->update_category_count($category_ID);
-			}
 		}
 
 		return $post_ID;
@@ -182,7 +192,7 @@ class Post extends Database{
 	/**
 	 * Get post meta
 	 */
-	public function get_meta($post_ID, $key = NULL)
+	public function get_meta($post_ID, $key = NULL, $single = false)
 	{
 		$this->where('object_id', $post_ID);
 		
@@ -195,7 +205,11 @@ class Post extends Database{
 			return false;
 		}
 
-		if (isset($key)) {
+		// if (isset($key)) {
+		// 	$result = $this->result();
+		// 	return $result->meta_value;
+		// }
+		if ($single) {
 			$result = $this->result();
 			return $result->meta_value;
 		}

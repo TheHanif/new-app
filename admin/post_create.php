@@ -258,9 +258,10 @@ include 'include/header.php';
 									<?php 
 										$selected_categories = array();
 
-										if (isset($ID) && $Post->get_meta($ID, 'categories')) {
-											unset($selected_categories);
-											$selected_categories = json_decode($Post->get_meta($ID, 'categories'));
+										if (isset($ID) && $get_categories_meta =$Post->get_meta($ID, 'category')) {
+											foreach ($get_categories_meta as $selected_category) {
+												$selected_categories[] = $selected_category->meta_value;
+											}
 										}
 
 										// Get all categories
@@ -322,8 +323,8 @@ include 'include/header.php';
 
 						$selected_media = array();
 
-						if (isset($ID)) {
-							$selected_media = json_decode($Post->get_meta($ID, 'featured_image'));
+						if (isset($ID) && $featured_images = $Post->get_meta($ID, 'featured_image', true)) {
+							$selected_media = json_decode($featured_images);
 						}
 
 						for ($i=0; $i < $custom_post['featured_image']; $i++):
