@@ -242,81 +242,84 @@ include 'include/header.php';
 
 					<?php 
 					// Categories
-					if(isset($custom_post['category']) && $custom_post['category'] == true): ?>
-					<div class="portlet">
-						<div class="portlet-heading default-bg">
-							<div class="portlet-title">
-								<h4><strong><?php __('Categories'); ?></strong></h4>
-							</div>
-							<div class="portlet-widgets">
-								<a data-toggle="collapse" data-parent="#accordion" href="#categories"><i class="fa fa-chevron-down"></i></a>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div id="categories" class="panel-collapse collapse in">
-							<div class="portlet-body">
-									<?php 
-										$selected_categories = array();
+					if(isset($custom_post['category']) && $custom_post['category'] == true):
+						
+						// Get all categories
+						$Categories = new categories();
+						$all_categories = $Categories->get_categories($type);
+						if ($all_categories){?>
+							<div class="portlet">
+								<div class="portlet-heading default-bg">
+									<div class="portlet-title">
+										<h4><strong><?php __('Categories'); ?></strong></h4>
+									</div>
+									<div class="portlet-widgets">
+										<a data-toggle="collapse" data-parent="#accordion" href="#categories"><i class="fa fa-chevron-down"></i></a>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div id="categories" class="panel-collapse collapse in">
+									<div class="portlet-body">
+											<?php 
+												$selected_categories = array();
 
-										if (isset($ID) && $get_categories_meta =$Post->get_meta($ID, 'category')) {
-											foreach ($get_categories_meta as $selected_category) {
-												$selected_categories[] = $selected_category->meta_value;
-											}
-										}
+												if (isset($ID) && $get_categories_meta =$Post->get_meta($ID, 'category')) {
+													foreach ($get_categories_meta as $selected_category) {
+														$selected_categories[] = $selected_category->meta_value;
+													}
+												}
 
-										// Get all categories
-										$Categories = new categories();
-										$all_categories = $Categories->get_categories($type);
-										foreach ($all_categories as $key => $all_category) { 
-											if($all_category->category_parent != 0) continue;
-										?>
-										<div class="row">
-										<div class="col-xs-12">
-										<div class="tcb" style="margin:0">
-											<label>
-												<input name="categories[]" <?php echo (in_array($all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $all_category->category_id; ?>" type="checkbox" class="tc">
-												<span class="labels"> <?php echo $all_category->category_name; ?></span>
-											</label>
-										</div></div></div>
-
-											<!-- Go for sencond level -->
-											<?php foreach ($all_categories as $key => $second_all_category) { 
-													if($second_all_category->category_parent != $all_category->category_id) continue;
+												
+												foreach ($all_categories as $key => $all_category) { 
+													if($all_category->category_parent != 0) continue;
 												?>
-											<div class="row"><div class="col-xs-1"></div>
-											<div class="col-xs-11">
-											<div class="tcb" style="margin:0">
-												<label>
-													<input name="categories[]" <?php echo (in_array($second_all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $second_all_category->category_id; ?>" type="checkbox" class="tc">
-													<span class="labels"> <?php echo $second_all_category->category_name; ?></span>
-												</label>
-											</div></div></div>
-
-												<!-- Go for third level -->
-												<?php foreach ($all_categories as $key => $third_all_category) { 
-														if($third_all_category->category_parent != $second_all_category->category_id) continue;
-													?>
-												<div class="row"><div class="col-xs-2"></div>
-												<div class="col-xs-10">
+												<div class="row">
+												<div class="col-xs-12">
 												<div class="tcb" style="margin:0">
 													<label>
-														<input name="categories[]" <?php echo (in_array($third_all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $third_all_category->category_id; ?>" type="checkbox" class="tc">
-														<span class="labels"> <?php echo $third_all_category->category_name; ?></span>
+														<input name="categories[]" <?php echo (in_array($all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $all_category->category_id; ?>" type="checkbox" class="tc">
+														<span class="labels"> <?php echo $all_category->category_name; ?></span>
 													</label>
 												</div></div></div>
-												
-												<?php }?>
-												<!-- End of third level -->
 
-											<?php }?>
-											<!-- End of sencond level -->
+													<!-- Go for sencond level -->
+													<?php foreach ($all_categories as $key => $second_all_category) { 
+															if($second_all_category->category_parent != $all_category->category_id) continue;
+														?>
+													<div class="row"><div class="col-xs-1"></div>
+													<div class="col-xs-11">
+													<div class="tcb" style="margin:0">
+														<label>
+															<input name="categories[]" <?php echo (in_array($second_all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $second_all_category->category_id; ?>" type="checkbox" class="tc">
+															<span class="labels"> <?php echo $second_all_category->category_name; ?></span>
+														</label>
+													</div></div></div>
 
-									<?php } // end of first level ?>
-							</div><!-- end of .body -->
-						</div>
-					</div><!-- end of .portlet -->
-					<?php endif; // end of categories ?>
+														<!-- Go for third level -->
+														<?php foreach ($all_categories as $key => $third_all_category) { 
+																if($third_all_category->category_parent != $second_all_category->category_id) continue;
+															?>
+														<div class="row"><div class="col-xs-2"></div>
+														<div class="col-xs-10">
+														<div class="tcb" style="margin:0">
+															<label>
+																<input name="categories[]" <?php echo (in_array($third_all_category->category_id, $selected_categories))? 'checked' : '' ?> value="<?php echo $third_all_category->category_id; ?>" type="checkbox" class="tc">
+																<span class="labels"> <?php echo $third_all_category->category_name; ?></span>
+															</label>
+														</div></div></div>
+														
+														<?php }?>
+														<!-- End of third level -->
 
+													<?php }?>
+													<!-- End of sencond level -->
+
+											<?php } // end of first level ?>
+									</div><!-- end of .body -->
+								</div>
+							</div><!-- end of .portlet -->
+					<?php }
+					endif; // end of categories ?>
 					<?php 
 					// Featured images
 					if(isset($custom_post['featured_image']) && (is_numeric($custom_post['featured_image']) && $custom_post['featured_image'] > 0)):
