@@ -20,6 +20,7 @@ $admin_title = ucfirst($custom_names);
 // Header file
 include 'include/header.php';
 ?>
+<link rel="stylesheet" href="assets/css/plugins/footable/footable.min.css">
 <!-- BEGIN MAIN PAGE CONTENT -->
 <div id="page-wrapper">
 	<!-- BEGIN PAGE HEADING ROW -->
@@ -57,23 +58,40 @@ include 'include/header.php';
 					echo "</p>";
 				else:
 				?>
-				<table class="table table-bordered table-striped table-hover tc-table">
-					<thead>
-						<tr>
-							<th class="col-small center"><?php __('Image'); ?></th>
-							<th><?php __('Name') ?></th>
-							<th class="col-small"><?php __('Posts') ?></th>
-							<th class="hidden-xs col-medium"><?php __('Date') ?></th>
-							<th class="center col-small"><?php __('Actions') ?></th>
-						</tr>
-					</thead>
-						tr*5>td*5>{Test}
-					<tbody>
-					</tbody>
-				</table>
+				
+				<div class="well white">
+					<table id="SampleDT" class="datatable table table-bordered table-striped table-hover tc-table table-primary footable">
+						<thead>
+							<tr>
+								<th class="col-small center"><label><input type="checkbox" class="tc"><span class="labels"></span></label></th>
+								<th><?php __('Name') ?></th>
+								<th class="hidden-xs col-large center"><i class="fa fa-user" title="Author"></i></th>
+								<th class="hidden-xs col-medium center"><i class="fa fa-comments" title="Post Comments"></i></th>
+								<th class="hidden-xs col-medium center"><i class="fa fa-calendar" title="Date"></i></th>
+								<th class="center col-small"><?php __('Actions') ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><label><input type="checkbox" class="tc"><span class="labels"></span></label></td>
+								<td>My first sample post</td>
+								<td>Muhammad Hanif</td>
+								<td class="col-medium center"><small class="badge center">100</small></td>
+								<td>Test</td>
+								<td>Test</td>
+							</tr>
+						</tbody>
+					</table>
+				</div><!-- end of .well -->
 
 				<?php endif; ?>
 			</div>
 		</div>
 		<!-- END YOUR CONTENT HERE -->
+
 <?php include 'include/footer.php'; ?>
+
+<script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/js/plugins/datatables/datatables.js"></script>
+<script src="assets/js/plugins/datatables/datatables.responsive.js"></script>
+<script src="assets/js/plugins/datatables/datatables.init.js"></script>

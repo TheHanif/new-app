@@ -46,6 +46,10 @@ is_logged_in(true);
 	.bootbox-close-button{
 		margin-bottom: -11px;/*remove bottom margin of media browse*/
 	}
+
+	#SampleDT th:first-child::after, #SampleDT th:last-child::after, .no-data::after{
+		display: none;
+	}
 	</style>
 	<link rel="stylesheet" href="assets/css/plugins/bootstrap-wysihtml/bootstrap-wysihtml5.css">
 	<link href="assets/css/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
