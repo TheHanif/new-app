@@ -161,7 +161,7 @@ include 'include/header.php';
 										<div class="col-sm-9">
 											<select name="template" class="form-control selectpicker">
 												<option><?php __('none'); ?></option>
-												<option value="default" <?php echo ($Post->get_meta($ID, 'template'))? 'selected' : '' ?>>Default</option>
+												<option value="default" <?php echo ($Post->get_meta($ID, 'template', true) == 'default')? 'selected' : '' ?>>Default</option>
 											</select>
 										</div>
 									</div>
@@ -202,6 +202,7 @@ include 'include/header.php';
 								<?php endif; // end of post parent ?>
 
 								<?php 
+
 								// Post sidebar
 								if (isset($custom_post['attributes']) && in_array('sidebar', $custom_post['attributes'])): ?>
 								<div class="form-horizontal">
@@ -209,8 +210,8 @@ include 'include/header.php';
 										<label class="col-sm-3 control-label"><?php __('Sidebar') ?></label>
 										<div class="col-sm-9">
 											<select name="sidebar" class="form-control selectpicker">
-												<option><?php __('none'); ?></option>
-												<option value="left" <?php echo ($Post->get_meta($ID, 'sidebar'))? 'selected' : '' ?>>left</option>
+												<option value="0"><?php __('none'); ?></option>
+												<option value="left" <?php echo ($Post->get_meta($ID, 'sidebar', true) == 'left')? 'selected' : '' ?>>left</option>
 											</select>
 										</div>
 									</div>
