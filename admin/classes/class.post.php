@@ -18,6 +18,53 @@ class Post extends Database{
 	}
 
 	/**
+	 * Delete post
+	 */
+	public function delete_post($post_ID)
+	{
+		// Select post
+		$post = $this->get_post($post_ID);
+
+		if ($this->row_count() == 0) {
+			return false;
+		}
+
+		// Move children to parent level
+		$this->where('parent', $post_ID);
+		$this->update($this->table_name, array('parent'=> $post->parent));
+
+		// Delete post meta data
+		$this->delete_meta($post_ID);
+
+		// Delete post
+		$this->where('ID', $post_ID);
+		return $this->delete($this->table_name);
+	} // end of delete
+
+	/**
+	 * Get count of post
+	 */
+	public function get_post_count($type, $status = NULL)
+	{	
+		if (isset($status)) {
+			$this->where('status', $status);
+		}
+		$this->where('type', $type);
+		$this->from($this->table_name);
+		return $this->row_count();
+	}
+
+	/**
+	 * Change status of post
+	 */
+	public function change_status($post_ID, $status)
+	{
+		$this->where('ID', $post_ID);
+		$this->update($this->table_name, array('status'=>$status));
+		return $this->row_count();
+	}
+
+	/**
 	 * Get All posts by type
 	 */
 	public function get_posts($type)
@@ -225,6 +272,7 @@ class Post extends Database{
 		if (isset($key)) {
 			$this->where('meta_key', $key);
 		}
+
 		$this->where('object_id', $post_ID);
 		$this->delete($this->table_meta_name);
 	}// end of delete_meta()
