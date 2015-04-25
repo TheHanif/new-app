@@ -7,6 +7,16 @@ $type = $_GET['type'];
 
 $Posts = new post();
 
+// Select all post
+$fields = array();
+$fields['ID'] = 'ID';
+$fields['author'] = 'author';
+$fields['title'] = 'title';
+$fields['parent'] = 'parent';
+$fields['ts'] = 'cts';
+$fields['modified_ts'] = 'mts';
+
+$Posts->select($fields);
 $all_posts = $Posts->get_posts($type);
 
 // Get data of custom post from global post container
@@ -50,7 +60,7 @@ include 'include/header.php';
 			<div class="col-lg-12">
 				<?php
 				// print_f($all_categories);
-				if (!isset($all_posts)):
+				if (!isset($all_posts) || empty($all_posts)):
 					echo "<p>";
 					__($admin_title);
 					echo " ";
@@ -59,6 +69,15 @@ include 'include/header.php';
 				else:
 				?>
 				
+				<div class="well white">
+					<a href="#" class="btn btn-sm">All <small class="badge badge-primary">59</small></a>
+					<a href="#" class="btn btn-sm btn-primary active disabled">Published <small class="badge badge-inverse">41</small></a>
+					<a href="#" class="btn btn-sm ">Unpublished <small class="badge badge-primary">8</small></a>
+					<a href="#" class="btn btn-sm ">Trash <small class="badge badge-primary">10</small></a>
+
+					
+				</div>
+
 				<div class="well white">
 					<table id="SampleDT" class="datatable table table-bordered table-striped table-hover tc-table table-primary footable">
 						<thead>
@@ -72,6 +91,30 @@ include 'include/header.php';
 							</tr>
 						</thead>
 						<tbody>
+
+							<?php 
+								function generate_parent($all_posts, $parent = 0, $indent = ''){
+									foreach ($all_posts as $post) {
+										if ($post->parent != $parent) {
+											continue;
+										}
+										?>
+											<tr>
+												<td><label><input type="checkbox" class="tc"><span class="labels"></span></label></td>
+												<td><?php echo $indent.' '.$post->title ?></td>
+												<td>Muhammad Hanif</td>
+												<td class="col-medium center"><small class="badge center">100</small></td>
+												<td>Test</td>
+												<td>Test</td>
+											</tr>
+										<?php
+										generate_parent($all_posts, $post->ID, $indent.'- ');
+									}
+								} // end of generate_parent()
+								generate_parent($all_posts, 0, '');
+							?>
+
+							
 							<tr>
 								<td><label><input type="checkbox" class="tc"><span class="labels"></span></label></td>
 								<td>My first sample post</td>
