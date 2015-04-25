@@ -348,6 +348,7 @@ class Database {
         $this->_table = ' ' . $table_name;
         $this->_limit = $num_rows;
         $this->build_query();
+        return $this->row_count();
     }
 
     /**
