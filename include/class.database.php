@@ -15,15 +15,15 @@
  */
 class Database {
 
-    private $_DB;
-    private $_query;
-    private $_where = array();
-    private $_select = array();
-    private $_action;
-    private $_limit;
-    private $_table;
-    private $_data = array();
-    private $_joins = array();
+    public $_DB;
+    public $_query;
+    public $_where = array();
+    public $_select = array();
+    public $_action;
+    public $_limit;
+    public $_table;
+    public $_data = array();
+    public $_joins = array();
 
     /**
      * Connect Database
@@ -86,6 +86,7 @@ class Database {
      * @return none        
      */
     public function query($query) {
+        // echo $query;
         try {
             $this->_query = $this->_DB->prepare(filter_var($query, FILTER_SANITIZE_STRING));
             $this->bind_results();
@@ -98,6 +99,7 @@ class Database {
             // $this->_query = '';
             // unset($this->_action, $this->_where, $this->_limit, $this->_table, $this->_select, $this->_joins);
         } catch (PDOException $e) {
+            // print_f($e)
             $er = $e->errorInfo;
             echo '<p style="font-family:arial; background:#F00; position:absolute; z-index:10000; color:#FFF; padding:5px;">ERROR: ' . $er[2] . '</p>';
         }
@@ -107,10 +109,18 @@ class Database {
      * Bind params and data values
      * @return none
      */
-    private function bind_results() {
+    public function bind_results() {
         if (!empty($this->_where)) {
+            $ci = 0;
             foreach ($this->_where as $c => $value) {
-                $this->_query->bindValue(':' . $c, $value[0], $this->get_type($value[0]));
+                // $cn = $c;
+                $ci++;
+                if (strpos($c, '.')) {
+                    $c = explode('.', $c);
+                    $c = $c[1];
+                }
+
+                $this->_query->bindValue(':' . $c.$ci, $value[0], $this->get_type($value[0]));
             }
         }
 
@@ -128,7 +138,7 @@ class Database {
      * @param  mix $value param or data value
      * @return PDOdataType
      */
-    private function get_type($value) {
+    public function get_type($value) {
         if (is_int($value)) {
             $param = PDO::PARAM_INT;
         } elseif (is_bool($value)) {
@@ -151,13 +161,15 @@ class Database {
      * @param array $match
      * @param array $select
      */
-    private function join($table_name, $override_name, $join_type = 'INNER JOIN', $match = array(), $select = NULL) {
-        $conditions = array();
-        foreach ($match as $key1 => $key2) {
-            $conditions[] = $key1 . '=' . $key2;
-        }
+    public function join($table_name, $override_name, $join_type = 'INNER JOIN', $match, $select = NULL) {
+        // $conditions = array();
+        // foreach ($match as $key1 => $key2) {
+        //     $conditions[] = $key1 . '=' . $key2;
+        // }
+        if(isset($select))
         $this->select($select);
-        $this->_joins[] = $join_type . ' ' . $table_name . ' AS ' . $override_name . ' ON ' . implode(' AND ', $conditions);
+        // $this->_joins[] = $join_type . ' ' . $table_name . ' AS ' . $override_name . ' ON ' . implode(' AND ', $conditions);
+        $this->_joins[] = $join_type . ' ' . $table_name . ' AS ' . $override_name . ' ON ' . $match;
     }
 
     /**
@@ -197,7 +209,7 @@ class Database {
      * Build query before execute, Using the params, datas and requested query functions
      * @return none
      */
-    private function build_query() {
+    public function build_query() {
         $query = $this->_action;
         if ($this->_action == 'SELECT') {
             if (!empty($this->_select)) {
@@ -228,8 +240,17 @@ class Database {
         if (!empty($this->_where)) {
             $query .= ' WHERE ';
             $columns = array();
+
+            $ci = 0;
             foreach ($this->_where as $c => $v) {
-                $columns[] = $c . ' ' . $v[1] . ' :' . $c;
+                $cn = $c;
+                $ci++;
+                if (strpos($c, '.')) {
+                    $c = explode('.', $c);
+                    $c = $c[1];
+                }
+
+                $columns[] = $cn . ' ' . $v[1] . ' :' . $c.$ci;
             }
             $query .= implode(' AND ', $columns);
         }
@@ -259,7 +280,7 @@ class Database {
      * Build query to update data
      * @return string query part to use in build_query
      */
-    private function build_update_data() {
+    public function build_update_data() {
         $fields = '';
         $i = 0;
 
