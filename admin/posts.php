@@ -78,9 +78,11 @@ if (isset($_POST['filter']) || isset($_GET['category'])) {
 
 	$category = (isset($_POST['category'])) ? $_POST['category'] : $_GET['category'];
 
-	$Posts->inner_join('meta', 'c', 'c.object_id = objects.ID');
-	$Posts->where('c.meta_key', 'category');
-	$Posts->where('c.meta_value', $category);
+	if(!empty($category)){
+		$Posts->inner_join('meta', 'c', 'c.object_id = objects.ID');
+		$Posts->where('c.meta_key', 'category');
+		$Posts->where('c.meta_value', $category);
+	}
 } // end filter
 
 if (isset($_GET['status'])) {
@@ -197,12 +199,13 @@ include 'include/header.php';
 						<table id="SampleDT" class="datatable table table-bordered table-striped table-hover tc-table table-primary footable">
 							<thead>
 								<tr>
-									<th class="col-small hidden-xs center"><label><input type="checkbox" class="tc"><span class="labels"></span></label></th>
+									<th class="col-small center"><label><input type="checkbox" class="tc"><span class="labels"></span></label></th>
 									<th><?php __('Name') ?></th>
-									<th class="hidden-xs" style="width:160px; text-align: center;"><i class="fa fa-user" title="Author"></i></th>
-									<th class="hidden-xs" style="width:80px; text-align: center;"><i class="fa fa-comments" title="Post Comments"></i></th>
+									<th class="hidden-xs col-large center"><i class="fa fa-user" title="Author"></i></th>
+									<th class="hidden-xs col-medium center"><i class="fa fa-comments" title="Post Comments"></i></th>
 									<th class="hidden-xs col-medium center"><i class="fa fa-calendar" title="Date"></i></th>
 									<th class="center col-medium"><?php __('Actions') ?></th>
+
 								</tr>
 							</thead>
 							<tbody>
@@ -217,9 +220,9 @@ include 'include/header.php';
 											}
 											?>
 												<tr>
-													<td class="col-small hidden-xs center"><label><input type="checkbox" class="tc" name='posts[]' value="<?php echo $post->ID; ?>"><span class="labels"></span></label></td>
+													<td class="col-small center"><label><input type="checkbox" class="tc" name='posts[]' value="<?php echo $post->ID; ?>"><span class="labels"></span></label></td>
 													<td><?php echo $indent.' '.$post->title ?></td>
-													<td class="hidden-xs">
+													<td>
 														<?php 
 															// Author
 															$Users = new users();
@@ -227,8 +230,8 @@ include 'include/header.php';
 															echo $profile->user_display_name;
 														?>
 													</td>
-													<td class="hidden-xs" style="width:80px; text-align: center;"><small class="badge center"><?php echo $post->comments; ?></small></td>
-													<td class="hidden-xs col-medium center"><?php echo $Users->_date('d-m-Y', $post->cts); ?></td>
+													<td class="col-medium center"><small class="badge center"><?php echo $post->comments; ?></small></td>
+													<td class="col-medium center"><?php echo $Users->_date('d-m-Y', $post->cts); ?></td>
 													<td class="center col-medium">
 														<div class="btn-group btn-group-sm">
 															<a href="post_create.php?type=<?php echo $type; ?>&ID=<?php echo $post->ID; ?>" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
