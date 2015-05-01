@@ -65,13 +65,14 @@ class Language extends Settings{
 
 		// remove head and tail
 		$info = str_replace('/**'.PHP_EOL, '', $info);
+		$info = str_replace(' * ', '', $info);
 		$info = str_replace('*/', '', $info);
 		$info = explode(PHP_EOL, $info);
 		
 		// Get details
-		$name = end(explode('* Name: ', $info[0]));
-		$country = end(explode('* Country: ', $info[1]));
-		$direction = end(explode('* Direction: ', $info[2]));
+		$name = end(explode('Name: ', $info[1]));
+		$country = end(explode('Country: ', $info[2]));
+		$direction = end(explode('Direction: ', $info[3]));
 
 		// Prepare
 		$info = array();
