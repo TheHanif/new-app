@@ -244,9 +244,17 @@ function add_navigation_item($name, $title, $icon, $file, $child_files = array()
 	);
 
 	if (isset($parent)) { // Submenu item
+
+		// 2nd Level
 		if (isset($admin_sidebar_navigation[$parent])) {
 			$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
 		}
+
+		// 3rd Level
+		if (is_array($parent) && isset($admin_sidebar_navigation[$parent[0]]['submenu'][$parent[1]])) {
+			$admin_sidebar_navigation[$parent[0]]['submenu'][$parent[1]]['submenu'][$name]=$item;
+		}
+
 	}else{ // Top level item
 		$admin_sidebar_navigation[$name]=$item;
 	}
