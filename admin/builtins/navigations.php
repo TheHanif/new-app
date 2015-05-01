@@ -25,7 +25,7 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 			,'excerpt'=> true
 			,'category'	=> true
 			,'featured_image'=> 3
-			,'tag'	=> true
+			,'tag'	=> false
 			,'template' => true
 			,'searchable'=> true
 		);
@@ -33,24 +33,6 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 	register_post($blog); // end Blog
 } // end blog
 
-// Blog
-$services = array(
-		'id' 		=>	'services'
-		,'name'	=> 'Services'
-		,'meta'		=>	array(
-					'title' => 'Service'
-					,'single_title' => 'service'
-					,'pulural_title' => 'services'
-					,'icon' => 'thumb-tack'
-					)
-		,'category'	=> true
-		,'featured_image'=> true
-		,'tag'	=> true
-		,'template' => true
-		,'searchable'=> true
-	);
-
-register_post($services); // end Blog
 
 // Media
 add_navigation_item('media', 'Media', 'camera', 'media.php', array('media_upload.php', 'media_edit.php'));
@@ -67,3 +49,4 @@ add_navigation_item('user_role', 'User roles', 'check', 'user_roles.php', array(
 add_navigation_item('settings', 'Settings', 'cogs', 'settings.php', array(), NULL, NULL, array('Settings'=>array('manage-settings')));
 
 // print_f($Users->user_capabilities, 1);
+// print_f($admin_sidebar_navigation, 1);
