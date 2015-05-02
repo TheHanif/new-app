@@ -142,10 +142,43 @@ function generate_admin_menu()
 										unlock_page(is_page_active($submenu_data['child_files'], $id, false), $submenu_data['has_settings'], $submenu_data['has_capability']);
 									}
 									?>
-										<li>
-											<a class="<?php echo $submenu_item_active; ?>" href="<?php echo $submenu_data['file']; ?>">
+										<li class="<?php echo (isset($submenu_data['submenu']))? check_submenu($submenu_data['submenu'], $submenu_key) : ''; ?>">
+											<a class="<?php echo $submenu_item_active; echo (isset($submenu_data['submenu']))? ' accordion-toggle' : ''; ?>" <?php echo (isset($submenu_data['submenu']))? ('data-toggle="collapse"  data-target="#'.$submenu_key.'"') : ''; ?> href="<?php echo $submenu_data['file']; ?>">
 												<i class="fa fa-<?php echo $submenu_data['icon']; ?>"></i> <?php __($submenu_data['title']); ?>
+												<?php if (isset($submenu_data['submenu'])) { ?>
+													<span class="fa arrow"></span>
+												<?php } ?>
 											</a>
+
+											<?php // Goto 3rd menu level
+												if (isset($submenu_data['submenu'])) {
+
+													?>
+														<ul class="collapse nav" id="<?php echo $submenu_key; ?>">
+															<?php 
+																foreach ($submenu_data['submenu'] as $third_key => $third_data) {
+																	$third_item_active = '';
+																	if (strpos($third_data['file'], '.')) {
+																		$third_file = array_shift(array_slice(explode('.', $third_data['file']), 0, 1));
+
+																		$third_data['child_files'][] = $third_file;
+																		
+																		$third_item_active = is_page_active($third_data['child_files'], $id, false);
+
+																		// Go to unlock the page
+																		unlock_page(is_page_active($third_data['child_files'], $id, false), $third_data['has_settings'], $third_data['has_capability']);
+																	}
+																	?>
+																		<li>
+																			<a href="<?php echo $third_data['file']; ?>" class="<?php echo $third_item_active; ?>" title="Title"><i class="fa fa-angle-double-right"></i> item1 </a>
+																		</li>
+																	<?php
+																}
+															?>
+														</ul>
+													<?php
+												} // end 3rd menu level
+											 ?>
 										</li>
 									<?php
 								} // end for foreach
@@ -191,11 +224,12 @@ function get_lock_status()
 /**
  * Get classes for submenus
  */
-function check_submenu($data, $id = NULL)
+function check_submenu($data, $id = NULL, $third = NULL)
 {
 	$open = '';
 	foreach ($data as $key => $value) {
 		if (strpos($value['file'], '.')) {
+
 			$file = array_shift(array_slice(explode('.', $value['file']), 0, 1));
 
 			$value['child_files'][] = $file;
@@ -203,8 +237,15 @@ function check_submenu($data, $id = NULL)
 			if (is_page_active($value['child_files'], $id, false)) {
 				$open = 'open';
 			}
+		}elseif(isset($value['submenu'])){
+
+			$open = check_submenu($value['submenu'], $key, true);
 		}
 	}// end foreach
+
+	if (isset($third)) {
+		return $open;
+	}
 
 	$class = 'panel '.$open;
 	return $class;
@@ -246,7 +287,7 @@ function add_navigation_item($name, $title, $icon, $file, $child_files = array()
 	if (isset($parent)) { // Submenu item
 
 		// 2nd Level
-		if (isset($admin_sidebar_navigation[$parent])) {
+		if (!is_array($parent) && isset($admin_sidebar_navigation[$parent])) {
 			$admin_sidebar_navigation[$parent]['submenu'][$name]=$item;
 		}
 
