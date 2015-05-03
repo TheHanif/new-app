@@ -33,6 +33,10 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 	register_post($blog); // end Blog
 } // end blog
 
+// Catalog
+if (defined('HAS_CATALOG') && HAS_CATALOG == true) {
+	include 'catalog_nav.php';
+} // end catalog menu
 
 // Media
 add_navigation_item('media', 'Media', 'camera', 'media.php', array('media_upload.php', 'media_edit.php'));
