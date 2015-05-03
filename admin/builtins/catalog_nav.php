@@ -21,7 +21,7 @@ add_navigation_item('sections', 'Sections', 'list', '#', array(), 'catalog', HAS
 /**
  * Manufacturers
  */
-add_navigation_item('manufacturers', 'Manufacturers', 'check', '#', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('manufacturers', 'Manufacturers', 'check', '#', array(), 'catalog', HAS_CATALOG_MANUFACTURERS, array('Catalog'=>array('manage-products')));
 
 /**
  * Downloads
@@ -41,12 +41,12 @@ add_navigation_item('attributes', 'Attributes', 'th', '#', array(), 'catalog', H
 /**
  * Sales
  */
-add_navigation_item('sales', 'Sales', 'money', '#', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('sales', 'Sales', 'money', '#', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-orders')));
 
 /**
  * Methods
  */
-add_navigation_item('methods', 'Methods', 'plug', '#', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('methods', 'Methods', 'plug', '#', array(), 'catalog', HAS_METHODS, array('Catalog'=>array('manage-products')));
 
 
 
