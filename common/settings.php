@@ -8,6 +8,7 @@ define('HAS_BLOG', true);					// Manage blog
 
 // Catelog
 define('HAS_CATALOG', true);				// Able to manage products
+define('HAS_METHODS', true);				// Able to manage methods
 define('HAS_CATALOG_PAYMENT', true);		// Add payment module and checkout options for products
 define('HAS_CATALOG_SHIPPING', true);		// Add shipping modules for products
 define('HAS_CATALOG_MANUFACTURERS', true);	// Add multiple manufacturer options
