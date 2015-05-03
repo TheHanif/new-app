@@ -22,6 +22,7 @@ $Users->register_capability('Site', 'Manage Themes');
 
 // Catalog
 $Users->register_capability('Catalog', 'Manage catalog');
+$Users->register_capability('Catalog', 'Manage products');
 $Users->register_capability('Catalog', 'Add Products');
 $Users->register_capability('Catalog', 'Edit Products');
 $Users->register_capability('Catalog', 'Delete Products');
