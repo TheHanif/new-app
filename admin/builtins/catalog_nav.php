@@ -16,12 +16,12 @@ add_navigation_item('products', 'Products', 'barcode', '#', array(), 'catalog', 
 /**
  * Sections
  */
-add_navigation_item('sections', 'Sections', 'list', '#', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('sections', 'Sections', 'list', 'categories.php?type=section', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
 
 /**
  * Manufacturers
  */
-add_navigation_item('manufacturers', 'Manufacturers', 'check', '#', array(), 'catalog', HAS_CATALOG_MANUFACTURERS, array('Catalog'=>array('manage-products')));
+add_navigation_item('manufacturers', 'Manufacturers', 'check', 'categories.php?type=manufacturer', array(), 'catalog', HAS_CATALOG_MANUFACTURERS, array('Catalog'=>array('manage-products')));
 
 /**
  * Downloads
