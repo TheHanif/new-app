@@ -3,7 +3,8 @@
 include_once 'include/init.php';
 
 // Page title
-$admin_title = 'Categories';
+$admin_title = ($_GET['type'] == 'section')? 'Sections' : 'Categories';
+$admin_title = ($_GET['type'] == 'manufacturer')? 'Manufacturers' : $admin_title;
 
 // Get type for custom post
 $type = $_GET['type'];
@@ -15,7 +16,7 @@ $Categories = new categories();
 if (isset($_POST['submit'])) {
 	$result = $Categories->save_category($_POST, $type, $ID);
 	if ($result > 0) {
-		register_admin_message('Success', 'Category updated/created successfully.', 'success');
+		register_admin_message('Success', 'Updated/Created successfully.', 'success');
 	}
 }
 
@@ -29,9 +30,9 @@ if (isset($_GET['action'])) {
 	// Delete category
 	if ($_GET['action'] == 'delete') {
 		if ($Categories->delete_category($ID) > 0) {
-			register_admin_message('Success', 'Category has been deleted successfully.', 'success');
+			register_admin_message('Success', 'Deleted successfully.', 'success');
 		}else{
-			register_admin_message('Not found', 'Category not found or already deleted. Please try again.', 'danger');
+			register_admin_message('Not found', 'Not found or already deleted. Please try again.', 'danger');
 		}
 		unset($_GET['action']);
 		unset($_GET['ID']);
@@ -55,7 +56,7 @@ include 'include/header.php';
 				
 				<div class="page-header title">
 				<!-- PAGE TITLE ROW -->
-					<h1><?php echo __($admin_title); ?> <span class="sub-title"><?php __(ucfirst($type)); ?></span> <?php if (isset($_GET['action']) && $_GET['action'] == 'edit') {
+					<h1><?php echo __($admin_title); ?> <!-- <span class="sub-title"><?php __(ucfirst($type)); ?></span> --> <?php if (isset($_GET['action']) && $_GET['action'] == 'edit') {
 						?> <a href="categories.php?type=<?php echo $type; ?>" class="btn btn-default pull-right btn-sm"><i class="fa fa-plus"></i> <?php __('Create new'); ?></a><?php
 					} ?></h1>								
 				</div>
@@ -76,7 +77,7 @@ include 'include/header.php';
 				<div class="portlet">
 					<div class="portlet-heading default-bg">
 						<div class="portlet-title">
-							<h4><?php __(((isset($_GET['action']) && $_GET['action'] == 'edit')? 'Edit' : 'Create new')); echo ' '; __('category'); ?></h4>
+							<h4><?php __(((isset($_GET['action']) && $_GET['action'] == 'edit')? 'Edit' : 'Create new')); ?></h4>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -159,7 +160,7 @@ include 'include/header.php';
 							
 							<div class="form-group">
 								<div class="col-sm-12">
-									<textarea name="description" rows='6' placeholder="<?php __('Category Description'); ?>" id="editor" class="form-control"><?php echo (isset($category))? $category->category_description : ''; ?></textarea>
+									<textarea name="description" rows='6' placeholder="<?php __('Description'); ?>" id="editor" class="form-control"><?php echo (isset($category))? $category->category_description : ''; ?></textarea>
 								</div>
 							</div>
 
