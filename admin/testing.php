@@ -48,7 +48,7 @@ include 'include/header.php';
 
 // print_f(mysql_fetch_object($a));
 
-$DB = new database1();
+// $DB = new database1();
 
 // $query = "SELECT *
 // FROM objects AS o
@@ -65,19 +65,19 @@ $DB = new database1();
 
 // $DB->_query->execute();
 
-$DB->select(array('m.meta_value'=>'template', 'c.meta_value'=>'category'));
+// $DB->select(array('m.meta_value'=>'template', 'c.meta_value'=>'category'));
 
-$DB->inner_join('meta', 'm', 'm.object_id = objects.ID');
-$DB->inner_join('meta', 'c', 'c.object_id = objects.ID');
-// $DB->inner_join('categories', 'c', 'c.category_id = m.meta_value');
+// $DB->inner_join('meta', 'm', 'm.object_id = objects.ID');
+// $DB->inner_join('meta', 'c', 'c.object_id = objects.ID');
+// // $DB->inner_join('categories', 'c', 'c.category_id = m.meta_value');
 
-// $DB->where('c.category_slug', 'sample-category-2');
-$DB->where('m.meta_key', 'template');
-$DB->where('c.meta_key', 'category');
+// // $DB->where('c.category_slug', 'sample-category-2');
+// $DB->where('m.meta_key', 'template');
+// $DB->where('c.meta_key', 'category');
 
-$DB->from('objects');
+// $DB->from('objects');
 
-print_f($DB->all_results());
+// print_f($DB->all_results());
 
 
 
