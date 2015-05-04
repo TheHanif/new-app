@@ -189,7 +189,7 @@ function generate_admin_menu()
 																	}
 																	?>
 																		<li>
-																			<a href="<?php echo $third_data['file']; ?>" class="<?php echo $third_item_active; ?>" title="Title"><i class="fa fa-<?php echo $third_data['icon']; ?>"></i> item1 </a>
+																			<a href="<?php echo $third_data['file']; ?>" class="<?php echo $third_item_active; ?>" title="Title"><i class="fa fa-<?php echo $third_data['icon']; ?>"></i> <?php __($third_data['title']); ?> </a>
 																		</li>
 																	<?php
 																}
