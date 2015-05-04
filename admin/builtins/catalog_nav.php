@@ -12,6 +12,8 @@ add_navigation_item('catalog', 'Catalog', 'shopping-cart', '#', array(), NULL, H
  * Products
  */
 add_navigation_item('products', 'Products', 'barcode', '#', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('all_products', 'All products', 'list', '#', array(), array('catalog', 'products'), HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('new_products', 'Add new', 'plus', '#', array(), array('catalog', 'products'), HAS_CATALOG, array('Catalog'=>array('manage-products')));
 
 /**
  * Sections
