@@ -75,7 +75,7 @@ function get_script_name()
 	return end(explode('/', rtrim($_SERVER['SCRIPT_NAME'], '.php')));
 }
 
-function is_page_active($page, $id = NULL, $echo = true)
+function is_page_active($page, $id = NULL, $echo = true, $sub_id = NULL)
 {	
 	$state = true;
 
@@ -85,6 +85,25 @@ function is_page_active($page, $id = NULL, $echo = true)
 
 		if (isset($query_strings['type']) && !in_array($id, $query_strings)) {
 			$state = false;
+		}
+		
+		// Handle top level catalog current item for sections and manufacturers
+		if((($id == 'catalog' && get_script_name() == 'categories') && !$sub_id) && ($query_strings['type'] == 'section' || $query_strings['type'] == 'manufacturer')){
+			$state = true;
+		}
+	}
+
+	// Handle catalog current item for sections and manufacturers
+	if (isset($sub_id) && get_query_string()) {
+		
+		$query_strings = get_query_string();
+
+		if(($sub_id == 'sections' && in_array('section', $query_strings))){
+			$state = true;
+		}
+
+		if($sub_id == 'manufacturers' && in_array('manufacturer', $query_strings)){
+			$state = true;
 		}
 	}
 
@@ -136,10 +155,10 @@ function generate_admin_menu()
 
 										$submenu_data['child_files'][] = $file;
 										
-										$submenu_item_active = is_page_active($submenu_data['child_files'], $id, false);
+										$submenu_item_active = is_page_active($submenu_data['child_files'], $id, false, $submenu_key);
 
 										// Go to unlock the page
-										unlock_page(is_page_active($submenu_data['child_files'], $id, false), $submenu_data['has_settings'], $submenu_data['has_capability']);
+										unlock_page(is_page_active($submenu_data['child_files'], $id, false, $submenu_key), $submenu_data['has_settings'], $submenu_data['has_capability']);
 									}
 									?>
 										<li class="<?php echo (isset($submenu_data['submenu']))? check_submenu($submenu_data['submenu'], $submenu_key) : ''; ?>">
