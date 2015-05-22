@@ -3,7 +3,8 @@
 include_once 'include/init.php';
 
 // Page title
-$admin_title = ($_GET['type'] == 'section')? 'Sections' : 'Categories';
+// $admin_title = ($_GET['type'] == 'section')? 'Sections' : 'Categories';
+$admin_title = 'Categories';
 $admin_title = ($_GET['type'] == 'manufacturer')? 'Manufacturers' : $admin_title;
 
 // Get type for custom post
