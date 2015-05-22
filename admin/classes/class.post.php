@@ -29,6 +29,14 @@ class Post extends Database{
 			return false;
 		}
 
+		// Update categorie post count to negative
+		$categories = $this->get_meta($post_ID, 'category');
+		if ($categories) {
+			foreach ($categories as $category) {
+				$this->categories->update_category_count($category->meta_value, -1);
+			}
+		}
+
 		// Move children to parent level
 		$this->where('parent', $post_ID);
 		$this->update($this->table_name, array('parent'=> $post->parent));
