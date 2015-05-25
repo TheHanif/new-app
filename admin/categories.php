@@ -194,7 +194,7 @@ include 'include/header.php';
 						<tr>
 							<th class="col-small center"><?php __('Image'); ?></th>
 							<th><?php __('Name') ?></th>
-							<th class="col-small"><?php __('Posts') ?></th>
+							<th class="col-small"><?php __('Items') ?></th>
 							<th class="hidden-xs col-medium"><?php __('Date') ?></th>
 							<th class="center col-small"><?php __('Actions') ?></th>
 						</tr>

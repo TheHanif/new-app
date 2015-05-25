@@ -18,7 +18,7 @@ add_navigation_item('new_products', 'Add new', 'plus', '#', array(), array('cata
 /**
  * Sections
  */
-add_navigation_item('categories', 'Categories', 'list', 'categories.php?type=catalog', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
+add_navigation_item('catagories', 'Categories', 'list', 'categories.php?type=catalog_catagories', array(), 'catalog', HAS_CATALOG, array('Catalog'=>array('manage-products')));
 
 /**
  * Manufacturers

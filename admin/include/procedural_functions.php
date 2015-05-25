@@ -87,18 +87,18 @@ function is_page_active($page, $id = NULL, $echo = true, $sub_id = NULL)
 			$state = false;
 		}
 		
-		// Handle top level catalog current item for sections and manufacturers
-		if((($id == 'catalog' && get_script_name() == 'categories') && !$sub_id) && ($query_strings['type'] == 'section' || $query_strings['type'] == 'manufacturer')){
+		// Handle top level catalog current item for catalog_catagories and manufacturers
+		if((($id == 'catalog' && get_script_name() == 'categories') && !$sub_id) && ($query_strings['type'] == 'catalog_catagories' || $query_strings['type'] == 'manufacturer')){
 			$state = true;
 		}
 	}
 
-	// Handle catalog current item for sections and manufacturers
+	// Handle catalog current item for catalog_catagories and manufacturers
 	if (isset($sub_id) && get_query_string()) {
 		
 		$query_strings = get_query_string();
 
-		if(($sub_id == 'sections' && in_array('section', $query_strings))){
+		if(($sub_id == 'catagories' && in_array('catalog_catagories', $query_strings))){
 			$state = true;
 		}
 
