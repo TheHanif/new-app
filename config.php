@@ -2,7 +2,7 @@
 /**
  * Please enter your database details
  */
-
+ 
 // Database Server path
 define('DB_HOST', 'localhost');
 
