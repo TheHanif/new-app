@@ -6,6 +6,9 @@
 // Blog
 define('HAS_BLOG', true);					// Manage blog
 
+// Pages
+define('HAS_PAGES', true);					// Manage pages
+
 // Catelog
 define('HAS_CATALOG', true);				// Able to manage products
 define('HAS_METHODS', true);				// Able to manage methods

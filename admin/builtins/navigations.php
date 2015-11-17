@@ -8,6 +8,32 @@
 // Dashboard
 add_navigation_item('dashboard', 'Dashboard', 'dashboard', 'index.php');
 
+// Pages
+if (defined('HAS_PAGES') && HAS_PAGES == true) {
+
+	$pages = array(
+			'id' 		=>	'page'
+			,'name'	=> 'Pages'
+			,'meta'		=>	array(
+						'title' => 'Page'
+						,'single_title' => 'Page'
+						,'pulural_title' => 'Pages'
+						,'icon' => 'file-text'
+						)
+			,'attributes' => array('template', 'sidebar', 'parent')
+			,'permalink'=> true
+			,'content'=> true
+			,'excerpt'=> true
+			,'category'	=> false // no categories
+			,'featured_image'=> 1
+			,'tag'	=> false
+			,'template' => true
+			,'searchable'=> true
+		);
+
+	register_post($pages); // end pages
+} // end pages
+
 // Blog
 if (defined('HAS_BLOG') && HAS_BLOG == true) {
 	$blog = array(
@@ -15,11 +41,11 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 			,'name'	=> 'Blog'
 			,'meta'		=>	array(
 						'title' => 'Post'
-						,'single_title' => 'post'
-						,'pulural_title' => 'posts'
+						,'single_title' => 'Post'
+						,'pulural_title' => 'Posts'
 						,'icon' => 'thumb-tack'
 						)
-			,'attributes' => array('template', 'sidebar', 'parent')
+			,'attributes' => array()
 			,'permalink'=> true
 			,'content'=> true
 			,'excerpt'=> true
@@ -32,6 +58,7 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 
 	register_post($blog); // end Blog
 } // end blog
+
 
 // Catalog
 if (defined('HAS_CATALOG') && HAS_CATALOG == true) {
