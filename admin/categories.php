@@ -12,6 +12,9 @@ $type = $_GET['type'];
 
 $ID = (isset($_GET['ID']))? $_GET['ID'] : NULL;
 
+// Catch url to filter latter
+$actual_url = get_actual_url(false);
+
 $Categories = new categories();
 
 if (isset($_POST['submit'])) {
@@ -21,6 +24,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 
+
 if (isset($_GET['action'])) {
 	
 	// Get category
@@ -29,14 +33,15 @@ if (isset($_GET['action'])) {
 	}
 
 	// Delete category
-	if ($_GET['action'] == 'delete') {
+	if ($_GET['action'] == 'delete' && !isset($_POST['submit'])) {
 		if ($Categories->delete_category($ID) > 0) {
 			register_admin_message('Success', 'Deleted successfully.', 'success');
 		}else{
 			register_admin_message('Not found', 'Not found or already deleted. Please try again.', 'danger');
 		}
-		unset($_GET['action']);
-		unset($_GET['ID']);
+		
+		$actual_url = str_replace('&action=delete', '', $actual_url);
+		$actual_url = str_replace('&ID='.$ID, '', $actual_url);
 	}
 }
 
@@ -84,7 +89,7 @@ include 'include/header.php';
 					</div>
 
 					<div class="portlet-body">
-						<form class="form-horizontal" action="<?php echo get_actual_url(false); ?>" role="form" method="post">
+						<form class="form-horizontal" action="<?php echo $actual_url; ?>" role="form" method="post">
 							<div class="form-group">
 								<label class="col-sm-2 control-label"><?php __('Name'); ?></label>
 								<div class="col-sm-10">
