@@ -104,3 +104,23 @@ function get_query_string()
 
 	return $params;
 }
+
+/**
+ * Register media size
+ * @param  array  $new_size
+ * 
+ * array(
+ *		'key' => 'medium'
+ *		,'description' => 'Medial'
+ *		, 'crop' => false
+ *	)
+ */
+function register_media_size($new_size = array()){
+	global $media_sizes;
+	$media_sizes[] = $new_size;
+} // end of register_media_size()
+
+function get_media_sizes(){
+	global $media_sizes;
+	return $media_sizes;
+}

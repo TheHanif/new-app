@@ -97,6 +97,12 @@ function get_media(browser, editor = null){
 			
 				if (editor != null || (browser != null && browser.data('output') == 'url')) { value = path+media.file};
 
+				// Set data from footer file for custom media sizes
+				var data_attr = '';
+				$(media_sizes).each(function() {
+					data_attr += ' data-'+this.key+'="'+path+media.file.replace('.', '-'+this.key+'.')+'"';
+				})
+
 				gallery += '<li class="thumbnail">'+
 					'<div class="thumb-preview">'+
 						'<div class="thumb-image">'+
@@ -108,7 +114,7 @@ function get_media(browser, editor = null){
 							'</a>'+
 							'<div class="gl-toolbar">'+
 								'<div class="gl-option checkbox-inline">'+
-									'<input class="tc media_select" type="checkbox" id="file_'+media.ID+'" name="media" data-preview="'+path+media.file.replace('.', '-large.')+'" data-thumbnail="'+path+media.file.replace('.', '-thumbnail.')+'" data-small="'+path+media.file.replace('.', '-small.')+'" data-medium="'+path+media.file.replace('.', '-medium.')+'" data-large="'+path+media.file.replace('.', '-large.')+'" value="'+value+'">'+
+									'<input class="tc media_select" type="checkbox" id="file_'+media.ID+'" name="media" data-preview="'+path+media.file.replace('.', '-large.')+'" '+data_attr+' value="'+value+'">'+
 									'<label class="labels media" for="file_'+media.ID+'"> Select</label>'+
 								'</div>'+
 							'</div>'+
@@ -139,37 +145,15 @@ function get_media(browser, editor = null){
 							}else{
 								var message = "<strong>Select Size</strong>";
 
-									// Thumbnail
+								// Set data from footer file for custom media sizes
+								$(media_sizes).each(function() {
 									message += '<div class="tcb">'+
 													'<label>'+
-														'<input type="radio" name="optionsRadios" value="thumbnail" class="tc sizes">'+
-														'<span class="labels"> Thumbnail</span>'+
+														'<input type="radio" name="optionsRadios" value="'+this.key+'" class="tc sizes">'+
+														'<span class="labels"> '+this.description+'</span>'+
 													'</label>'+
 												'</div>';
-
-									// Small
-									message += '<div class="tcb">'+
-													'<label>'+
-														'<input type="radio" name="optionsRadios" value="small" class="tc sizes">'+
-														'<span class="labels"> Small</span>'+
-													'</label>'+
-												'</div>';
-
-									// Medium
-									message += '<div class="tcb">'+
-													'<label>'+
-														'<input type="radio" name="optionsRadios" value="medium" class="tc sizes">'+
-														'<span class="labels"> Medium</span>'+
-													'</label>'+
-												'</div>';
-
-									// Large
-									message += '<div class="tcb">'+
-													'<label>'+
-														'<input type="radio" name="optionsRadios" value="large" class="tc sizes">'+
-														'<span class="labels"> Large</span>'+
-													'</label>'+
-												'</div>';
+								})
 
 									// Original
 									message += '<div class="tcb">'+

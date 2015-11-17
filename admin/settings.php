@@ -77,6 +77,7 @@ include 'include/header.php';
 							<div class="tab-pane active" id="general">
 								<div class="row">
 									<div class="col-sm-6 col-xs-12">
+
 										<div class="form-group">
 											<label class="col-sm-3 control-label"><?php __('Title') ?>:</label>
 											<div class="col-sm-9">
@@ -136,126 +137,52 @@ include 'include/header.php';
 								<div class="hr hr-12 hr-double"></div>
 								<div class="row">
 									<div class="col-sm-6 col-xs-12">
-										<div class="form-group">
-											<label class="col-sm-3 control-label"><?php __('Thumbnail') ?>:</label>
-											
-											<div class="col-sm-8 col-sm-offset-1">
-												<div class="row">
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Width') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->thumbnail->w))? $media->thumbnail->w : '' ?>" name="media[thumbnail][w]">
+
+										<?php 
+											$media_sizes = get_media_sizes();
+
+											foreach($media_sizes as $media_size){
+												$key = $media_size['key'];
+												?>
+													<div class="form-group">
+														<label class="col-sm-3 control-label"><?php __($media_size['description']) ?>:</label>
+														
+														<div class="col-sm-8 col-sm-offset-1">
+															<div class="row">
+																<div class="col-sm-6">
+																	<div class="form-group">
+																		<label class="col-sm-4 control-label"><small><?php __('Width') ?>:</small></label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" value="<?php echo (isset($media->$key->w))? $media->$key->w : '' ?>" name="media[<?php echo $key; ?>][w]">
+																		</div>
+																	</div>
+																</div><!-- width -->
+
+																<div class="col-sm-6">
+																	<div class="form-group">
+																		<label class="col-sm-4 control-label"><small><?php __('Height') ?>:</small></label>
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" value="<?php echo (isset($media->$key->h))? $media->$key->h : '' ?>" name="media[<?php echo $key; ?>][h]">
+																		</div>
+																	</div>
+																</div><!-- height -->
 															</div>
-														</div>
-													</div><!-- width -->
+															<?php if (isset($media_size['crop']) && $media_size['crop'] == true) { ?>
+																<div class="tcb">
+																	<label>
+																		<input type="checkbox" class="tc" <?php echo (isset($media->$key->c))? 'checked' : '' ?> name="media[<?php echo $key; ?>][c]" value="1">
+																		<span class="labels"> <?php __('Crop to exact dimensions'); ?></span>
+																	</label>
+																</div><!-- // crop checkbox -->
+															<?php } ?>
+														</div><!-- column -->
 
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Height') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->thumbnail->h))? $media->thumbnail->h : '' ?>" name="media[thumbnail][h]">
-															</div>
-														</div>
-													</div><!-- height -->
-												</div>
-												<div class="tcb">
-													<label>
-														<input type="checkbox" class="tc" <?php echo (isset($media->thumbnail->c))? 'checked' : '' ?> name="media[thumbnail][c]" value="1">
-														<span class="labels"> <?php __('Crop thumbnail to exact dimensions'); ?></span>
-													</label>
-												</div><!-- // crop checkbox -->
-											</div><!-- column -->
+													</div><!-- // end -->
 
-										</div><!-- // thumbnail -->
-
-										<hr class="seperator">
-										<div class="form-group">
-											<label class="col-sm-3 control-label"><?php __('Small') ?>:</label>
-											
-											<div class="col-sm-8 col-sm-offset-1">
-												<div class="row">
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Width') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->small->w))? $media->small->w : '' ?>" name="media[small][w]">
-															</div>
-														</div>
-													</div><!-- width -->
-
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Height') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->small->h))? $media->small->h : '' ?>" name="media[small][h]">
-															</div>
-														</div>
-													</div><!-- height -->
-												</div>
-
-												
-											</div><!-- column -->
-
-										</div><!-- // small -->
-										
-										<hr class="seperator">
-										<div class="form-group">
-											<label class="col-sm-3 control-label"><?php __('Medium') ?>:</label>
-											
-											<div class="col-sm-8 col-sm-offset-1">
-												<div class="row">
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Width') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->medium->w))? $media->medium->w : '' ?>" name="media[medium][w]">
-															</div>
-														</div>
-													</div><!-- width -->
-
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Height') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->medium->h))? $media->medium->h : '' ?>" name="media[medium][h]">
-															</div>
-														</div>
-													</div><!-- height -->
-												</div>
-												
-											</div><!-- column -->
-
-										</div><!-- // Medium -->
-
-										<hr class="seperator">
-										<div class="form-group">
-											<label class="col-sm-3 control-label"><?php __('Large') ?>:</label>
-											
-											<div class="col-sm-8 col-sm-offset-1">
-												<div class="row">
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Width') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->large->w))? $media->large->w : '' ?>" name="media[large][w]">
-															</div>
-														</div>
-													</div><!-- width -->
-
-													<div class="col-sm-6">
-														<div class="form-group">
-															<label class="col-sm-4 control-label"><small><?php __('Height') ?>:</small></label>
-															<div class="col-sm-6">
-																<input type="text" class="form-control" value="<?php echo (isset($media->large->h))? $media->large->h : '' ?>" name="media[large][h]">
-															</div>
-														</div>
-													</div><!-- height -->
-												</div>
-												
-											</div><!-- column -->
-
-										</div><!-- // Large -->
+													<hr class="seperator">
+												<?php
+											}
+										 ?>
 
 									</div>
 								</div><!-- // row -->

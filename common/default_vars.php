@@ -27,3 +27,6 @@ $lock_page = true;
 
 // Registered posts
 $posts = array();
+
+// Media sizes
+$media_sizes = array();

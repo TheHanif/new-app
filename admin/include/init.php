@@ -30,3 +30,6 @@ include_once ADMINABS.'builtins/capabilities.php';
 
 // Load Built-in features
 include_once ADMINABS.'builtins/navigations.php';
+
+// Load Built-in media sizes
+include_once ADMINABS.'builtins/media.php';

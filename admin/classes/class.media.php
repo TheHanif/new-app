@@ -172,10 +172,16 @@ class Media extends Settings{
 			// if image, delete all croped images
 			if(strpos($media->type,"image") !== false){
 				$files = array();
-				$files[] = str_replace('.', '-thumbnail.', $file);
-				$files[] = str_replace('.', '-small.', $file);
-				$files[] = str_replace('.', '-medium.', $file);
-				$files[] = str_replace('.', '-large.', $file);
+				// $files[] = str_replace('.', '-thumbnail.', $file);
+				// $files[] = str_replace('.', '-small.', $file);
+				// $files[] = str_replace('.', '-medium.', $file);
+				// $files[] = str_replace('.', '-large.', $file);
+				
+				$media_sizes = get_media_sizes();
+
+				foreach ($media_sizes as $size) {
+					$files[] = str_replace('.', '-'.$size['key'].'.', $file);
+				}
 
 				if($delete_backup)
 				$files[] = str_replace('.', '-backup.', $file);

@@ -402,7 +402,6 @@ function is_allowed($settings = null, $capability = null){
 	return $state;
 } // end of is_allowed()
 
-
 /**
  * Add new capabilty
  * @param  string $group
