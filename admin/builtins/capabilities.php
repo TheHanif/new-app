@@ -5,11 +5,11 @@
 $Users = new users();
 
 // Site
-$Users->register_capability('Site', 'Manage Pages');
-$Users->register_capability('Site', 'Create Pages');
-$Users->register_capability('Site', 'Publish Pages');
-$Users->register_capability('Site', 'Edit Pages');
-$Users->register_capability('Site', 'Delete Pages');
+// $Users->register_capability('Site', 'Manage Pages');
+// $Users->register_capability('Site', 'Create Pages');
+// $Users->register_capability('Site', 'Publish Pages');
+// $Users->register_capability('Site', 'Edit Pages');
+// $Users->register_capability('Site', 'Delete Pages');
 $Users->register_capability('Site', 'Manage Themes');
 
 // Blog
