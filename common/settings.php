@@ -10,7 +10,7 @@ define('HAS_BLOG', true);					// Manage blog
 define('HAS_PAGES', true);					// Manage pages
 
 // Catelog
-define('HAS_CATALOG', true);				// Able to manage products
+define('HAS_CATALOG', false);				// Able to manage products
 define('HAS_METHODS', true);				// Able to manage methods
 define('HAS_CATALOG_PAYMENT', true);		// Add payment module and checkout options for products
 define('HAS_CATALOG_SHIPPING', true);		// Add shipping modules for products
