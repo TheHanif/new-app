@@ -5,7 +5,8 @@ define('ADMINABS', ABSPATH.'admin/');
 // CMS name
 define('CMSNAME', 'New App');
 
-define('SITEURL', 'http://localhost/new-app/');
+define('SITEURL', 'http://new-app:8888/');
+// define('SITEURL', 'http://localhost/new-app/');
 
 // Admin page title
 $admin_title = 'Untitled';
