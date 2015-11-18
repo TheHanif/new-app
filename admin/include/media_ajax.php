@@ -15,6 +15,8 @@ if (isset($_POST['action'])) {
 	
 	// browse
 	if ($_POST['action'] == 'browse') {
+		header('Content-Type: application/json');
 		echo json_encode($Media->get_media());
+		exit;
 	}
 }
