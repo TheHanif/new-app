@@ -24,10 +24,6 @@
 	<script src="assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/js/plugins/pace/pace.min.js"></script>
 
-	<script>
-		var media_sizes = JSON.parse('<?php echo json_encode(get_media_sizes()); ?>');
-	</script>
-	
 	<!-- PAGE LEVEL PLUGINS JS -->
 	<script src="assets/js/plugins/bootbox/bootbox.min.js"></script>
 
@@ -45,6 +41,9 @@
 	<script src="assets/js/plugins/slimscroll/jquery.slimscroll.init.js"></script>
 	<script src="assets/js/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 	<script>
+
+		var media_sizes = JSON.parse('<?php echo json_encode(get_media_sizes()); ?>');
+
 		$('.selectpicker').selectpicker('show');
 	
 		$(document).ready(function() {
