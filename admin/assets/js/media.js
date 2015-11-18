@@ -71,6 +71,8 @@ function insert_media(browser, media){
 
 function get_media(browser, editor = null){
 
+	var Buttons = {}
+
 	$.ajax({
 		url: 'include/media_ajax.php',
 		type: 'POST',
@@ -78,8 +80,12 @@ function get_media(browser, editor = null){
 		dataType: 'json',
 	})
 	.done(function(data) {
-		var gallery = '<ul class="tc-gallery-2 clearfix" id="media_browser">';
-			
+		
+		var gallery = 'Sorry! You do not have any media in library.';
+
+		if ($.type(data) != 'null') {
+			gallery = '<ul class="tc-gallery-2 clearfix" id="media_browser">';
+				
 			for (var i = data.length - 1; i >= 0; i--) {
 
 				var media = data[i];
@@ -126,16 +132,10 @@ function get_media(browser, editor = null){
 					'</div>'+
 				'</li>';
 			};
-		gallery += '</ul>';
+			gallery += '</ul>';
 
-		bootbox.dialog({
-			message: gallery,
-			buttons: 			
-			{
-
-				"success" :
-				  {
-					"label" : "<i class='fa fa-check'></i> Insert!",
+			Buttons["success"] = {
+						"label" : "<i class='fa fa-check'></i> Insert!",
 						"className" : "btn-sm btn-success",
 						"callback": function() {
 							var media_select = $('.media_select:checked');
@@ -181,17 +181,24 @@ function get_media(browser, editor = null){
 								});
 								
 							} // end else
-						}
-				 },
-				"cancel" :
-				{
+						} // call back
+					} // end of button
+			}
+
+		
+
+		
+			Buttons['cancel'] = {
 					"label" : "Cancel",
 						"className" : "btn-sm btn-inverse",
 						"callback": function() {
 							//Example: console.log("");
 						}
-				}
-			}
+					}
+
+		bootbox.dialog({
+			message: gallery,
+			buttons: Buttons		
 		}); // end bootbox
 
 		$('#media_browser').slimScroll({
@@ -231,7 +238,5 @@ function get_media(browser, editor = null){
 			$("#cboxLoadingGraphic").append("<i class='fa fa-spinner fa-spin'></i>");//let's add a custom loading icon for colorbox
 		})
 	}) // end done
-
-	
-}
+} // end of get_media()
 
