@@ -2,6 +2,9 @@
 // Admin absolute path
 define('ADMINABS', ABSPATH.'admin/');
 
+// Contents path
+define('CONTPATH', ABSPATH.'contents/');
+
 // CMS name
 define('CMSNAME', 'New App');
 
