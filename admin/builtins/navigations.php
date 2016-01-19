@@ -79,5 +79,25 @@ add_navigation_item('user_role', 'User roles', 'check', 'user_roles.php', array(
 // Settings
 add_navigation_item('settings', 'Settings', 'cogs', 'settings.php', array(), NULL, NULL, array('Settings'=>array('manage-settings')));
 
+
+// Appereance
+$appearance = array(
+		'name' 				=> 	'appearance'
+		,'title' 			=>	'appearance'
+		, 'icon' 			=>	'desktop'
+		, 'capability'		=> 	array('Site'=>array('manage-appearance'))
+	);
+add_admin_menu_item($appearance);
+
+$theme = array(
+			'name' 				=> 	'theme'
+			,'title' 			=>	'Themes'
+			, 'icon' 			=>	'magic'
+			, 'file'			=>	'themes.php'
+			, 'parent'			=> 	'appearance'
+			, 'capability'		=> array('Site'=>array('manage-themes'))
+		);
+add_admin_menu_item($theme);
+
 // print_f($Users->user_capabilities, 1);
 // print_f($admin_sidebar_navigation, 1);
