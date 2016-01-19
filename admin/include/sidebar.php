@@ -1,3 +1,9 @@
+<?php
+// Load default capabilities list
+include ADMINABS.'builtins/capabilities.php';
+// Load Built-in features
+include_once ADMINABS.'builtins/navigations.php';
+?>
 <!-- BEGIN SIDE NAVIGATION -->				
 				<nav class="navbar-side" role="navigation">
 					<div class="navbar-collapse sidebar-collapse collapse">

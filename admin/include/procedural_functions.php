@@ -283,7 +283,7 @@ function add_admin_menu_item($arg = array()){
 			, 'icon' 			=>	''
 			, 'file'			=>	'#'
 			, 'child_files'		=> 	array()
-			, 'parent'			=> NULL // Use array for 3rd level like catelog
+			, 'parent'			=> NULL // Use array for 3rd level l
 			, 'settings'		=> NULL
 			, 'capability'		=> NULL
 		);
