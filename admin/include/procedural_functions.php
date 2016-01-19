@@ -270,6 +270,32 @@ function check_submenu($data, $id = NULL, $third = NULL)
 	return $class;
 } // check_submenu
 
+
+/**
+ * Register admin navigation
+ * @param array $arg [description]
+ */
+function add_admin_menu_item($arg = array()){
+
+	$defaults = array(
+			'name' 				=> 	''
+			,'title' 			=>	'Undefined Menu'
+			, 'icon' 			=>	''
+			, 'file'			=>	'#'
+			, 'child_files'		=> 	array()
+			, 'parent'			=> NULL // Use array for 3rd level like catelog
+			, 'settings'		=> NULL
+			, 'capability'		=> NULL
+		);
+
+	$params = array_replace_recursive($defaults, $arg);
+
+	extract($params);
+
+	add_navigation_item($name, $title, $icon, $file, $child_files, $parent, $settings, $capability);
+
+} // add_admin_menu_item()
+
 /**
  * Add item admin sidebar navigation
  * @param string $name   item key
