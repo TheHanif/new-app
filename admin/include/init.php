@@ -26,10 +26,10 @@ spl_autoload_register('admin_autoloader');
 is_logged_in(true);
 
 // Load default capabilities list
-include ADMINABS.'builtins/capabilities.php'; // Re-Included in include/sidebar.php to reload capabilities when editing roles
+include_once ADMINABS.'builtins/capabilities.php';
 
 // Load Built-in features
-// include_once ADMINABS.'builtins/navigations.php'; // Moved to include/sidebar.php
+include_once ADMINABS.'builtins/navigations.php';
 
 // Load Built-in media sizes
 include_once ADMINABS.'builtins/media.php';
