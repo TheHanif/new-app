@@ -36,6 +36,36 @@ function print_f($data, $exit = false)
 
 	if($exit) exit;
 }
+/**
+ * Get file comment data as array
+ */
+function get_file_header($file, $all_headers = array())
+{
+	if (!file($file)) {
+		return false;
+	}
+
+    // We don't need to write to the file, so just open for reading.
+    $fp = fopen( $file, 'r' );
+
+    // Pull only the first 8kiB of the file in.
+    $file_data = fread( $fp, 8192 );
+
+    // PHP will close file handle, but we are good citizens.
+    fclose( $fp );
+
+    // Make sure we catch CR-only line endings.
+    $file_data = str_replace( "\r", "\n", $file_data );
+
+    foreach ( $all_headers as $field => $regex ) {
+        if ( preg_match( '/^[ \t\/*#@]*' . preg_quote( $regex, '/' ) . ':(.*)$/mi', $file_data, $match ) && $match[1] )
+            $all_headers[ $field ] = $match[1];
+        else
+            $all_headers[ $field ] = '';
+	}
+
+	return $all_headers;
+}
 
 // Get current URL from address bar
 function get_actual_url($encode = true)
@@ -46,7 +76,7 @@ function get_actual_url($encode = true)
 	}else{
 		return $actual_url;
 	}
-}
+} // get_file_header
 
 /**
  * Check user login status
