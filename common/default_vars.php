@@ -9,7 +9,14 @@ define('CONTPATH', ABSPATH.'contents/');
 define('CMSNAME', 'New App');
 
 define('SITEURL', 'http://new-app:8888/');
-// define('SITEURL', 'http://localhost/new-app/');
+define('ADMINDIRNAME', 'admin');
+
+define('ADMINURL', SITEURL.ADMINDIRNAME.'/');
+
+// Contents URL
+define('CONTURL', SITEURL.'contents/');
+
+
 
 // Admin page title
 $admin_title = 'Untitled';
