@@ -10,7 +10,7 @@ class Themes extends Database{
 	/**
 	 * Get Installed themes
 	 */
-	public function list_themes()
+	public function get_theme_list()
 	{	
 		// Init list
 		$themes = array();
