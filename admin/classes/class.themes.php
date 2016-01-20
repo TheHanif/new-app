@@ -15,8 +15,9 @@ class Themes extends Database{
 		// Init list
 		$themes = array();
 
+		$path = CONTPATH.'themes/';
 		// Read theme dir
-		$dir = opendir(CONTPATH.'themes/');
+		$dir = opendir($path);
 
 		// Loop through dir
 		while($theme_name = readdir($dir)){
@@ -24,7 +25,16 @@ class Themes extends Database{
 
           // Add to list
           $themes[$theme_name] = $this->get_theme_info($theme_name);
-        }
+
+          // Get thumbnail
+          if (file_exists($path.$theme_name.'/thumbnail.png')) {
+          	$themes[$theme_name]['preview'] = CONTURL.'themes/'.$theme_name.'/thumbnail.png';
+          }else{
+          	$themes[$theme_name]['preview'] = ADMINURL.'assets/images/nopreview.png';
+          }
+          
+
+        } // end while
 
         // Return list
         return $themes;
@@ -36,27 +46,22 @@ class Themes extends Database{
 		// File path
 		$file = CONTPATH.'themes/'.$theme.'/styles.css';
 
-        // We don't need to write to the file, so just open for reading.
-        $fp = fopen( $file, 'r' );
+		// Name: Test theme
+		// Author: Muhammad Hanif
+		// Version: 1.0
+		// Description: Test Description of the theme
 
-        // Pull only the first 8kiB of the file in.
-        $file_data = fread( $fp, 8192 );
+		// URL: http://google.com
 
-        // PHP will close file handle, but we are good citizens.
-        fclose( $fp );
+		$all_headers = array(
+			'name'=>'Name'
+			,'author'=>'Author'
+			,'version'=>'Version'
+			,'description'=>'Description'
+			,'URL'=>'URL'
+			);
 
-        // Make sure we catch CR-only line endings.
-        $file_data = str_replace( "\r", "\n", $file_data );
+		return get_file_header($file, $all_headers);
 
-        $all_headers = array('Name'=>'Name');
-
-         foreach ( $all_headers as $field => $regex ) {
-	        if ( preg_match( '/^[ \t\/*#@]*' . preg_quote( $regex, '/' ) . ':(.*)$/mi', $file_data, $match ) && $match[1] )
-	            $all_headers[ $field ] = $match[1];
-	        else
-	            $all_headers[ $field ] = '';
-		    }
-
-		return $all_headers;
 	}
 } // end of class
