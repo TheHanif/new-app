@@ -1,11 +1,32 @@
 <?php
-class Themes extends Database{
+class Themes extends Settings{
 
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
+
+	/**
+	 * Get current site theme
+	 * @return string theme dir name
+	 */
+	public function get_theme(){
+
+		return $this->get_settings('theme');
+
+	} // end of get_theme
+
+	/**
+	 * Load new theme
+	 * @param  string $theme theme dir name
+	 * @return boolean
+	 */
+	public function load_theme($theme){
+
+		return $this->set_setting('theme', $theme);
+
+	} // end of load_theme
 
 	/**
 	 * Get Installed themes
