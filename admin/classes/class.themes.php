@@ -23,6 +23,9 @@ class Themes extends Database{
 		while($theme_name = readdir($dir)){
           if(is_file($theme_name) || substr($theme_name, 0, 1) == '.') continue;
 
+          // Check if proper style sheet exists
+          if(!file_exists(CONTPATH.'themes/'.$theme_name.'/styles.css')) continue;
+
           // Add to list
           $themes[$theme_name] = $this->get_theme_info($theme_name);
 
@@ -33,7 +36,6 @@ class Themes extends Database{
           	$themes[$theme_name]['preview'] = ADMINURL.'assets/images/nopreview.png';
           }
           
-
         } // end while
 
         // Return list
@@ -60,7 +62,6 @@ class Themes extends Database{
 			,'description'=>'Description'
 			,'URL'=>'URL'
 			);
-
 		return get_file_header($file, $all_headers);
 
 	}
