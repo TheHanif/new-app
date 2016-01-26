@@ -39,7 +39,7 @@ function print_f($data, $exit = false)
 /**
  * Get file comment data as array
  */
-function get_file_header($file, $all_headers = array())
+function get_file_header($file, $all_headers = array(), $defaults = array())
 {
 	if (!file($file)) {
 		return false;
@@ -57,12 +57,16 @@ function get_file_header($file, $all_headers = array())
     // Make sure we catch CR-only line endings.
     $file_data = str_replace( "\r", "\n", $file_data );
 
+
     foreach ( $all_headers as $field => $regex ) {
         if ( preg_match( '/^[ \t\/*#@]*' . preg_quote( $regex, '/' ) . ':(.*)$/mi', $file_data, $match ) && $match[1] )
             $all_headers[ $field ] = $match[1];
         else
             $all_headers[ $field ] = '';
 	}
+
+	// Fill missing
+	$all_headers = array_replace_recursive($defaults, $all_headers);
 
 	return $all_headers;
 }
