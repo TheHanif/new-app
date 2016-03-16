@@ -28,11 +28,12 @@ if (!is_null($ID) && $is_allowed) {
 // Page title
 $admin_title = (isset($ID))? 'Edit Role' : 'Create Role';
 
-// Get User object from builtin/capabilities.php
-$capabilities_groups = $Users->get_capabilities_groups();
 
 // Header file
 include 'include/header.php';
+
+// Get User object from builtin/capabilities.php
+$capabilities_groups = $Users->get_capabilities_groups();
 ?>
 <!-- BEGIN MAIN PAGE CONTENT -->
 <div id="page-wrapper">
