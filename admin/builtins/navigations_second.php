@@ -39,7 +39,7 @@ add_admin_menu_item($theme);
 $plugins = array(
 		'name' 				=> 	'plugins'
 		,'title' 			=>	'Plugins'
-		, 'icon' 			=>	'desktop'
+		, 'icon' 			=>	'plug'
 		, 'file'			=>	'plugins.php'
 		, 'capability'		=> 	array('Plugins'=>array('manage-plugins'))
 	);
