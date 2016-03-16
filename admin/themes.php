@@ -60,7 +60,7 @@ include 'include/header.php';
 				<?php 
 					foreach ($theme_list as $key => $info) {
 						?>
-							<div class="col-md-4 col-sm-3 col-xs-12 col-lg-2">
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4">
 								<div class="panel <?php echo ($current_theme != $key)? 'panel-default' : 'panel-info'; ?>">
 									<div class="panel-body">
 										<img src="<?php echo $info['preview']; ?>" alt="<?php echo $info['name']; ?>" class="img-responsive">
