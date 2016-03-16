@@ -42,7 +42,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 }
 
 // Action
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && isset($_POST['posts'])) {
 	foreach ($_POST['posts'] as $ID) {
 		if($_POST['action'] == 'deleted'){
 			$post = $Posts->get_post($ID);
@@ -59,6 +59,10 @@ if (isset($_POST['submit'])) {
 	}
 
 	register_admin_message('Success', 'Action applied successfully.', 'success');
+}else if(isset($_POST['submit']) && !isset($_POST['posts'])) {
+	
+	register_admin_message('Error', 'Nothing selected.', 'danger');
+
 }
 
 // Select all post
