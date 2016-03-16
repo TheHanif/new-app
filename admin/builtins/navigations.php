@@ -99,5 +99,14 @@ $theme = array(
 		);
 add_admin_menu_item($theme);
 
+// Plugins
+$plugins = array(
+		'name' 				=> 	'plugins'
+		,'title' 			=>	'Plugins'
+		, 'icon' 			=>	'desktop'
+		, 'file'			=>	'plugins.php'
+		, 'capability'		=> 	array('Plugins'=>array('manage-plugins'))
+	);
+add_admin_menu_item($plugins);
 // print_f($Users->user_capabilities, 1);
 // print_f($admin_sidebar_navigation, 1);
