@@ -1,10 +1,13 @@
 <?php
 class Plugins extends Database{
 
+	private $table_name;
 
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->table_name = DB_PREFIX.'objects';
 	}
 
 	
@@ -52,5 +55,46 @@ class Plugins extends Database{
 			);
 		return get_file_header($file, $all_headers);
 
+	}
+
+	public function get_active_plugins($plugin = NULL){
+
+		$plugins = array();
+
+		$this->where('type', 'plugin');
+
+		if (isset($plugin)) {
+			$this->where('name', $plugin);
+		}else{
+			$this->where('status', 'on');
+		}
+
+		$this->from($this->table_name);
+
+		if ($this->row_count() > 0) {
+			$ps = $this->all_results();
+			foreach ($ps as $p) {
+				$plugins[] = $p->name;
+			}
+		}
+
+		return $plugins;
+	}
+
+	public function set_plugin($plugin, $status)
+	{
+		$this->get_active_plugins($plugin);
+
+		$data = array();
+		$data['name'] = $plugin;
+		$data['status'] = $status;
+		$data['type'] = 'plugin';
+
+		if ($this->row_count() > 0) {
+			$this->where('name', $plugin);
+			$this->update($this->table_name, $data);	
+		}else{
+			$this->insert($this->table_name, $data);
+		}
 	}
 } // end of class
