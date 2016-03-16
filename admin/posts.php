@@ -138,7 +138,7 @@ include 'include/header.php';
 								<a href="posts.php?type=<?php echo $type; ?>&status=deleted" class="btn btn-sm <?php echo (isset($_GET['status']) && $_GET['status'] == 'deleted')? 'btn-primary active disabled' : ''; ?>">Trash <small class="badge <?php echo (isset($_GET['status']) && $_GET['status'] == 'deleted')? 'badge-inverse' : 'badge-primary'; ?>"><?php echo $Posts->get_post_count($type, 'deleted'); ?></small></a>
 							</div>
 							<div class="col-sm-4">
-								<div class="form-horizontal">
+								<div class="form-horizontal <?php echo $custom_post['category']? '' : 'hidden'; ?>">
 									<div class="form-group" style="margin-bottom:0">
 										<label class="col-sm-3 control-label"><?php __('Category'); ?>:</label>
 										<div class="col-sm-6">
