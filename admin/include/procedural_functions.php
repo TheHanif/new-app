@@ -467,11 +467,10 @@ function is_allowed($settings = null, $capability = null){
  * @param  string $group
  * @param  string $key
  */
-function register_capability($group, $key)
+function register_capability($group, $key, $force = NULL)
 {
-	global $capabilities_groups;
+	global $Users;
 
-	if (isset($capabilities_groups[$group])) {
-		$capabilities_groups[$group][] = $key;
-	}
+	$Users->register_capability($group, $key, $force);
+	
 } // end of register_capability()
