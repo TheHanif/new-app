@@ -74,6 +74,13 @@ class Plugins extends Database{
 		if ($this->row_count() > 0) {
 			$ps = $this->all_results();
 			foreach ($ps as $p) {
+
+				if (!file_exists(CONTPATH.'plugins/'.$p->name.'/plugin.php')) {
+					$this->where('name', $p->name);
+					$this->delete($this->table_name);
+					continue;	
+				}
+
 				$plugins[] = $p->name;
 			}
 		}
