@@ -124,3 +124,17 @@ function get_media_sizes(){
 	global $media_sizes;
 	return $media_sizes;
 }
+
+// Load active plugins
+function load_active_plugins(){
+	$plugins = new plugins();
+
+	$active_plugins = $plugins->get_active_plugins();
+
+	foreach ($active_plugins as $plugin) {
+		include_once CONTPATH.'plugins/'.$plugin.'/plugin.php';
+	}
+
+	// Load Built-in features menu part after plugin menus
+ 	include_once ADMINABS.'builtins/navigations_second.php';
+}

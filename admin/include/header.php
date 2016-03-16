@@ -1,6 +1,9 @@
 <?php 
 // Redirect to login page if not logged in
 is_logged_in(true);
+
+// Load Plugins
+load_active_plugins();
 ?>
 <!DOCTYPE html>
 <html lang="en">

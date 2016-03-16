@@ -28,6 +28,9 @@ is_logged_in(true);
 // Load default capabilities list
 include_once ADMINABS.'builtins/capabilities.php';
 
+// Load Plugins
+// load_active_plugins(); // Moved to admin header.php
+
 // Load Built-in features
 include_once ADMINABS.'builtins/navigations.php';
 
