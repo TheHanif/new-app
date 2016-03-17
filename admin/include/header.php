@@ -128,12 +128,12 @@ load_active_plugins();
 											</li>
 											<li>
 												<a href="settings.php">
-													<i class="fa fa-gear"></i> Settings
+													<i class="fa fa-gear"></i> <?php __('Settings') ?>
 												</a>
 											</li>											
 											<li>
 												<a href="login.php?logout">
-													<i class="fa fa-power-off"></i> Logout
+													<i class="fa fa-power-off"></i> <?php __('Logout') ?>
 												</a>
 											</li>
 									</ul>
@@ -161,7 +161,7 @@ load_active_plugins();
 							<div class="collapse navbar-collapse top-collapse">
 								<!-- .nav -->
 								<ul class="nav navbar-left navbar-nav">
-									<li><a href="index.php">Dashboard</a></li>
+									<li><a href="index.php"><?php __('Dashboard') ?></a></li>
 									<li class="dropdown">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 											Pages <b class="caret"></b>

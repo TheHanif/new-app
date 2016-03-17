@@ -15,7 +15,7 @@
 							
 						<!-- BEGIN FIND MENU ITEM INPUT -->
 						<div class="media-search">	
-							<input type="text" class="input-menu" id="input-items" placeholder="Find...">
+							<input type="text" class="input-menu" id="input-items" placeholder="<?php __('Find...') ?>">
 						</div>						
 						<!-- END FIND MENU ITEM INPUT -->
 						
@@ -23,7 +23,7 @@
 							<!-- BEGIN SIDE NAV MENU -->							
 							<!-- Navigation category -->
 							<li>
-								<h4>Navigation</h4> 								
+								<h4><?php __('Navigation'); ?></h4> 								
 							</li>
 							<!-- END Navigation category -->
 							
@@ -34,7 +34,7 @@
 						</ul><!-- /.side-nav -->
 						
 						<div class="sidebar-labels">
-							<h4>Labels</h4>							
+							<h4><?php echo __('Labels'); ?></h4>							
 							<ul>
 								<li><a href="#"><i class="fa fa-circle-o text-primary"></i> My Recent <span class="badge badge-primary">3</span></a></li>
 								<li><a href="#"><i class="fa fa-circle-o text-success"></i> Background</a></li>

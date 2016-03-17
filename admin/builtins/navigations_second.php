@@ -19,7 +19,7 @@ add_navigation_item('user_role', 'User roles', 'check', 'user_roles.php', array(
 // Appereance
 $appearance = array(
 		'name' 				=> 	'appearance'
-		,'title' 			=>	'appearance'
+		,'title' 			=>	'Appearance'
 		, 'icon' 			=>	'desktop'
 		, 'capability'		=> 	array('Site'=>array('manage-appearance'))
 	);
