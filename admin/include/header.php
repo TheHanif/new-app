@@ -127,7 +127,7 @@ load_active_plugins();
 												</a>
 											</li>
 											<li>
-												<a href="#">
+												<a href="settings.php">
 													<i class="fa fa-gear"></i> Settings
 												</a>
 											</li>											
@@ -170,7 +170,7 @@ load_active_plugins();
 											<li> <a href="pricing.html">Pricing</a></li>
 										</ul>
 									</li>
-									<li><a href="front/index.html">FrontEnd <span class="badge badge-primary">New</span></a></li>
+									<li><a href="<?php echo SITEURL; ?>">FrontEnd</a></li>
 								</ul><!-- /.nav -->
 							</div>
 						<!-- END TOP MENU -->

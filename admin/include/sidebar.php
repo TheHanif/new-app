@@ -5,10 +5,10 @@
 						<!-- BEGIN SHORTCUT BUTTONS -->
 						<div class="media">							
 							<ul class="sidebar-shortcuts">
-								<li><a class="btn"><i class="fa fa-user icon-only"></i></a></li>
+								<?php if(defined('HAS_USERS') && HAS_USERS == true){ ?><li><a class="btn" href="users.php"><i class="fa fa-user icon-only"></i></a></li><?php } ?>
 								<li><a class="btn"><i class="fa fa-envelope icon-only"></i></a></li>
 								<li><a class="btn"><i class="fa fa-th icon-only"></i></a></li>
-								<li><a class="btn"><i class="fa fa-gear icon-only"></i></a></li>
+								<li><a class="btn" href="settings.php"><i class="fa fa-gear icon-only"></i></a></li>
 							</ul>	
 						</div>
 						<!-- END SHORTCUT BUTTONS -->	
