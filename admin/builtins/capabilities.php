@@ -12,6 +12,7 @@ $Users = new users();
 // $Users->register_capability('Site', 'Delete Pages');
 $Users->register_capability('Site', 'Manage Appearance');
 $Users->register_capability('Site', 'Manage Themes');
+$Users->register_capability('Site', 'Manage Menus');
 
 // Blog
 // $Users->register_capability('Blog', 'Manage Blog');
