@@ -38,7 +38,7 @@ add_admin_menu_item($theme);
 $menu = array(
 			'name' 				=> 	'menu'
 			,'title' 			=>	'Menus'
-			, 'icon' 			=>	'magic'
+			, 'icon' 			=>	'bars'
 			, 'file'			=>	'menus.php'
 			, 'parent'			=> 	'appearance'
 			, 'capability'		=> array('Site'=>array('manage-menus'))

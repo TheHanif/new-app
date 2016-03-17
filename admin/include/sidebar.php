@@ -8,7 +8,7 @@
 							<ul class="sidebar-shortcuts">
 								<?php if(defined('HAS_USERS') && HAS_USERS == true){ ?><li><a class="btn" href="users.php"><i class="fa fa-user icon-only"></i></a></li><?php } ?>
 								<li><a class="btn" href="media_upload.php"><i class="fa fa-upload icon-only"></i></a></li>
-								<?php if($is_allowed){ ?><li><a class="btn" href="menus.php"><i class="fa fa-th icon-only"></i></a></li><?php } ?>
+								<?php if($is_allowed){ ?><li><a class="btn" href="menus.php"><i class="fa fa-bars icon-only"></i></a></li><?php } ?>
 								<li><a class="btn" href="settings.php"><i class="fa fa-gear icon-only"></i></a></li>
 							</ul>	
 						</div>
