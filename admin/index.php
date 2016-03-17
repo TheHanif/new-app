@@ -2,6 +2,9 @@
 // Initialization
 include_once 'include/init.php';
 
+$is_allowed = is_allowed(NULL, array('Site'=>array('manage-themes')));
+
+
 // Page title
 $admin_title = 'Dashboard';
 
