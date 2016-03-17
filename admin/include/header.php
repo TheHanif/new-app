@@ -161,7 +161,7 @@ load_active_plugins();
 							<div class="collapse navbar-collapse top-collapse">
 								<!-- .nav -->
 								<ul class="nav navbar-left navbar-nav">
-									<li><a href="index.html">Dashboard</a></li>
+									<li><a href="index.php">Dashboard</a></li>
 									<li class="dropdown">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 											Pages <b class="caret"></b>

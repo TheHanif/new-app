@@ -3,7 +3,7 @@
 							<div class="footer-inner">
 								<!-- basics/footer -->
 								<div class="footer-content">
-									&copy; 2014 <a href="#">eKoders</a>, All Rights Reserved.
+									&copy; <?php echo date('Y'); ?> <a href="#">The Pure CMS</a>, All Rights Reserved.
 								</div>
 								<!-- /basics/footer -->
 							</div>
