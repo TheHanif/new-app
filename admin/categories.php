@@ -143,16 +143,13 @@ include 'include/header.php';
 								<label class="col-sm-2 control-label"><?php __('Image'); ?></label>
 								<div class="col-sm-10">
 									<div class="input-group">
-										<div id="thumbnail">
-											<?php if (isset($category) && (!empty($category->category_media) && $Categories->Media->get_media($category->category_media))) {
-												$media = $Categories->Media->get_media($category->category_media);
-												echo '<img src="'.$media[0]->thumbnail.'">';
-											} ?>
-										</div>
-										<span class="btn btn-file1 browse-media" data-media="<?php echo (isset($category) && !empty($category->category_media))? 1 : 0; ?>" data-preview="#preview" data-thumbnail="#thumbnail" data-value="#image" data-output="id">
-											<?php __((isset($category) && !empty($category->category_media))? 'Remove' : 'Browse'); ?>
-										</span>
-										<input type="hidden" name="image" value="<?php echo (isset($category))? $category->category_media : ''; ?>" id="image"  class="form-control">
+
+									<?php 
+									$default = (isset($category->category_media) && !empty($category->category_media))? $category->category_media : NULL;
+									featured_image('image', 0, $default); ?>
+
+
+										
 									</div>
 								</div>
 							</div>
