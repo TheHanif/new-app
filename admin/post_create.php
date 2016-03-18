@@ -339,6 +339,7 @@ include 'include/header.php';
 								$media = $Media->get_media($selected_media[$i]);
 								$media = $media[0];
 							}
+
 						?>
 						<div class="portlet">
 							<div class="portlet-heading default-bg">
@@ -352,11 +353,10 @@ include 'include/header.php';
 							</div>
 							<div id="<?php echo $fortlet_id; ?>" class="panel-collapse collapse in">
 								<div class="portlet-body">
-									<div class="thumbnail<?php echo $i; ?>"><?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? ('<img src="'.$media->thumbnail.'">') : ''; ?></div>
-									<span class="btn btn-file1 browse-media" data-media="<?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? 1 : 0; ?>" data-thumbnail=".thumbnail<?php echo $i; ?>" data-value=".value<?php echo $i; ?>" data-output="id">
-										<?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? 'Remove' : 'Browse'; ?>
-									</span>
-									<input type="hidden" class="value<?php echo $i; ?>" value="<?php echo (isset($selected_media[$i]) && !empty($selected_media[$i]) && isset($media->ID))? $media->ID : ''; ?>" name="featured_image[<?php echo $i; ?>]">
+									<?php 
+									$default = (isset($media->ID))? $media->ID : NULL;
+									featured_image('featured_image[]', $i, $default); ?>
+									
 								</div><!-- end body -->
 							</div>
 						</div><!-- end portlet -->

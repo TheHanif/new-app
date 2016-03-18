@@ -27,6 +27,27 @@ function __($key, $echo = true)
 	}
 }
 
+/**
+ * Get button to browse image
+ * @param  string $name     Form field name, can be array
+ * @param  int    $index   	parse index if $name is array
+ * @param  int    $default 	Default media ID
+ * @return HTML          	Browse button and all the markup
+ */
+function featured_image($name, $index = 0, $default = NULL){
+	$media = array();
+	if (isset($default) && !empty($default)) {
+		$Media = new Media();
+		$media = $Media->get_media($default);
+		$media = $media[0];
+	}?>
+	<div class="thumbnail<?php echo $index; ?>"><?php echo (isset($media->ID))? ('<img src="'.$media->thumbnail.'">') : ''; ?></div>
+	<span class="btn btn-file1 browse-media" data-media="<?php echo (isset($media->ID))? 1 : 0; ?>" data-thumbnail=".thumbnail<?php echo $index; ?>" data-value=".value<?php echo $index; ?>" data-output="id">
+		<?php echo (isset($media->ID))? 'Remove' : 'Browse'; ?>
+	</span>
+	<input type="hidden" class="value<?php echo $index; ?>" value="<?php echo (isset($media->ID))? $media->ID : ''; ?>" name="<?php echo $name; ?>">
+<?php } // featured_image()
+
 // Alternate of print_r
 function print_f($data, $exit = false)
 {
@@ -69,7 +90,7 @@ function get_file_header($file, $all_headers = array(), $defaults = array())
 	$all_headers = array_replace_recursive($defaults, $all_headers);
 
 	return $all_headers;
-}
+} // get_file_header
 
 // Get current URL from address bar
 function get_actual_url($encode = true)
@@ -80,7 +101,7 @@ function get_actual_url($encode = true)
 	}else{
 		return $actual_url;
 	}
-} // get_file_header
+} 
 
 /**
  * Check user login status
