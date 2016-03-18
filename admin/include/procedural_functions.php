@@ -43,7 +43,7 @@ function featured_image($name, $index = 0, $default = NULL){
 	}?>
 	<div class="thumbnail<?php echo $index; ?>"><?php echo (isset($media->ID))? ('<img src="'.$media->thumbnail.'">') : ''; ?></div>
 	<span class="btn btn-file1 browse-media" data-media="<?php echo (isset($media->ID))? 1 : 0; ?>" data-thumbnail=".thumbnail<?php echo $index; ?>" data-value=".value<?php echo $index; ?>" data-output="id">
-		<?php echo (isset($media->ID))? 'Remove' : 'Browse'; ?>
+		<?php __((isset($media->ID))? 'Remove' : 'Browse'); ?>
 	</span>
 	<input type="hidden" class="value<?php echo $index; ?>" value="<?php echo (isset($media->ID))? $media->ID : ''; ?>" name="<?php echo $name; ?>">
 <?php } // featured_image()
