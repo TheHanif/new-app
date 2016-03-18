@@ -55,7 +55,7 @@ include 'include/header.php';
 											</select>
 										</div>
 									
-										<button type="submit" class="btn btn-primary">Edit</button>
+										<button type="submit" class="btn btn-primary"><?php __('Edit'); ?></button>
 
 										<?php __('or') ?> <a href="menus.php"><?php __('Create a new menu'); ?></a>
 									</form>
@@ -86,7 +86,97 @@ include 'include/header.php';
 									
 								</div><!-- // left -->
 
-								<div class="col-xs-12 col-sm-9 col-md-9">structure</div><!-- // structure -->
+								<div class="col-xs-12 col-sm-9 col-md-9">
+
+
+								
+								
+									<form action="" method="POST" class="" role="form">
+									
+										<div class="panel panel-default">
+											<div class="panel-heading form-inline clearfix">
+												<div class="form-group">
+													<label class="label-control" for="menu_name"><?php __('Menu name'); ?></label>
+													<input type="text" required class="form-control input-sm" id="menu_name">
+												</div>
+
+												<button type="submit" class="btn btn-sm btn-primary pull-right"><?php __('Submit'); ?></button>
+											</div><!-- // .panel-heading -->
+											<div class="panel-body menu-structure">
+												
+												<ul class="menu-items">
+													<li>
+														<div class="portlet"><!-- /Basic Portlet -->
+															<div class="portlet-heading">
+																<div class="portlet-title">
+																	<h4>Basic Portlet</h4>
+																</div>
+																<div class="portlet-widgets">
+																	<a data-toggle="collapse" data-parent="#accordion" href="#basic"><i class="fa fa-chevron-down"></i></a>
+																	<span class="divider"></span>
+																	<a href="#" class="box-close" title="<?php __('Remove') ?>"><i class="fa fa-times text-danger"></i></a>
+																</div>
+																<div class="portlet-widgets">
+																	<small class="text-sx"><?php __('Page') ?></small>
+																</div>
+																<div class="clearfix"></div>
+															</div>
+															<div id="basic" class="panel-collapse collapse in">
+																<div class="portlet-body form-horizontal" role="form">
+																	<div class="row">
+																		<div class="col-xs-12 col-sm-6">
+																			<div class="form-group">
+																				<label class="label-control"><?php __('Navigation label'); ?></label>
+																				<input required type="text" class="form-control input-sm">
+																			</div>
+																		</div>
+																		<div class="col-xs-12 col-sm-6">
+																			<div class="form-group">
+																				<label class="label-control"><?php __('Title attribute'); ?></label>
+																				<input type="text" class="form-control input-sm">
+																			</div>
+																		</div>
+																	</div><!-- // .row -->
+
+																	<div class="form-group">
+																		<label class="label-control"><?php __('CSS Classes (Optional)'); ?></label>
+																		<input type="text" class="form-control input-sm">
+																	</div>
+
+																	<div class="form-group">
+																		<label class="label-control"><?php __('Description'); ?></label>
+																		<textarea name="" rows="4" class="form-control input-sm"></textarea>
+																	</div>
+
+																	<div class="form-group">
+																		<label class="label-control"><?php __('Image'); ?></label>
+																		<?php featured_image('iamge'); ?>
+																	</div>
+																	
+
+																	<div class="well white">
+																		<?php __('Original:') ?> <a href="#">Original</a>
+																	</div>
+
+																</div><!-- // .portlet-body -->
+															</div>
+														</div><!-- /Basic Portlet -->
+
+														<ul class="sub-items"></ul>
+													</li>
+												</ul><!-- // .menu-items -->
+
+														
+
+											</div><!-- // .panel-body -->
+											<div class="panel-footer clearfix">
+												<a href="#" class="btn-sm link" style="display:inline-block"><?php __('Delete menu') ?></a>
+												<button type="submit" class="btn btn-primary btn-sm pull-right"><?php __('Submit'); ?></button>
+											</div>
+										</div><!-- // .panel -->
+									</form>
+
+								</div><!-- // structure -->
 							</div><!-- // .row -->
 							
 						</div><!-- // #manage_menu -->

@@ -4,3 +4,55 @@ html{position:relative;min-height:100%}body{font-family:'Open Sans',sans-serif;f
 .img-responsive{
 	width: 100%;
 }
+
+.menu-structure{}
+.menu-structure .portlet-widgets .text-sx{
+	margin-right: 15px;
+	color: #999999;
+	font-size: 11px;
+}
+
+.menu-structure .menu-items, .menu-structure .sub-items{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.menu-structure .sub-items{
+	margin-left: 20px;
+	padding-top: 15px;
+}
+
+.menu-structure .portlet{
+	max-width: 450px;
+	margin-bottom: 0;
+}
+
+.menu-structure .portlet .form-group{
+	margin-right: 0;
+	margin-left: 0;
+}
+.menu-structure .portlet .form-group .label-control{
+	font-weight: normal;
+	font-size: 12px;
+	font-style: italic;
+	margin-bottom: 3px;
+}
+
+.menu-structure .portlet .well{
+	padding: 5px 10px;
+	font-size: 12px;
+	/*border-color: #efefef;*/
+	border-style: dotted;
+}
+
+@media (max-width:768px){
+	.menu-structure .portlet{
+		max-width: 400px;
+	}
+}
+
+@media (max-width:480px){
+	.menu-structure .portlet{
+		max-width: 300px;
+	}
+}
