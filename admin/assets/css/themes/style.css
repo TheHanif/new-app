@@ -22,7 +22,7 @@ html{position:relative;min-height:100%}body{font-family:'Open Sans',sans-serif;f
 	padding-top: 15px;
 }
 
-.menu-structure .portlet{
+.menu-structure .portlet, .ui-state-highlight{
 	max-width: 450px;
 	margin-bottom: 0;
 }
@@ -45,14 +45,20 @@ html{position:relative;min-height:100%}body{font-family:'Open Sans',sans-serif;f
 	border-style: dotted;
 }
 
+.ui-state-highlight{
+	background-color: #f00;
+	display: block;
+	height: 50px;
+}
+
 @media (max-width:768px){
-	.menu-structure .portlet{
+	.menu-structure .portlet, .ui-state-highlight{
 		max-width: 400px;
 	}
 }
 
 @media (max-width:480px){
-	.menu-structure .portlet{
+	.menu-structure .portlet, .ui-state-highlight{
 		max-width: 300px;
 	}
 }
