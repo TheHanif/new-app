@@ -40,6 +40,10 @@
 	<script src="assets/js/plugins/colorBox/jquery.colorbox-min.js"></script>
 	<script src="assets/js/plugins/slimscroll/jquery.slimscroll.init.js"></script>
 	<script src="assets/js/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+
+	<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="assets/js/menus.js"></script>
+
 	<script>
 
 		var media_sizes = JSON.parse('<?php echo json_encode(get_media_sizes()); ?>');
