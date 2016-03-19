@@ -17,15 +17,9 @@ html{position:relative;min-height:100%}body{font-family:'Open Sans',sans-serif;f
 	margin: 0;
 	list-style: none;
 }
-.menu-structure li{
-	position: relative;
-	margin-bottom: 15px;
-}
 .menu-structure .sub-items{
 	margin-left: 20px;
 	padding-top: 15px;
-	position: absolute;
-	z-index: 10000;
 }
 .menu-structure .sub-items:hover{
 	padding-top: 45px;

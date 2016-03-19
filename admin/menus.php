@@ -4,8 +4,6 @@ include_once 'include/init.php';
 
 $is_allowed = is_allowed(NULL, array('Site'=>array('manage-themes')));
 
-print_f($_POST);
-
 // Page title
 $admin_title = 'Menus';
 
