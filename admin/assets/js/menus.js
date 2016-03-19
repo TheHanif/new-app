@@ -119,6 +119,7 @@ function create_element1(type, label, url, object_id = '', original_label = '', 
 
 	// reindex all elements
 	reindex_order();
+	make_draggable();
 
 	return $($e);
 
