@@ -4,6 +4,7 @@ include_once 'include/init.php';
 
 $is_allowed = is_allowed(NULL, array('Site'=>array('manage-themes')));
 
+print_f($_POST);
 
 // Page title
 $admin_title = 'Menus';
@@ -102,17 +103,23 @@ include 'include/header.php';
 
 												<button type="submit" class="btn btn-sm btn-primary pull-right"><?php __('Submit'); ?></button>
 											</div><!-- // .panel-heading -->
-											<div class="panel-body menu-structure">
+											<div class="panel-body menu-structure" id="menu-structure">
 												
-												<ul class="menu-items">
-													<li>
+												<ul class="menu-items menu-target">
+
+													<?php $index = 0; ?>
+													<li data-index="<?php echo $index; ?>">
+														<input type="hidden" value="" name="items[<?php echo $index; ?>][parent]">
+														<input type="hidden" value="" name="items[<?php echo $index; ?>][objectid]">
+														<input type="hidden" value="" name="items[<?php echo $index; ?>][url]">
+														<input type="hidden" value="" name="items[<?php echo $index; ?>][type]">
 														<div class="portlet"><!-- /Basic Portlet -->
 															<div class="portlet-heading">
 																<div class="portlet-title">
-																	<h4>Basic Portlet</h4>
+																	<h4>Basic Portlet 1</h4>
 																</div>
 																<div class="portlet-widgets">
-																	<a data-toggle="collapse" data-parent="#accordion" href="#basic"><i class="fa fa-chevron-down"></i></a>
+																	<a data-toggle="collapse" data-parent="#accordion" href="#panel_<?php echo $index; ?>"><i class="fa fa-chevron-down"></i></a>
 																	<span class="divider"></span>
 																	<a href="#" class="box-close" title="<?php __('Remove') ?>"><i class="fa fa-times text-danger"></i></a>
 																</div>
@@ -121,36 +128,36 @@ include 'include/header.php';
 																</div>
 																<div class="clearfix"></div>
 															</div>
-															<div id="basic" class="panel-collapse collapse in">
+															<div id="panel_<?php echo $index; ?>" class="panel-collapse collapse">
 																<div class="portlet-body form-horizontal" role="form">
 																	<div class="row">
 																		<div class="col-xs-12 col-sm-6">
 																			<div class="form-group">
 																				<label class="label-control"><?php __('Navigation label'); ?></label>
-																				<input required type="text" class="form-control input-sm">
+																				<input required type="text" value="" name="items[<?php echo $index; ?>][label]" class="form-control input-sm">
 																			</div>
 																		</div>
 																		<div class="col-xs-12 col-sm-6">
 																			<div class="form-group">
 																				<label class="label-control"><?php __('Title attribute'); ?></label>
-																				<input type="text" class="form-control input-sm">
+																				<input type="text" value="" name="items[<?php echo $index; ?>][title]" class="form-control input-sm">
 																			</div>
 																		</div>
 																	</div><!-- // .row -->
 
 																	<div class="form-group">
 																		<label class="label-control"><?php __('CSS Classes (Optional)'); ?></label>
-																		<input type="text" class="form-control input-sm">
+																		<input type="text" value="" name="items[<?php echo $index; ?>][css]" class="form-control input-sm">
 																	</div>
 
 																	<div class="form-group">
 																		<label class="label-control"><?php __('Description'); ?></label>
-																		<textarea name="" rows="4" class="form-control input-sm"></textarea>
+																		<textarea name="items[<?php echo $index; ?>][description]" rows="4" class="form-control input-sm"></textarea>
 																	</div>
 
 																	<div class="form-group">
 																		<label class="label-control"><?php __('Image'); ?></label>
-																		<?php featured_image('iamge'); ?>
+																		<?php featured_image('items['.$index.'][image]', $index); ?>
 																	</div>
 																	
 
@@ -162,8 +169,9 @@ include 'include/header.php';
 															</div>
 														</div><!-- /Basic Portlet -->
 
-														<ul class="sub-items"></ul>
+														<ul class="sub-items menu-target"></ul>
 													</li>
+													
 												</ul><!-- // .menu-items -->
 
 														
@@ -191,4 +199,5 @@ include 'include/header.php';
 	
 			</div>
 		</div>
+		
 <?php include 'include/footer.php'; ?>
