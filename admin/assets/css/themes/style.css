@@ -57,6 +57,16 @@ html{position:relative;min-height:100%}body{font-family:'Open Sans',sans-serif;f
 	border: dashed 1px #D3D3D3;
 }
 
+/*Remove padding for menu foe category or single item in menus*/
+.portlet .portlet-body.no-padding .tab-content{
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+}
+.portlet .portlet-body.no-padding .nav-tabs > li:first-child a{
+	border-left: none !important;
+}
+
 @media (max-width:768px){
 	.menu-structure .portlet, .ui-state-highlight{
 		max-width: 400px;
