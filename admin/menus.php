@@ -64,6 +64,107 @@ include 'include/header.php';
 							<div class="row">
 								<div class="col-xs-12 col-sm-3 col-md-3 tc-accordion" id="accordion">
 									
+									<?php //print_f($posts);
+									// Global posts var
+									foreach ($posts as $key => $value) {
+										
+										if (!isset($value['menu']) || $value['menu'] == false) {
+											continue;
+										}
+
+										$portlet_id = $key; ?>
+										<div class="portlet">
+											<div class="portlet-heading ">
+												<div class="portlet-title">
+													<h4><?php __($value['name']) ?></h4>
+												</div>
+												<div class="portlet-widgets">
+													<span class="divider"></span>
+													<a data-toggle="collapse" data-parent="#accordion" href="#panel_<?php echo $portlet_id; ?>"><i class="fa fa-chevron-down"></i></a>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+											<div id="panel_<?php echo $portlet_id; ?>" class="panel-collapse in collapse">
+												<div class="portlet-body <?php echo (isset($value['category']) && $value['category'] == true)? 'no-padding' : ''; ?>">
+
+													<?php
+														if (isset($value['category']) && $value['category'] == true) {
+															?>
+														<div role="tabpanel">
+															<!-- Nav tabs -->
+															<ul class="nav nav-tabs" role="tablist">
+																<li role="presentation" class="active">
+																	<a href="#categories_<?php echo $portlet_id ?>" aria-controls="categories_<?php echo $portlet_id ?>" role="tab" data-toggle="tab"><?php __('Categories') ?></a>
+																</li>
+																<li role="presentation">
+																	<a href="#items_<?php echo $portlet_id ?>" aria-controls="items_<?php echo $portlet_id ?>" role="tab" data-toggle="tab"><?php __($value['meta']['pulural_title']); ?></a>
+																</li>
+																
+															</ul>
+														
+															<!-- Tab panes -->
+															<div class="tab-content">
+																<div role="tabpanel" class="tab-pane active" id="categories_<?php echo $portlet_id ?>"><?php create_from_posts($key); ?></div>
+																<div role="tabpanel" class="tab-pane" id="items_<?php echo $portlet_id ?>">
+																	<?php create_from_posts($key); ?>
+																</div>
+															</div>
+														</div>
+
+													<?php
+														}else{
+															create_from_posts($key);
+														}
+													?>
+												</div><!-- // .portlet-body -->
+											</div>
+										</div><!-- // .portlet -->
+										<?php
+									} // end post_type loop
+
+function create_from_posts($type){
+	$Posts = new post();
+
+	$fields = array();
+	$fields['ID'] = 'ID';
+	$fields['title'] = 'title';
+	$fields['name'] = 'name';
+
+	$Posts->select($fields);
+
+	$Posts->where('status', 'published');
+	$all_posts = $Posts->get_posts($type);
+
+	if ($Posts->row_count() <= 0) {
+		__('Not found');
+	}
+	// print_f($all_posts);
+	?>
+	<div class="items-for-menu clearfix">
+		
+		<?php foreach ($all_posts as $key => $value) {
+
+			$original_url = SITEURL.$value->name.'/';
+			?>
+			<div class="tcb">
+				<label>
+				
+				<input data-type="<?php echo $type ?>" data-label="<?php echo $value->title; ?>" data-url="<?php echo $value->name; ?>" data-object-id="<?php echo $value->ID; ?>" data-original-label="<?php echo $value->title; ?>" data-original-url="<?php echo $original_url; ?>" type="checkbox" class="tc">
+					<span class="labels"> <?php echo $value->title; ?></span>
+				</label>
+			</div>
+		<?php } ?>
+		
+		<hr>
+		<a href="#" class="btn btn-default btn-sm pull-right add-menu">Add to menu</a>
+	</div><!-- // .items-for-menu -->
+	<?php
+
+} // create_from_posts()
+
+?>
+									
+									<?php $portlet_id = 'test'; ?>
 									<div class="portlet">
 										<div class="portlet-heading ">
 											<div class="portlet-title">
@@ -71,13 +172,30 @@ include 'include/header.php';
 											</div>
 											<div class="portlet-widgets">
 												<span class="divider"></span>
-												<a data-toggle="collapse" data-parent="#accordion" href="#notes-warn"><i class="fa fa-chevron-down"></i></a>
+												<a data-toggle="collapse" data-parent="#accordion" href="#panel_<?php echo $portlet_id; ?>"><i class="fa fa-chevron-down"></i></a>
 											</div>
 											<div class="clearfix"></div>
 										</div>
-										<div id="notes-warn" class="panel-collapse collapse">
-											<div class="portlet-body">
-												                                  													
+										<div id="panel_<?php echo $portlet_id; ?>" class="panel-collapse in collapse">
+											<div class="portlet-body no-padding">
+												<div role="tabpanel">
+													<!-- Nav tabs -->
+													<ul class="nav nav-tabs" role="tablist">
+														<li role="presentation" class="active">
+															<a href="#categories_<?php echo $portlet_id ?>" aria-controls="categories_<?php echo $portlet_id ?>" role="tab" data-toggle="tab">categories</a>
+														</li>
+														<li role="presentation">
+															<a href="#items_<?php echo $portlet_id ?>" aria-controls="items_<?php echo $portlet_id ?>" role="tab" data-toggle="tab">items</a>
+														</li>
+														
+													</ul>
+												
+													<!-- Tab panes -->
+													<div class="tab-content">
+														<div role="tabpanel" class="tab-pane active" id="categories_<?php echo $portlet_id ?>">...q</div>
+														<div role="tabpanel" class="tab-pane" id="items_<?php echo $portlet_id ?>">...w</div>
+													</div>
+												</div>
 											</div><!-- // .portlet-body -->
 										</div>
 									</div><!-- // .portlet -->
