@@ -10,6 +10,7 @@ $(function(){
 	// Index proper index
 	reindex_order();
 
+	// Bind key up for porlet name on item label
 	$menu_structure.find('li').find("[name$='[label]']").on('keyup', function(e) {
 		e.preventDefault();
 		var $this = $(this);
@@ -17,9 +18,32 @@ $(function(){
 		$this.parents('li').find('h4').text($this.val());
 	});
 
+	
+	// ADD TO MENU STRUCTURE
+	$('.add-menu').click(function(e) {
+		e.preventDefault();
+
+		var btn = $(this);
+		var container = btn.parents('.items-for-menu');
+
+		container.find("input:checked").each(function(index, el) {
+			var box = $(el);
+
+			var type = box.data('type');
+			var label = box.data('label');
+			var url = box.data('url');
+			var object_id = box.data('object-id');
+			var original_label = box.data('original-label');
+			var original_url = box.data('original-url');
+
+
+			create_element(type, label, url, object_id, original_label, original_url);
+		});
+	});
+
 })
 
-function create_element1(type, label, url, object_id = '', original_label = '', original_url = ''){
+function create_element(type, label, url, object_id = '', original_label = '', original_url = ''){
 
 	var index = $last_index+1;
 
