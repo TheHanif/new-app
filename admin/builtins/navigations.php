@@ -29,6 +29,7 @@ if (defined('HAS_PAGES') && HAS_PAGES == true) {
 			,'tag'	=> false
 			,'template' => true
 			,'searchable'=> true
+			,'menu'=> true
 		);
 
 	register_post($pages); // end pages
@@ -38,7 +39,7 @@ if (defined('HAS_PAGES') && HAS_PAGES == true) {
 if (defined('HAS_BLOG') && HAS_BLOG == true) {
 	$blog = array(
 			'id' 		=>	'blog'
-			,'name'	=> 'Blog'
+			,'name'		=> 'Blog'
 			,'meta'		=>	array(
 						'title' => 'Post'
 						,'single_title' => 'Post'
@@ -54,6 +55,7 @@ if (defined('HAS_BLOG') && HAS_BLOG == true) {
 			,'tag'	=> false
 			,'template' => true
 			,'searchable'=> true
+			,'menu'=> true
 		);
 
 	register_post($blog); // end Blog
