@@ -15,9 +15,15 @@ $(function(){
 		e.preventDefault();
 		var $this = $(this);
 		
-		$this.parents('li').find('h4').text($this.val());
+		$this.parents('li:first()').find('h4:first()').text($this.val());
 	});
 
+	$menu_structure.on('click', '.box-close', function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		$this.parents('li:first()').remove();
+		/* Act on the event */
+	});
 	
 	// ADD TO MENU STRUCTURE
 	$('.add-menu').click(function(e) {
@@ -39,6 +45,20 @@ $(function(){
 
 			create_element(type, label, url, object_id, original_label, original_url);
 		});
+	});
+
+	// CUSTOM LINK ADD TO MENU STRUCTURE
+	$('.custom-add-menu').click(function(e) {
+		e.preventDefault();
+
+		var btn = $(this);
+		var container = btn.parents('.portlet-body');
+
+		var type = 'custom';
+		var label = container.find('.custom-link-label').val();
+		var url = container.find('.custom-link-url').val()
+
+		create_element(type, label, url);
 	});
 
 })
@@ -82,7 +102,7 @@ function create_element(type, label, url, object_id = '', original_label = '', o
 							'<div class="col-xs-12 col-sm-6">'+
 								'<div class="form-group">'+
 									'<label class="label-control">*Navigation label</label>'+
-									'<input type="text" class="form-control input-sm" name="items['+index+'][label]" value="'+label+'" required="">'+
+									'<input type="text" class="form-control input-sm" name="items['+index+'][label]" value="'+label+'">'+
 								'</div>'+
 							'</div>'+
 							'<div class="col-xs-12 col-sm-6">'+
@@ -97,7 +117,7 @@ function create_element(type, label, url, object_id = '', original_label = '', o
 		if (type == 'custom') {
 			$e +=		'<div class="form-group">'+
 							'<label class="label-control">Custom URL</label>'+
-							'<input type="text" required class="form-control input-sm" name="items['+index+'][url]" value="'+url+'">'+
+							'<input type="text" class="form-control input-sm" name="items['+index+'][url]" value="'+url+'">'+
 						'</div>';
 		};
 
@@ -138,7 +158,13 @@ function create_element(type, label, url, object_id = '', original_label = '', o
 		e.preventDefault();
 		var $this = $(this);
 		
-		$this.parents('li').find('h4').text($this.val());
+		$this.parents('li:first()').find('h4:first()').text($this.val());
+		
+		$this.find('.box-close').click(function(event) {
+			event.preventDefault();
+			$this.remove();
+		});
+
 	});
 
 	// reindex all elements
@@ -183,7 +209,7 @@ function make_draggable(){
 		placeholder: "ui-state-highlight",
 		connectWith: ".menu-target",
 		revert: 250,
-		opacity: 0.5,
+		opacity: 0.4,
 		update: function(event, ui) {
 			// reindex();
 			reindex_order();
