@@ -16,6 +16,8 @@ define('ADMINURL', SITEURL.ADMINDIRNAME.'/');
 // Contents URL
 define('CONTURL', SITEURL.'contents/');
 
+define('MEGAMENUSTEPS', 5);
+
 
 
 // Admin page title
